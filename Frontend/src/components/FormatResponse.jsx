@@ -213,11 +213,14 @@ export const ModernResume = ({ data }) => {
               <div key={i} className="edu-item">
                 <p>
                   {edu?.startDate?.slice(0, 4)}
-                  {edu?.currentlyLearning ||edu?.endDate && (
+                  {edu?.currentlyLearning ||
+                    (edu?.endDate &&
                       ` - 
-                  ${edu?.currentlyLearning
-                    ? "Present"
-                    : edu?.endDate?.slice(0, 4)}`)}
+                  ${
+                    edu?.currentlyLearning
+                      ? "Present"
+                      : edu?.endDate?.slice(0, 4)
+                  }`)}
                 </p>
                 {edu?.institutionName && <h4>{edu?.institutionName}</h4>}
                 {edu?.degree && <li>{edu?.degree}</li>}
