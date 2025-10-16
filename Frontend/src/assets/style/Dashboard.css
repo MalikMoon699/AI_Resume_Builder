@@ -1,0 +1,130 @@
+.resume-select-cards-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.dashboard-header {
+  padding-bottom: 30px;
+}
+
+/* .dashboard-title {
+}
+
+.dashboard-subtitle {
+} */
+
+.resume-select-card {
+  width: 100%;
+  border: 1px solid #00000024;
+  padding: 10px 5px;
+  border-radius: 5px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.dashboard {
+  padding: 40px;
+  color: #000;
+}
+
+.dashboard-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 345px;
+  min-width: 250px;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+  box-shadow: 0px 0px 5px #0000001f;
+  border: 1px solid #0000002e;
+}
+
+.dashboard-btn:hover {
+  transform: scale(1.02);
+  border: 1px dotted black;
+}
+
+.dashboard-btn .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.create-btn {
+  color: #00af4e;
+}
+
+.create-btn:hover {
+  color: #00873d;
+}
+
+.upload-btn {
+  color: #ef4444;
+}
+
+.upload-btn:hover {
+  color: #c53030;
+}
+
+.resume-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Resume card */
+.dashboard-resume-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  height: 345px;
+  width: 250px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.dashboard-resume-card:hover {
+  transform: scale(1.2);
+  border-color: #00af4e;
+  box-shadow: 0 6px 15px rgba(0, 175, 78, 0.2);
+}
+
+.resume-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.no-resumes {
+  text-align: center;
+  color: #6b7280;
+  font-size: 1rem;
+  padding: 40px 0;
+}
+
+.resume-preview {
+  transform: scale(0.28, 0.46);
+  width: 360%;
+  height: 250%;
+  pointer-events: none;
+}

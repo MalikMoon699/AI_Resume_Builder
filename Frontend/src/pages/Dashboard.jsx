@@ -1,0 +1,155 @@
+import React, { useEffect, useState } from "react";
+import API from "../utils/api.js";
+import { useAuth } from "../contexts/AuthContext.jsx";
+import { CloudUpload, Plus, X } from "lucide-react";
+import "../assets/style/Dashboard.css";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { ClassicResume, ModernResume } from "../components/FormatResponse.jsx";
+
+const Dashboard = () => {
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
+  const [resume, setResume] = useState([]);
+  const [resumeTitle, setResumeTitle] = useState("");
+  const [isCreateResume, setIsCreateResume] = useState(false);
+  const [isUploadResume, setIsUploadResume] = useState(false);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        if (!currentUser?._id) return;
+        const res = await API.get(`/resume/user/${currentUser._id}`);
+        setResume(res.data);
+      } catch (err) {
+        console.log("Error to get resume:", err);
+      }
+    };
+    load();
+  }, [currentUser]);
+
+  const handleCreate = async () => {
+    if (!resumeTitle) return toast.error("Resume Title required!!!");
+
+    try {
+      const res = await API.post("/resume/create", {
+        title: resumeTitle,
+      });
+
+      toast.success("Resume created!");
+      navigate(`/create-resume/${res.data._id}`);
+    } catch (err) {
+      console.error("Error creating resume:", err);
+      toast.error("Failed to create resume");
+    }
+  };
+
+  return (
+    <div className="dashboard">
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">My Resume</h1>
+        <p className="dashboard-subtitle">
+          Start creating your Ai resume for next Job role
+        </p>
+      </div>
+      <div className="resume-container">
+        <button
+          onClick={() => {
+            setIsCreateResume(true);
+          }}
+          className="dashboard-btn create-btn"
+        >
+          <Plus className="icon" />
+          Create Resume
+        </button>
+        <button
+          onClick={() => {
+            setIsUploadResume(true);
+          }}
+          className="dashboard-btn upload-btn"
+        >
+          <CloudUpload className="icon" />
+          Upload Existing
+        </button>
+        {resume.map((item, index) => (
+          <div
+            onClick={() => {
+              navigate(`/resume/${item._id}`);
+            }}
+            key={index}
+            className="dashboard-resume-card"
+          >
+            <div className="resume-preview">
+              {item?.resumeType === "Modern" ? (
+                <ModernResume data={item} />
+              ) : (
+                <ClassicResume data={item} />
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      {isCreateResume && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3 className="modal-header-title">Create a Resume</h3>
+              <button
+                onClick={() => {
+                  setIsCreateResume(false);
+                  setResumeTitle("");
+                }}
+              >
+                <X />
+              </button>
+            </div>
+            <div className="create-resume-modal-content">
+              <input
+                type="text"
+                value={resumeTitle}
+                onChange={(e) => {
+                  setResumeTitle(e.target.value);
+                }}
+                placeholder="Enter resume title"
+              />
+              <button onClick={handleCreate}>Create Resume</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {isUploadResume && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3 className="modal-header-title">Upload a Resume</h3>
+              <button
+                onClick={() => {
+                  setIsUploadResume(false);
+                }}
+              >
+                <X />
+              </button>
+            </div>
+            <div className="create-resume-modal-content">
+              <div className="resume-select-cards-container">
+                {resume.map((item, index) => (
+                  <div
+                    onClick={() => {
+                      navigate(`/create-resume/${item._id}`);
+                    }}
+                    key={index}
+                    className="resume-select-card"
+                  >
+                    <p className="resume-name">{item.title}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Dashboard;

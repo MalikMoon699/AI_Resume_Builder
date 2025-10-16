@@ -1,0 +1,260 @@
+import React from "react";
+import { Copy } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { toast } from "react-toastify";
+import "../assets/style/Resumes.css";
+
+const handleCopy = (text) => {
+  navigator.clipboard.writeText(text);
+  toast.success("Copied!");
+};
+
+export const FormatResponse = ({ text }) => {
+  return (
+    <div className="format-wrapper">
+      <ReactMarkdown
+        components={{
+          code({ inline, className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || "");
+            return !inline && match ? (
+              <>
+                <div className="code-header">
+                  <strong>Code</strong>
+                  <span onClick={() => handleCopy(String(children))}>
+                    <Copy size={15} />
+                    Copy
+                  </span>
+                </div>
+                <SyntaxHighlighter
+                  style={materialDark}
+                  language={match[1]}
+                  PreTag="div"
+                  {...props}
+                >
+                  {String(children).replace(/\n$/, "")}
+                </SyntaxHighlighter>
+              </>
+            ) : (
+              <code {...props}>{children}</code>
+            );
+          },
+        }}
+      >
+        {text}
+      </ReactMarkdown>
+    </div>
+  );
+};
+
+export const ClassicResume = ({ data }) => {
+  const {
+    title,
+    summary,
+    personalDetails,
+    education,
+    experience,
+    projects,
+    skills,
+  } = data || {};
+
+  return (
+    <div className="formates classic-resume">
+      <header className="classic-header">
+        <h1>{personalDetails?.fullName || "Your Name"}</h1>
+        <p className="classic-title">{personalDetails?.profession || title}</p>
+      </header>
+
+      <div className="classic-body">
+        <aside className="classic-sidebar">
+          <section className="contact">
+            <h3>Contact</h3>
+            <p>{personalDetails?.number}</p>
+            <p>{personalDetails?.email}</p>
+            <p>{personalDetails?.location}</p>
+            {personalDetails?.personalWebsite && (
+              <a
+                href={personalDetails?.personalWebsite}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {personalDetails?.personalWebsite}
+              </a>
+            )}
+          </section>
+
+          {education?.length > 0 && (
+            <section className="education">
+              <h3>Education</h3>
+              {education.map((edu, i) => (
+                <div key={i}>
+                  <p className="degree">{edu?.degree}</p>
+                  <p>{edu?.institutionName}</p>
+                  <p className="year">
+                    {edu?.startDate} -{" "}
+                    {edu?.currentlyLearning ? "Present" : edu?.endDate}
+                  </p>
+                </div>
+              ))}
+            </section>
+          )}
+
+          {skills?.length > 0 && (
+            <section className="skills">
+              <h3>Skills</h3>
+              <ul>
+                {skills.map((skill, i) => (
+                  <li key={i}>{skill}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </aside>
+
+        <main className="classic-main">
+          {summary && (
+            <section className="profile">
+              <h3>Professional Summary</h3>
+              <p>{summary}</p>
+            </section>
+          )}
+
+          {experience?.length > 0 && (
+            <section className="experience">
+              <h3>Experience</h3>
+              {experience.map((exp, i) => (
+                <div key={i} className="job">
+                  <h4>{exp?.jobTitle}</h4>
+                  <p className="company">
+                    {exp?.companyName} {exp?.startDate && `| ${exp?.startDate}`}{" "}
+                    {exp?.currentlyWorking &&
+                      ` -{" "}
+                    ${exp?.currentlyWorking ? "Present" : exp?.endDate}
+                   `}
+                  </p>
+                  <p>{exp?.jobDescription}</p>
+                </div>
+              ))}
+            </section>
+          )}
+
+          {projects?.length > 0 && (
+            <section className="projects">
+              <h3>Projects</h3>
+              {projects.map((p, i) => (
+                <div key={i} className="project">
+                  <h4>{p?.projectName}</h4>
+                  <p>{p?.projectDescription}</p>
+                  {p?.projectLink && (
+                    <a href={p.projectLink} target="_blank" rel="noreferrer">
+                      {p.projectLink}
+                    </a>
+                  )}
+                </div>
+              ))}
+            </section>
+          )}
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export const ModernResume = ({ data }) => {
+  const { summary, personalDetails, education, experience, projects, skills } =
+    data || {};
+
+  return (
+    <div className="formates modern-resume">
+      <aside className="modern-sidebar">
+        <div className="modern-header">
+          <h1>{personalDetails?.fullName}</h1>
+          <p className="modern-title">{personalDetails?.profession}</p>
+          <div className="modern-contact">
+            <span>{personalDetails?.email}</span>{" "}
+            {personalDetails?.number && ` | ${personalDetails?.number}`}
+            <p>{personalDetails?.location}</p>
+            {personalDetails?.personalWebsite && (
+              <a
+                href={personalDetails?.personalWebsite}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {personalDetails?.personalWebsite}
+              </a>
+            )}
+          </div>
+        </div>
+        {education?.length > 0 && (
+          <section className="education">
+            <h3>Education</h3>
+            {education.map((edu, i) => (
+              <div key={i} className="edu-item">
+                <h4>{edu?.degree}</h4>
+                <p>{edu?.institutionName}</p>
+                <p>
+                  {edu?.startDate} -{" "}
+                  {edu?.currentlyLearning ? "Present" : edu?.endDate}
+                </p>
+              </div>
+            ))}
+          </section>
+        )}
+        {skills?.length > 0 && (
+          <section className="skills">
+            <h3>Skills</h3>
+            <ul>
+              {skills.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </aside>
+      <main className="modern-main">
+        {summary && (
+          <section className="profile-info">
+            <h3>Professional Summary</h3>
+            <p>{summary}</p>
+          </section>
+        )}
+        {experience?.length > 0 && (
+          <section className="experience">
+            <h3>Experience</h3>
+            {experience.map((exp, i) => (
+              <div key={i} className="job">
+                <h4>{exp?.companyName}</h4>
+                <p className="company">
+                  {exp?.jobTitle} {exp?.startDate && `| ${exp?.startDate}`}{" "}
+                  {exp?.currentlyWorking &&
+                    ` -{" "}
+                    ${exp?.currentlyWorking ? "Present" : exp?.endDate}
+                   `}
+                </p>
+                <p>{exp?.jobDescription}</p>
+              </div>
+            ))}
+          </section>
+        )}
+
+        {projects?.length > 0 && (
+          <section className="projects">
+            <h3>Projects</h3>
+            {projects.map((p, i) => (
+              <div key={i} className="project">
+                <h4>{p?.projectName}</h4>
+                <p>{p?.projectDescription}</p>
+                {p?.projectLink && (
+                  <a href={p.projectLink} target="_blank" rel="noreferrer">
+                    {p.projectLink}
+                  </a>
+                )}
+              </div>
+            ))}
+          </section>
+        )}
+      </main>
+    </div>
+  );
+};
