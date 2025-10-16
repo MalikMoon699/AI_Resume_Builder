@@ -1,5 +1,5 @@
 import React from "react";
-import { Copy } from "lucide-react";
+import { Copy, Link, Mail, MapPin, Phone } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -92,7 +92,7 @@ export const ClassicResume = ({ data }) => {
                   <p className="degree">{edu?.degree}</p>
                   <p>{edu?.institutionName}</p>
                   <p className="year">
-                    {edu?.startDate} -{" "}
+                    {edu?.startDate} -
                     {edu?.currentlyLearning ? "Present" : edu?.endDate}
                   </p>
                 </div>
@@ -127,9 +127,9 @@ export const ClassicResume = ({ data }) => {
                 <div key={i} className="job">
                   <h4>{exp?.jobTitle}</h4>
                   <p className="company">
-                    {exp?.companyName} {exp?.startDate && `| ${exp?.startDate}`}{" "}
+                    {exp?.companyName} {exp?.startDate && `| ${exp?.startDate}`}
                     {exp?.currentlyWorking &&
-                      ` -{" "}
+                      ` -
                     ${exp?.currentlyWorking ? "Present" : exp?.endDate}
                    `}
                   </p>
@@ -172,17 +172,37 @@ export const ModernResume = ({ data }) => {
           <h1>{personalDetails?.fullName}</h1>
           <p className="modern-title">{personalDetails?.profession}</p>
           <div className="modern-contact">
-            <span>{personalDetails?.email}</span>{" "}
-            {personalDetails?.number && ` | ${personalDetails?.number}`}
-            <p>{personalDetails?.location}</p>
+            <p className="resume-collection">
+              <span className="resume-icon">
+                <Mail size={12} />
+              </span>{" "}
+              {personalDetails?.email}
+            </p>
+            <p>
+              <span>
+                <Phone size={12} />
+              </span>{" "}
+              {personalDetails?.number}
+            </p>
+            <p>
+              <span>
+                <MapPin size={12} />
+              </span>{" "}
+              {personalDetails?.location}
+            </p>
             {personalDetails?.personalWebsite && (
-              <a
-                href={personalDetails?.personalWebsite}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {personalDetails?.personalWebsite}
-              </a>
+              <p>
+                <span>
+                  <Link size={12} />
+                </span>{" "}
+                <a
+                  href={personalDetails?.personalWebsite}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {personalDetails?.personalWebsite}
+                </a>
+              </p>
             )}
           </div>
         </div>
@@ -191,12 +211,16 @@ export const ModernResume = ({ data }) => {
             <h3>Education</h3>
             {education.map((edu, i) => (
               <div key={i} className="edu-item">
-                <h4>{edu?.degree}</h4>
-                <p>{edu?.institutionName}</p>
                 <p>
-                  {edu?.startDate} -{" "}
-                  {edu?.currentlyLearning ? "Present" : edu?.endDate}
+                  {edu?.startDate?.slice(0, 4)}
+                  {edu?.currentlyLearning ||edu?.endDate && (
+                      ` - 
+                  ${edu?.currentlyLearning
+                    ? "Present"
+                    : edu?.endDate?.slice(0, 4)}`)}
                 </p>
+                {edu?.institutionName && <h4>{edu?.institutionName}</h4>}
+                {edu?.degree && <li>{edu?.degree}</li>}
               </div>
             ))}
           </section>
@@ -226,9 +250,9 @@ export const ModernResume = ({ data }) => {
               <div key={i} className="job">
                 <h4>{exp?.companyName}</h4>
                 <p className="company">
-                  {exp?.jobTitle} {exp?.startDate && `| ${exp?.startDate}`}{" "}
+                  {exp?.jobTitle} {exp?.startDate && `| ${exp?.startDate}`}
                   {exp?.currentlyWorking &&
-                    ` -{" "}
+                    ` -
                     ${exp?.currentlyWorking ? "Present" : exp?.endDate}
                    `}
                 </p>
@@ -269,7 +293,7 @@ export const EmptyResume = ({ onCreate }) => {
           smart AI-powered builder.
         </p>
         <button className="empty-resume-btn" onClick={onCreate}>
-        Back to Dashboard
+          Back to Dashboard
         </button>
       </div>
     </div>

@@ -4,7 +4,14 @@ import API from "../utils/api.js";
 import { toast } from "react-toastify";
 import "../assets/style/CreateResume.css";
 import { ClassicResume, ModernResume } from "../components/FormatResponse.jsx";
-import { ArrowLeft, Plus, X } from "lucide-react";
+import {
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  Trash2,
+  X,
+} from "lucide-react";
 import Loader from "../components/Loader.jsx";
 
 const CreateResume = () => {
@@ -70,6 +77,14 @@ const CreateResume = () => {
     }));
   };
 
+  const removeArrayItem = (section, index) => {
+    setResume((prev) => {
+      const updated = [...(prev[section] || [])];
+      updated.splice(index, 1);
+      return { ...prev, [section]: updated };
+    });
+  };
+
   const handleSave = async () => {
     try {
       setSaveLoading(true);
@@ -126,10 +141,7 @@ const CreateResume = () => {
       case 2:
         return (
           <div className="create-resume-step">
-            <div>
-              <h3 className="create-resume-step-title">Professional Summary</h3>
-              <button></button>
-            </div>
+            <h3 className="create-resume-step-title">Professional Summary</h3>
             <textarea
               className="create-resume-textarea"
               rows="6"
@@ -148,7 +160,15 @@ const CreateResume = () => {
             <h3 className="create-resume-step-title">Experience</h3>
             {(resume.experience || []).map((exp, i) => (
               <div key={i} className="create-resume-card">
-                <h3 className="create-index-view">Experience #{i + 1}</h3>
+                <div className="create-resume-header-bin-collection">
+                  <h3 className="create-index-view">Experience #{i + 1}</h3>
+                  <button
+                    onClick={() => removeArrayItem("experience", i)}
+                    className="bin-resume-option"
+                  >
+                    <Trash2 />
+                  </button>
+                </div>
                 <input
                   type="text"
                   placeholder="Company Name"
@@ -181,9 +201,12 @@ const CreateResume = () => {
                   <div>
                     <label>Start Date</label>
                     <input
-                      type="date"
+                      type="number"
                       className="create-resume-input"
-                      value={exp.jobStartDate || ""}
+                      placeholder="Enter year"
+                      min="1950"
+                      max={new Date().getFullYear() + 5}
+                      value={exp.jobStartDate?.slice(0, 4) || ""}
                       onChange={(e) =>
                         handleArrayChange(
                           "experience",
@@ -197,10 +220,13 @@ const CreateResume = () => {
                   <div>
                     <label>End Date</label>
                     <input
-                      type="date"
+                      type="number"
                       className="create-resume-input"
+                      placeholder="Enter year"
+                      min="1950"
                       disabled={exp.currentlyWorking}
-                      value={exp.jobEndDate || ""}
+                      max={new Date().getFullYear() + 5}
+                      value={exp.jobEndDate?.slice(0, 4) || ""}
                       onChange={(e) =>
                         handleArrayChange(
                           "experience",
@@ -267,7 +293,15 @@ const CreateResume = () => {
             <h3 className="create-resume-step-title">Education</h3>
             {(resume.education || []).map((edu, i) => (
               <div key={i} className="create-resume-card">
-                <h3 className="create-index-view">Education #{i + 1}</h3>
+                <div className="create-resume-header-bin-collection">
+                  <h3 className="create-index-view">Education #{i + 1}</h3>
+                  <button
+                    onClick={() => removeArrayItem("education", i)}
+                    className="bin-resume-option"
+                  >
+                    <Trash2 />
+                  </button>
+                </div>
                 <input
                   type="text"
                   placeholder="Institution Name"
@@ -292,32 +326,44 @@ const CreateResume = () => {
                   }
                 />
                 <div className="create-resume-date-group">
-                  <input
-                    type="date"
-                    className="create-resume-input"
-                    value={edu.startDate || ""}
-                    onChange={(e) =>
-                      handleArrayChange(
-                        "education",
-                        i,
-                        "startDate",
-                        e.target.value
-                      )
-                    }
-                  />
-                  <input
-                    type="date"
-                    className="create-resume-input"
-                    value={edu.endDate || ""}
-                    onChange={(e) =>
-                      handleArrayChange(
-                        "education",
-                        i,
-                        "endDate",
-                        e.target.value
-                      )
-                    }
-                  />
+                  <div>
+                    <label>Start Date</label>
+                    <input
+                      type="number"
+                      className="create-resume-input"
+                      placeholder="Enter year"
+                      min="1950"
+                      max={new Date().getFullYear() + 5}
+                      value={edu.startDate?.slice(0, 4) || ""}
+                      onChange={(e) =>
+                        handleArrayChange(
+                          "education",
+                          i,
+                          "startDate",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label>End Date</label>
+                    <input
+                      type="number"
+                      className="create-resume-input"
+                      placeholder="Enter year"
+                      min="1950"
+                      max={new Date().getFullYear() + 5}
+                      value={edu.endDate?.slice(0, 4) || ""}
+                      onChange={(e) =>
+                        handleArrayChange(
+                          "education",
+                          i,
+                          "endDate",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             ))}
@@ -338,7 +384,15 @@ const CreateResume = () => {
             <h3 className="create-resume-step-title">Projects</h3>
             {(resume.projects || []).map((p, i) => (
               <div key={i} className="create-resume-card">
-                <h3 className="create-index-view">Projects #{i + 1}</h3>
+                <div className="create-resume-header-bin-collection">
+                  <h3 className="create-index-view">Projects #{i + 1}</h3>
+                  <button
+                    onClick={() => removeArrayItem("projects", i)}
+                    className="bin-resume-option"
+                  >
+                    <Trash2 />
+                  </button>
+                </div>
                 <input
                   type="text"
                   placeholder="Project Name"
@@ -363,6 +417,20 @@ const CreateResume = () => {
                       "projects",
                       i,
                       "projectType",
+                      e.target.value
+                    )
+                  }
+                />
+                <input
+                  type="text"
+                  placeholder="Project Link"
+                  className="create-resume-input"
+                  value={p.projectLink || ""}
+                  onChange={(e) =>
+                    handleArrayChange(
+                      "projects",
+                      i,
+                      "projectLink",
                       e.target.value
                     )
                   }
@@ -457,39 +525,44 @@ const CreateResume = () => {
 
   return (
     <>
-      <button
-        onClick={() => {
-          navigate("/");
-        }}
-        className="back-to-dashboard"
-      >
-        <span>
-          <ArrowLeft />
-        </span>
-        Back to Dashboard
-      </button>
-      <div className="create-resume-container">
+      <div className="create-resume-action-btns">
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+          className="back-to-dashboard"
+        >
+          <span>
+            <ArrowLeft />
+          </span>
+          Back to Dashboard
+        </button>
         <div>
-          <div></div>
-          <div>
-            {step > 1 && (
-              <button
-                className="create-resume-nav-btn create-resume-back-btn"
-                onClick={() => setStep((s) => s - 1)}
-              >
-                Back
-              </button>
-            )}
-            {step < 7 && (
-              <button
-                className="create-resume-nav-btn create-resume-next-btn"
-                onClick={() => setStep((s) => s + 1)}
-              >
-                Next
-              </button>
-            )}
-          </div>
+          {step > 1 && (
+            <button
+              className="create-resume-nav-btn create-resume-back-btn"
+              onClick={() => setStep((s) => s - 1)}
+            >
+              <span>
+                <ChevronLeft size={17} />
+              </span>
+              Back
+            </button>
+          )}
+          {step < 7 && (
+            <button
+              className="create-resume-nav-btn create-resume-next-btn"
+              onClick={() => setStep((s) => s + 1)}
+            >
+              Next
+              <span>
+                <ChevronRight size={17} />
+              </span>
+            </button>
+          )}
         </div>
+      </div>
+      <div className="create-resume-container">
         <div className="create-resume-box">
           {renderStep()}
 
@@ -511,29 +584,6 @@ const CreateResume = () => {
                 "Save Resume"
               )}
             </button>
-            {/* {step > 1 && (
-              <button
-                className="create-resume-nav-btn create-resume-back-btn"
-                onClick={() => setStep((s) => s - 1)}
-              >
-                Back
-              </button>
-            )}
-            {step < 7 ? (
-              <button
-                className="create-resume-nav-btn create-resume-next-btn"
-                onClick={() => setStep((s) => s + 1)}
-              >
-                Next
-              </button>
-            ) : (
-              <button
-                className="create-resume-nav-btn create-resume-save-btn"
-                onClick={handleSave}
-              >
-                Save Resume
-              </button>
-            )} */}
           </div>
         </div>
 

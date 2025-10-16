@@ -14,8 +14,8 @@
 .formates h3,
 .formates h4,
 .formates h5,
-.formates h6{
-padding: 4px 0px;
+.formates h6 {
+  padding: 4px 0px;
 }
 
 .formates section {
@@ -97,12 +97,12 @@ padding: 4px 0px;
   color: #00af4e;
 }
 
-.classic-resume .skills li::before {
+.classic-resume li::before {
   content: "• ";
   color: #00af4e;
 }
 
-.modern-resume .skills li::before {
+.modern-resume li::before {
   content: "• ";
   color: #fff;
 }
@@ -177,7 +177,7 @@ padding: 4px 0px;
   font-weight: 600;
 }
 
-.modern-sidebar h3{
+.modern-sidebar h3 {
   color: #fff;
 }
 
@@ -190,11 +190,11 @@ padding: 4px 0px;
   text-decoration: underline;
 }
 
-.modern-resume a{
-  color:#0000ff !important;
+.modern-resume a {
+  color: #0000ff !important;
 }
 
-.formates ul {
+.formates li {
   list-style: none;
 }
 
@@ -219,7 +219,7 @@ padding: 4px 0px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-   color: #fff;
+  color: #fff;
   transition: all 0.25s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
@@ -240,6 +240,17 @@ padding: 4px 0px;
   transform: translateY(-2px);
 }
 
+.resume-collection {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+}
+
+.resume-icon {
+  font-size: 0px;
+}
+
 /* Empty Resume State */
 .empty-resume {
   display: flex;
@@ -254,12 +265,11 @@ padding: 4px 0px;
 }
 
 .empty-resume-content {
-      max-width: 500px;
-    display: flex
-;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .empty-resume-content h2 {

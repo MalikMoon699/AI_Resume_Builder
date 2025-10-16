@@ -67,10 +67,8 @@ const Preview = () => {
       }
 
       pdf.save(`${resume?.name || "resume"}.pdf`);
-      toast.success("Resume downloaded successfully!");
     } catch (err) {
       console.error("PDF generation failed:", err);
-      toast.error("Failed to download PDF");
     }
   };
 
@@ -84,10 +82,8 @@ const Preview = () => {
           text: "Check out my resume!",
           url: shareUrl,
         });
-        toast.success("Resume link shared!");
       } catch (err) {
         console.error("Share failed:", err);
-        toast.error("Failed to share link");
       }
     } else {
       await navigator.clipboard.writeText(shareUrl);
