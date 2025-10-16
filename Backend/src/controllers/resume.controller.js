@@ -52,7 +52,6 @@ export const CreateResume = async (req, res) => {
 };
 
 export const UpdateResume = async (req, res) => {
-
   try {
     const { id } = req.params;
 
@@ -80,66 +79,63 @@ export const UpdateResume = async (req, res) => {
   }
 };
 
+export const DeleteResume = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-// export const UpdateResume = async (req, res) => {
-//   try {
-//     const { id } = req.params;
+    const resume = await Resume.findById(id);
+    if (!resume) {
+      return res.status(404).json({ message: "Resume not found" });
+    }
 
-//     console.log("📝 Incoming update for resume:", id);
-//     console.log("📦 Request body keys:", Object.keys(req.body));
-//     console.log("👤 Authenticated user:", req.user);
+    if (resume.user.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({ message: "Unauthorized to delete this resume" });
+    }
 
-//     // Validate resume ID
-//     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-//       return res.status(400).json({ message: "Invalid resume ID format" });
-//     }
+    await Resume.findByIdAndDelete(id);
 
-//     const resume = await Resume.findById(id);
-//     if (!resume) {
-//       return res.status(404).json({ message: "Resume not found" });
-//     }
+    await User.findByIdAndUpdate(req.user.id, {
+      $pull: { resumes: id },
+    });
 
-//     // Verify ownership
-//     if (resume.user.toString() !== req.user.id) {
-//       return res
-//         .status(403)
-//         .json({ message: "Unauthorized to update this resume" });
-//     }
+    res.status(200).json({ message: "Resume deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting resume:", err.message);
+    res.status(500).json({ message: "Server error while deleting resume" });
+  }
+};
 
-//     console.log(
-//       "🔄 Updating resume with data:",
-//       JSON.stringify(req.body, null, 2)
-//     );
+export const UpdateResumeTitle = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title } = req.body;
 
-//     const updatedResume = await Resume.findByIdAndUpdate(
-//       id,
-//       { $set: req.body },
-//       {
-//         new: true,
-//         runValidators: true,
-//         context: "query",
-//       }
-//     );
+    if (!title?.trim()) {
+      return res.status(400).json({ message: "Resume title is required" });
+    }
 
-//     console.log("✅ Resume successfully updated:", updatedResume._id);
-//     res.status(200).json(updatedResume);
-//   } catch (err) {
-//     console.error("❌ Error updating resume:", err);
-//     console.error("❌ Error details:", err.message);
-//     console.error("❌ Error stack:", err.stack);
+    const resume = await Resume.findById(id);
+    if (!resume) {
+      return res.status(404).json({ message: "Resume not found" });
+    }
 
-//     // Mongoose validation errors
-//     if (err.name === "ValidationError") {
-//       const errors = Object.values(err.errors).map((error) => error.message);
-//       return res.status(400).json({
-//         message: "Validation error",
-//         errors,
-//       });
-//     }
+    if (resume.user.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({ message: "Unauthorized to update this resume" });
+    }
 
-//     res.status(500).json({
-//       message: "Server error while updating resume",
-//       error: err.message,
-//     });
-//   }
-// };
+    resume.title = title.trim();
+    const updatedResume = await resume.save();
+
+    res.status(200).json({
+      message: "Resume title updated successfully",
+      resume: updatedResume,
+    });
+  } catch (err) {
+    console.error("Error updating resume title:", err.message);
+    res.status(500).json({ message: "Server error while updating title" });
+  }
+};

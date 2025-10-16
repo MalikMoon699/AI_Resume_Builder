@@ -92,7 +92,7 @@ const Preview = () => {
   };
 
   if (loading)
-    return <Loader size="100" className="create-resume-loading" stroke="6" />;
+    return <Loader size="100" style={{height:""}} className="create-resume-loading" stroke="6" />;
 
   return (
     <div className="preview-container">

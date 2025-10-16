@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../utils/api.js";
 import { useAuth } from "../contexts/AuthContext.jsx";
-import { CloudUpload, Plus, X } from "lucide-react";
+import { CloudUpload, Plus, SquarePen, Trash2, X } from "lucide-react";
 import "../assets/style/Dashboard.css";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -11,20 +11,26 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const [resume, setResume] = useState([]);
+
   const [resumeTitle, setResumeTitle] = useState("");
+  const [updateResumeTitle, setUpdateResumeTitle] = useState("");
+  const [selectedResumeId, setSelectedResumeId] = useState(null);
+
   const [isCreateResume, setIsCreateResume] = useState(false);
   const [isUploadResume, setIsUploadResume] = useState(false);
+  const [isUpdateResume, setIsUpdateResume] = useState(false);
+
+  const load = async () => {
+    try {
+      if (!currentUser?._id) return;
+      const res = await API.get(`/resume/user/${currentUser._id}`);
+      setResume(res.data);
+    } catch (err) {
+      console.log("Error to get resume:", err);
+    }
+  };
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        if (!currentUser?._id) return;
-        const res = await API.get(`/resume/user/${currentUser._id}`);
-        setResume(res.data);
-      } catch (err) {
-        console.log("Error to get resume:", err);
-      }
-    };
     load();
   }, [currentUser]);
 
@@ -41,6 +47,39 @@ const Dashboard = () => {
     } catch (err) {
       console.error("Error creating resume:", err);
       toast.error("Failed to create resume");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!id) return toast.error("resume not found.");
+    try {
+      const res = await API.delete(`/resume/delete/${id}`);
+      load();
+      toast.success("Resume deleted!");
+    } catch (err) {
+      console.error("Error creating resume:", err);
+      toast.error("Failed to delete resume");
+    }
+  };
+
+  const handleEdit = async () => {
+    if (!updateResumeTitle.trim()) return toast.error("Resume Title required!");
+    if (!selectedResumeId) return toast.error("No resume selected!");
+
+    try {
+      const res = await API.post(`/resume/update-title/${selectedResumeId}`, {
+        title: updateResumeTitle,
+      });
+
+      toast.success("Resume updated!");
+      setIsUpdateResume(false);
+      setUpdateResumeTitle("");
+      setSelectedResumeId(null);
+      load();
+      navigate(`/create-resume/${res.data.resume._id}`);
+    } catch (err) {
+      console.error("Error updating resume:", err);
+      toast.error("Failed to update resume");
     }
   };
 
@@ -86,6 +125,29 @@ const Dashboard = () => {
                 <ClassicResume data={item} />
               )}
             </div>
+            <div className="dashboard-resume-card-options">
+              <p>{item.title}</p>
+              <div className="dashboard-resume-card-options-btns">
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(item?._id);
+                  }}
+                >
+                  <Trash2 size={20} />
+                </span>
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                     setSelectedResumeId(item._id);
+                    setUpdateResumeTitle(item?.title);
+                    setIsUpdateResume(true);
+                  }}
+                >
+                  <SquarePen size={20} />
+                </span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -113,6 +175,35 @@ const Dashboard = () => {
                 placeholder="Enter resume title"
               />
               <button onClick={handleCreate}>Create Resume</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {isUpdateResume && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3 className="modal-header-title">Update Resume</h3>
+              <button
+                onClick={() => {
+                  setIsUpdateResume(false);
+                   setUpdateResumeTitle("");
+                   setSelectedResumeId(null);
+                }}
+              >
+                <X />
+              </button>
+            </div>
+            <div className="create-resume-modal-content">
+              <input
+                type="text"
+                value={updateResumeTitle}
+                onChange={(e) => {
+                  setUpdateResumeTitle(e.target.value);
+                }}
+                placeholder="Enter resume title"
+              />
+              <button onClick={handleEdit}>Update Resume</button>
             </div>
           </div>
         </div>
