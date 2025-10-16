@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ClassicResume, ModernResume } from "../components/FormatResponse.jsx";
+import {
+  ClassicResume,
+  EmptyResume,
+  ModernResume,
+} from "../components/FormatResponse.jsx";
 import Loader from "../components/Loader.jsx";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -92,24 +96,34 @@ const Preview = () => {
   };
 
   if (loading)
-    return <Loader size="100" style={{height:""}} className="create-resume-loading" stroke="6" />;
+    return (
+      <Loader
+        size="100"
+        style={{ height: "" }}
+        className="create-resume-loading"
+        stroke="6"
+      />
+    );
 
   return (
     <div className="preview-container">
-      <div className="preview-action-container">
-        <button onClick={handleDownload} className="preview-action download">
-          Download
-        </button>
-        <button onClick={handleShare} className="preview-action share">
-          Share
-        </button>
-      </div>
-
+      {resume?.resumeType && (
+        <div className="preview-action-container">
+          <button onClick={handleDownload} className="preview-action download">
+            Download
+          </button>
+          <button onClick={handleShare} className="preview-action share">
+            Share
+          </button>
+        </div>
+      )}
       <div ref={resumeRef} id="resume-preview">
         {resume?.resumeType === "Modern" ? (
           <ModernResume data={resume} />
-        ) : (
+        ) : resume?.resumeType === "Classic" ? (
           <ClassicResume data={resume} />
+        ) : (
+          <EmptyResume />
         )}
       </div>
     </div>

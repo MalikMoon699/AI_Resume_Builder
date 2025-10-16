@@ -258,3 +258,20 @@ export const ModernResume = ({ data }) => {
     </div>
   );
 };
+
+export const EmptyResume = ({ onCreate }) => {
+  return (
+    <div className="empty-resume">
+      <div className="empty-resume-content">
+        <h2>No Resume Found</h2>
+        <p>
+          You haven’t created any resumes yet. Start building one now with our
+          smart AI-powered builder.
+        </p>
+        <button className="empty-resume-btn" onClick={onCreate}>
+        Back to Dashboard
+        </button>
+      </div>
+    </div>
+  );
+};

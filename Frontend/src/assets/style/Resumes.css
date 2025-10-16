@@ -239,3 +239,55 @@ padding: 4px 0px;
   background-color: #d93737;
   transform: translateY(-2px);
 }
+
+/* Empty Resume State */
+.empty-resume {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-resume-content {
+      max-width: 500px;
+    display: flex
+;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-resume-content h2 {
+  font-size: 28px;
+  color: #00af4e;
+  margin-bottom: 10px;
+}
+
+.empty-resume-content p {
+  color: #444;
+  font-size: 16px;
+  width: 80%;
+  margin-bottom: 25px;
+}
+
+.empty-resume-btn {
+  background-color: #00af4e;
+  color: #fff;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.empty-resume-btn:hover {
+  background-color: #009344;
+  transform: translateY(-2px);
+}
