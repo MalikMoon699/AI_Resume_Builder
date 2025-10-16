@@ -113,7 +113,11 @@ const Preview = () => {
           </button>
         </div>
       )}
-      <div ref={resumeRef} id="resume-preview">
+      <div
+        style={{ "--accent-color": resume.accentColor || "#00af4e" }}
+        ref={resumeRef}
+        id="resume-preview"
+      >
         {resume?.resumeType === "Modern" ? (
           <ModernResume data={resume} />
         ) : resume?.resumeType === "Classic" ? (

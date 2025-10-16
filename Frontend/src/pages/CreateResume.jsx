@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../utils/api.js";
 import { toast } from "react-toastify";
@@ -8,6 +8,8 @@ import {
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
+  LayoutTemplate,
+  Palette,
   Plus,
   Trash2,
   X,
@@ -20,15 +22,24 @@ const CreateResume = () => {
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saveLoading, setSaveLoading] = useState(false);
+  const [isTemplate, setIsTemplate] = useState(false);
+  const [isAccent, setIsAccent] = useState(false);
   const [step, setStep] = useState(1);
   const [newSkill, setNewSkill] = useState("");
+
+  const templateRef = useRef();
+  const accentRef = useRef();
 
   useEffect(() => {
     const fetchResume = async () => {
       try {
         setLoading(true);
         const res = await API.get(`/resume/get/${id}`);
-        setResume(res.data);
+        // setResume(res.data);
+        setResume({
+          ...res.data,
+          accentColor: res.data.accentColor || "#00af4e",
+        });
       } catch (err) {
         console.error("Error fetching resume:", err);
         toast.error("Failed to load resume data");
@@ -39,6 +50,28 @@ const CreateResume = () => {
 
     if (id) fetchResume();
   }, [id]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        isTemplate &&
+        templateRef.current &&
+        !templateRef.current.contains(e.target)
+      ) {
+        setIsTemplate(false);
+      }
+      if (
+        isAccent &&
+        accentRef.current &&
+        !accentRef.current.contains(e.target)
+      ) {
+        setIsAccent(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isTemplate, isAccent]);
 
   const addSkill = () => {
     const trimmed = newSkill.trim();
@@ -96,6 +129,12 @@ const CreateResume = () => {
     } finally {
       setSaveLoading(false);
     }
+  };
+
+  const getProgress = () => {
+    const totalSteps = 6;
+    const progress = (step / totalSteps) * 100;
+    return `${progress}%`;
   };
 
   if (loading)
@@ -501,23 +540,6 @@ const CreateResume = () => {
           </div>
         );
 
-      case 7:
-        return (
-          <div className="create-resume-step">
-            <h3 className="create-resume-step-title">Resume Type</h3>
-            <select
-              className="create-resume-select"
-              value={resume.resumeType || "Modern"}
-              onChange={(e) =>
-                setResume((prev) => ({ ...prev, resumeType: e.target.value }))
-              }
-            >
-              <option value="Modern">Modern</option>
-              <option value="Classic">Classic</option>
-            </select>
-          </div>
-        );
-
       default:
         return null;
     }
@@ -525,18 +547,157 @@ const CreateResume = () => {
 
   return (
     <>
+      <button
+        onClick={() => {
+          navigate("/");
+        }}
+        className="back-to-dashboard"
+      >
+        <span>
+          <ArrowLeft />
+        </span>
+        Back to Dashboard
+      </button>
       <div className="create-resume-action-btns">
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-          className="back-to-dashboard"
-        >
-          <span>
-            <ArrowLeft />
-          </span>
-          Back to Dashboard
-        </button>
+        <div className="create-resume-action-btn-first-section">
+          <button
+            onClick={() => {
+              setIsTemplate(true);
+            }}
+          >
+            <span>
+              <LayoutTemplate size={17} />
+            </span>
+            Template
+            {isTemplate && (
+              <div
+                className="template-modal"
+                ref={templateRef}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h3 className="template-modal-title">Choose a Template</h3>
+                <div className="template-options">
+                  {["Classic", "Modern"].map((type) => (
+                    <div
+                      key={type}
+                      className={`template-option ${
+                        resume.resumeType === type ? "active" : ""
+                      }`}
+                      onClick={() => {
+                        setResume((prev) => ({
+                          ...prev,
+                          resumeType: type,
+                        }));
+                        setIsTemplate(false);
+                      }}
+                    >
+                      <h4>{type}</h4>
+                      <p>
+                        {type === "Classic" &&
+                          "A clean, traditional resume format with clear sections and professional typography"}
+                        {type === "Modern" &&
+                          "Sleek design with strategic use of color and modern font choices"}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </button>
+          <button
+            onClick={() => {
+              setIsAccent(true);
+            }}
+          >
+            <span>
+              <Palette size={17} />
+            </span>
+            Accent
+            {isAccent && (
+              <div
+                className="accent-modal"
+                ref={accentRef}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h3 className="accent-modal-title">Choose Accent Color</h3>
+                <div className="accent-options">
+                  {[
+                    "#3b82f6",
+                    "#6366f1",
+                    "#8b5cf6",
+                    "#00af4e",
+                    "#22c55e",
+                    "#ef4444",
+                    "#f97316",
+                    "#14b8a6",
+                    "#ec4899",
+                    "#9ca3af",
+                    "#111827",
+                  ].map((color, i) => (
+                    <div
+                      key={i}
+                      className={`accent-circle ${
+                        resume.accentColor === color ? "active" : ""
+                      }`}
+                      style={{ backgroundColor: color }}
+                      onClick={() => {
+                        setResume((prev) => ({
+                          ...prev,
+                          accentColor: color,
+                        }));
+                        setIsAccent(false);
+                      }}
+                    ></div>
+                  ))}
+                </div>
+                <div className="custom-color-picker">
+                  <label
+                    style={{
+                      color: "black",
+                      fontSize: "18px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Add Custom Color
+                  </label>
+                  <div
+                    className={`accent-circle ${
+                      ![
+                        "#3b82f6",
+                        "#6366f1",
+                        "#8b5cf6",
+                        "#00af4e",
+                        "#22c55e",
+                        "#ef4444",
+                        "#f97316",
+                        "#14b8a6",
+                        "#ec4899",
+                        "#9ca3af",
+                        "#111827",
+                      ].includes(resume.accentColor)
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+                    <input
+                      type="color"
+                      onClick={(e) => e.stopPropagation()}
+                      value={resume.accentColor || "#3b82f6"}
+                      onChange={(e) => {
+                        const newColor = e.target.value;
+                        setResume((prev) => ({
+                          ...prev,
+                          accentColor: newColor,
+                        }));
+                      }}
+                      title="Choose custom color"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </button>
+        </div>
         <div>
           {step > 1 && (
             <button
@@ -549,7 +710,7 @@ const CreateResume = () => {
               Back
             </button>
           )}
-          {step < 7 && (
+          {step < 6 && (
             <button
               className="create-resume-nav-btn create-resume-next-btn"
               onClick={() => setStep((s) => s + 1)}
@@ -564,6 +725,10 @@ const CreateResume = () => {
       </div>
       <div className="create-resume-container">
         <div className="create-resume-box">
+          <div
+            style={{ width: getProgress() }}
+            className="topbar-progressbar-line"
+          ></div>
           {renderStep()}
 
           <div className="create-resume-navigation">
@@ -587,7 +752,10 @@ const CreateResume = () => {
           </div>
         </div>
 
-        <div className="create-resume-preview">
+        <div
+          className="create-resume-preview"
+          style={{ "--accent-color": resume.accentColor || "#00af4e" }}
+        >
           {resume?.resumeType === "Modern" ? (
             <ModernResume data={resume} />
           ) : (

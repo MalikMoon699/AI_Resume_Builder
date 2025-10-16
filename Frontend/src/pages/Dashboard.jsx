@@ -118,7 +118,10 @@ const Dashboard = () => {
             key={index}
             className="dashboard-resume-card"
           >
-            <div className="resume-preview">
+            <div
+              style={{ "--accent-color": item.accentColor || "#00af4e" }}
+              className="resume-preview"
+            >
               {item?.resumeType === "Modern" ? (
                 <ModernResume data={item} />
               ) : (
@@ -139,7 +142,7 @@ const Dashboard = () => {
                 <span
                   onClick={(e) => {
                     e.stopPropagation();
-                     setSelectedResumeId(item._id);
+                    setSelectedResumeId(item._id);
                     setUpdateResumeTitle(item?.title);
                     setIsUpdateResume(true);
                   }}
@@ -187,8 +190,8 @@ const Dashboard = () => {
               <button
                 onClick={() => {
                   setIsUpdateResume(false);
-                   setUpdateResumeTitle("");
-                   setSelectedResumeId(null);
+                  setUpdateResumeTitle("");
+                  setSelectedResumeId(null);
                 }}
               >
                 <X />

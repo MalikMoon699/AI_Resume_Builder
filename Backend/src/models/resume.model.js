@@ -49,7 +49,7 @@ const ResumeSchema = new mongoose.Schema(
     ],
 
     skills: [{ type: String }],
-
+    accentColor: { type: String, default: "#00af4e" },
     resumeType: {
       type: String,
       enum: ["Modern", "Classic"],
