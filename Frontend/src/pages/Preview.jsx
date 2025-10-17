@@ -1,14 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  ClassicResume,
-  EmptyResume,
-  ModernResume,
-} from "../components/FormatResponse.jsx";
 import Loader from "../components/Loader.jsx";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { ResumePreview } from "../services/Constants.jsx";
 
 const Preview = () => {
   const { id } = useParams();
@@ -116,15 +112,14 @@ const Preview = () => {
       <div
         style={{ "--accent-color": resume.accentColor || "#00af4e" }}
         ref={resumeRef}
-        id="resume-preview"
+        className="resume-preview"
       >
-        {resume?.resumeType === "Modern" ? (
-          <ModernResume data={resume} />
-        ) : resume?.resumeType === "Classic" ? (
-          <ClassicResume data={resume} />
-        ) : (
-          <EmptyResume />
-        )}
+        <ResumePreview
+          item={resume}
+          width="100%"
+          height="90vh"
+          minWidth="300px"
+        />
       </div>
     </div>
   );

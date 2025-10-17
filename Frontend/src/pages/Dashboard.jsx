@@ -5,7 +5,9 @@ import { CloudUpload, Plus, SquarePen, Trash2, X } from "lucide-react";
 import "../assets/style/Dashboard.css";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { ClassicResume, ModernResume } from "../components/FormatResponse.jsx";
+import { ResumePreview } from "../services/Constants.jsx";
+import { resumeTemplateData } from "../services/Helpers.js";
+import { EmptyResume } from "../components/FormatResponse.jsx";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -122,11 +124,7 @@ const Dashboard = () => {
               style={{ "--accent-color": item.accentColor || "#00af4e" }}
               className="resume-preview"
             >
-              {item?.resumeType === "Modern" ? (
-                <ModernResume data={item} />
-              ) : (
-                <ClassicResume data={item} />
-              )}
+              <ResumePreview item={item} />
             </div>
             <div className="dashboard-resume-card-options">
               <p>{item.title}</p>
@@ -154,9 +152,50 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
+      <div className="resume-container">
+        <div className="dashboard-header">
+          <h1 className="dashboard-title">Templates</h1>
+          <p className="dashboard-subtitle">
+            Start creating your Ai resume for next Job role
+          </p>
+        </div>
+        <div className="resume-container">
+          {resumeTemplateData.map((item, index) => (
+            <div key={index} className="dashboard-resume-card" style={{cursor:"default"}}>
+              <div
+                style={{ "--accent-color": item.accentColor || "#00af4e" }}
+                className="resume-preview"
+              >
+                {item?.resumeType ? (
+                  <ResumePreview item={item} />
+                ) : (
+                  <EmptyResume btn={false} navigate={navigate} />
+                )}
+              </div>
+              <div className="dashboard-resume-card-options">
+                <p>{item.title}</p>
+                <div className="dashboard-resume-card-options-btns">
+                  <button className="use-temp-btn">Use template</button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
       {isCreateResume && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div
+          onClick={() => {
+            setIsCreateResume(false);
+            setResumeTitle("");
+          }}
+          className="modal-overlay"
+        >
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="modal-content"
+          >
             <div className="modal-header">
               <h3 className="modal-header-title">Create a Resume</h3>
               <button
@@ -183,8 +222,20 @@ const Dashboard = () => {
         </div>
       )}
       {isUpdateResume && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div
+          onClick={() => {
+            setIsUpdateResume(false);
+            setUpdateResumeTitle("");
+            setSelectedResumeId(null);
+          }}
+          className="modal-overlay"
+        >
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="modal-content"
+          >
             <div className="modal-header">
               <h3 className="modal-header-title">Update Resume</h3>
               <button
@@ -212,8 +263,18 @@ const Dashboard = () => {
         </div>
       )}
       {isUploadResume && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div
+          onClick={() => {
+            setIsUploadResume(false);
+          }}
+          className="modal-overlay"
+        >
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="modal-content"
+          >
             <div className="modal-header">
               <h3 className="modal-header-title">Upload a Resume</h3>
               <button

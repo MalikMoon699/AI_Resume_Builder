@@ -1,6 +1,6 @@
 import React from "react";
-import { Tailspin } from "ldrs/react";
-import "ldrs/react/Tailspin.css";
+import { Spiral } from "ldrs/react";
+import "ldrs/react/Spiral.css";
 
 const Loader = ({
   size = "40",
@@ -15,9 +15,10 @@ const Loader = ({
 }) => {
   return (
     <div className={className} style={style}>
-      <Tailspin size={size} speed={speed} stroke={stroke} color={color} />
+      <Spiral size={size} speed={speed} stroke={stroke} color={color} />
     </div>
   );
 };
 
 export default Loader;
+

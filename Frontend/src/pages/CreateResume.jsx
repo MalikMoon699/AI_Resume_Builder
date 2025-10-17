@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import Loader from "../components/Loader.jsx";
+import { ResumePreview } from "../services/Constants.jsx";
 
 const CreateResume = () => {
   const { id } = useParams();
@@ -931,11 +932,7 @@ const CreateResume = () => {
           className="create-resume-preview"
           style={{ "--accent-color": resume.accentColor || "#00af4e" }}
         >
-          {resume?.resumeType === "Modern" ? (
-            <ModernResume data={resume} />
-          ) : (
-            <ClassicResume data={resume} />
-          )}
+          <ResumePreview item={resume} width="100%" height="100%" />
         </div>
       </div>
     </>

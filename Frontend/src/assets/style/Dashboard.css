@@ -158,8 +158,14 @@
 }
 
 .resume-preview {
-  transform: scale(0.28, 0.46);
-  width: 360%;
-  height: 250%;
-  pointer-events: none;
+  margin-top: 20px;
+}
+
+.use-temp-btn {
+  padding: 6px;
+  cursor: pointer;
+  background: #00af4e;
+  border: none;
+  color: white;
+  border-radius: 5px;
 }

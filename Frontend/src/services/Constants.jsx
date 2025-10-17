@@ -1,0 +1,123 @@
+import html2canvas from "html2canvas";
+import { useEffect, useRef, useState } from "react";
+import Loader from "../components/Loader.jsx";
+import {
+  ClassicResume,
+  ModernResume,
+  EmptyResume,
+} from "../components/FormatResponse.jsx";
+
+export const ResumePreview = ({
+  item,
+  height = "297px",
+  width = "210px",
+  minHeight = "",
+  minWidth = "",
+}) => {
+  const previewRef = useRef(null);
+  const [img, setImg] = useState(null);
+  const [ready, setReady] = useState(false);
+
+  const waitForFonts = async () => {
+    if (document.fonts) {
+      try {
+        await document.fonts.ready;
+      } catch {
+        console.warn("Font loading timeout or unsupported browser.");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!previewRef.current) return;
+
+    const generatePreview = async () => {
+      await waitForFonts();
+
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      const node = previewRef.current;
+
+      const rect = node.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) {
+        console.warn("Resume node has no visible size yet!");
+        return;
+      }
+
+      const canvas = await html2canvas(node, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        logging: false,
+        width: node.scrollWidth,
+        height: node.scrollHeight,
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      setImg(imgData);
+      setReady(true);
+    };
+
+    generatePreview();
+  }, [item]);
+
+  return (
+    <>
+      <div
+        ref={previewRef}
+        style={{
+          position: "absolute",
+          top: "-100vh",
+          left: "-100vw",
+          zIndex: -9999,
+          opacity: 1,
+          pointerEvents: "none",
+          width: "800px",
+          background: "#fff",
+        }}
+      >
+        {item?.resumeType === "Modern" ? (
+          <ModernResume data={item} />
+        ) : (
+          <ClassicResume data={item} />
+        )}
+      </div>
+
+      {ready && img ? (
+        <img
+          src={img}
+          alt={item?.title}
+          style={{
+            width: width,
+            height: height,
+            minHeight: minHeight,
+            minWidth: minWidth,
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            objectFit: "contain",
+            background: "#fff",
+          }}
+        />
+      ) : (
+        <div
+          style={{
+            width: width,
+            height: height,
+            minHeight: minHeight,
+            minWidth: minWidth,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#f9f9f9",
+            borderRadius: "8px",
+            border: "1px dashed #ccc",
+            color: "#999",
+            fontSize: "14px",
+          }}
+        >
+          <Loader />
+        </div>
+      )}
+    </>
+  );
+};
