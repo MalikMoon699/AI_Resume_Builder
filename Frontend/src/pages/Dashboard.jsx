@@ -152,7 +152,10 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-      <div className="resume-container">
+      <div
+        style={{ gap: "5px", marginTop: "50px" }}
+        className="resume-container"
+      >
         <div className="dashboard-header">
           <h1 className="dashboard-title">Templates</h1>
           <p className="dashboard-subtitle">
@@ -161,7 +164,11 @@ const Dashboard = () => {
         </div>
         <div className="resume-container">
           {resumeTemplateData.map((item, index) => (
-            <div key={index} className="dashboard-resume-card" style={{cursor:"default"}}>
+            <div
+              key={index}
+              className="dashboard-resume-card"
+              style={{ cursor: "default" }}
+            >
               <div
                 style={{ "--accent-color": item.accentColor || "#00af4e" }}
                 className="resume-preview"
