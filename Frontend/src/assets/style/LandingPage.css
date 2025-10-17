@@ -81,7 +81,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 100px 80px;
+  padding: 200px 80px 100px;
   gap: 60px;
 }
 
@@ -244,17 +244,26 @@ html {
 .landing-template-carousel {
   width: 100%;
   position: relative;
+
+  /* Add new */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .landing-carousel-track {
   display: flex;
   width: max-content;
-  animation: infiniteScroll 40s linear infinite;
+  /* animation: infiniteScroll 40s linear infinite; */
 }
 
 .landing-dashboard-resume-card {
   margin-right: 40px;
   transition: transform 0.3s ease-in-out;
+  background: #f8f9fa;
+  padding: 15px;
+  box-shadow: 0px 0px 10px #00000017;
+  border-radius: 8px;
 }
 
 .landing-dashboard-resume-card:hover {
@@ -268,18 +277,18 @@ html {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes infiniteScroll {
+/* @keyframes infiniteScroll {
   from {
     transform: translateX(0);
   }
   to {
     transform: translateX(-50%);
   }
-}
+} */
 
-.landing-template-carousel:hover .landing-carousel-track {
+/* .landing-template-carousel:hover .landing-carousel-track {
   animation-play-state: paused;
-}
+} */
 
 /* ===== Contact Section ===== */
 .landing-contact {

@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router";
 import { ResumePreview } from "../services/Constants.jsx";
 import { resumeTemplateData } from "../services/Helpers.js";
+import LandingBackground from "../assets/images/LandingBackground.png";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const LandingPage = () => {
         </div>
         <div className="hero-image">
           <img
-            src="/hero-resume-preview.png"
+            src={LandingBackground}
             alt="AI Resume Preview"
             className="preview-img"
           />
@@ -93,7 +94,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="landing-template" id="templates">
+      {/* <section className="landing-template" id="templates">
         <h3>Explore Our AI Resume Templates</h3>
 
         <div className="landing-template-carousel">
@@ -108,6 +109,29 @@ const LandingPage = () => {
               ...resumeTemplateData,
               ...resumeTemplateData,
             ].map((item, index) => (
+              <div
+                key={index}
+                className="landing-dashboard-resume-card"
+                style={{ cursor: "default" }}
+              >
+                <div
+                  style={{ "--accent-color": item.accentColor || "#00af4e" }}
+                  className="landing-resume-preview"
+                >
+                  <ResumePreview margin="0px 0px -4px 0px" item={item} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section> */}
+
+      <section className="landing-template" id="templates">
+        <h3>Explore Our AI Resume Templates</h3>
+
+        <div className="landing-template-carousel">
+          <div className="landing-carousel-track">
+            {[...resumeTemplateData].map((item, index) => (
               <div
                 key={index}
                 className="landing-dashboard-resume-card"
