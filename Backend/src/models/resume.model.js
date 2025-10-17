@@ -49,6 +49,25 @@ const ResumeSchema = new mongoose.Schema(
     ],
 
     skills: [{ type: String }],
+
+    languages: [
+      {
+        language: { type: String },
+        proficiency: { type: Number, min: 0, max: 100 },
+      },
+    ],
+
+    hobbies: [{ type: String }],
+
+    awards: [
+      {
+        title: { type: String },
+        organization: { type: String },
+        year: { type: String },
+        description: { type: String },
+      },
+    ],
+
     accentColor: { type: String, default: "#00af4e" },
     resumeType: {
       type: String,

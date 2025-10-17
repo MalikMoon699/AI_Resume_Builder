@@ -14,7 +14,8 @@
 .formates h3,
 .formates h4,
 .formates h5,
-.formates h6 {
+.formates h6,
+.formates li{
   padding: 4px 0px;
 }
 
@@ -300,3 +301,31 @@
   transform: translateY(-2px);
 }
 
+.award-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.language-item .progress-bar {
+  height: 10px;
+  background: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 1px !important;
+  width: 90%;
+  margin-left: 8px;
+}
+
+.language-item .progress-fill {
+  height: 100%;
+  padding: 4px !important;
+  border-radius: 10px;
+  background: var(--accent-color, #00af4e);
+  transition: width 0.4s ease;
+}
+
+.award-year {
+  font-size: 0.85rem;
+  color: gray;
+}

@@ -48,6 +48,8 @@ export const FormatResponse = ({ text }) => {
   );
 };
 
+// ===================== CLASSIC RESUME =====================
+
 export const ClassicResume = ({ data }) => {
   const {
     title,
@@ -57,6 +59,9 @@ export const ClassicResume = ({ data }) => {
     experience,
     projects,
     skills,
+    languages,
+    hobbies,
+    awards,
   } = data || {};
 
   return (
@@ -70,31 +75,59 @@ export const ClassicResume = ({ data }) => {
         <aside className="classic-sidebar">
           <section className="contact">
             <h3>Contact</h3>
-            <p>{personalDetails?.number}</p>
-            <p>{personalDetails?.email}</p>
-            <p>{personalDetails?.location}</p>
-            {personalDetails?.personalWebsite && (
-              <a
-                href={personalDetails?.personalWebsite}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {personalDetails?.personalWebsite}
-              </a>
-            )}
+            <div className="modern-contact">
+              <p>
+                <span>
+                  <Mail size={12} />
+                </span>{" "}
+                {personalDetails?.email}
+              </p>
+              <p>
+                <span>
+                  <Phone size={12} />
+                </span>{" "}
+                {personalDetails?.number}
+              </p>
+              <p>
+                <span>
+                  <MapPin size={12} />
+                </span>{" "}
+                {personalDetails?.location}
+              </p>
+              {personalDetails?.personalWebsite && (
+                <p>
+                  <span>
+                    <Link size={12} />
+                  </span>{" "}
+                  <a
+                    href={personalDetails?.personalWebsite}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {personalDetails?.personalWebsite}
+                  </a>
+                </p>
+              )}
+            </div>
           </section>
-
           {education?.length > 0 && (
             <section className="education">
               <h3>Education</h3>
               {education.map((edu, i) => (
-                <div key={i}>
-                  <p className="degree">{edu?.degree}</p>
-                  <p>{edu?.institutionName}</p>
-                  <p className="year">
-                    {edu?.startDate} -
-                    {edu?.currentlyLearning ? "Present" : edu?.endDate}
+                <div key={i} className="edu-item">
+                  <p>
+                    {edu?.startDate?.slice(0, 4)}
+                    {edu?.currentlyLearning ||
+                      (edu?.endDate &&
+                        ` - 
+                  ${
+                    edu?.currentlyLearning
+                      ? "Present"
+                      : edu?.endDate?.slice(0, 4)
+                  }`)}
                   </p>
+                  {edu?.institutionName && <h4>{edu?.institutionName}</h4>}
+                  {edu?.degree && <li>{edu?.degree}</li>}
                 </div>
               ))}
             </section>
@@ -106,6 +139,40 @@ export const ClassicResume = ({ data }) => {
               <ul>
                 {skills.map((skill, i) => (
                   <li key={i}>{skill}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* 🔹 NEW: Languages */}
+          {languages?.length > 0 && (
+            <section className="languages">
+              <h3>Languages</h3>
+              <ul>
+                {languages.map((lang, i) => (
+                  <div className="language-item" key={i}>
+                    <li>
+                      {lang.language} — {lang.proficiency}%
+                    </li>
+                    <div className="progress-bar">
+                      <div
+                        className="progress-fill"
+                        style={{ width: `${lang.proficiency}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* 🔹 NEW: Hobbies */}
+          {hobbies?.length > 0 && (
+            <section className="hobbies">
+              <h3>Hobbies</h3>
+              <ul>
+                {hobbies.map((h, i) => (
+                  <li key={i}>{h}</li>
                 ))}
               </ul>
             </section>
@@ -125,14 +192,17 @@ export const ClassicResume = ({ data }) => {
               <h3>Experience</h3>
               {experience.map((exp, i) => (
                 <div key={i} className="job">
-                  <h4>{exp?.jobTitle}</h4>
-                  <p className="company">
-                    {exp?.companyName} {exp?.startDate && `| ${exp?.startDate}`}
-                    {exp?.currentlyWorking &&
-                      ` -
+                  <h4>{exp?.companyName}</h4>
+                  <div className="award-item-header">
+                    <p className="company">{exp?.jobTitle}</p>
+                    <span>
+                      {exp?.startDate && `| ${exp?.startDate}`}
+                      {exp?.currentlyWorking &&
+                        ` -
                     ${exp?.currentlyWorking ? "Present" : exp?.endDate}
                    `}
-                  </p>
+                    </span>
+                  </div>
                   <p>{exp?.jobDescription}</p>
                 </div>
               ))}
@@ -144,7 +214,9 @@ export const ClassicResume = ({ data }) => {
               <h3>Projects</h3>
               {projects.map((p, i) => (
                 <div key={i} className="project">
-                  <h4>{p?.projectName}</h4>
+                  <p>
+                    <strong>{p?.projectName}</strong> – {p?.projectType}
+                  </p>
                   <p>{p?.projectDescription}</p>
                   {p?.projectLink && (
                     <a href={p.projectLink} target="_blank" rel="noreferrer">
@@ -155,15 +227,42 @@ export const ClassicResume = ({ data }) => {
               ))}
             </section>
           )}
+          {awards?.length > 0 && (
+            <section className="awards">
+              <h3>Awards</h3>
+              {awards.map((a, i) => (
+                <div key={i}>
+                  <div className="award-item-header">
+                    <p>
+                      <strong>{a.title}</strong> – {a.organization}
+                    </p>
+                    <span className="award-year">{a.year}</span>
+                  </div>
+                  <p>{a.description}</p>
+                </div>
+              ))}
+            </section>
+          )}
         </main>
       </div>
     </div>
   );
 };
 
+// ===================== MODERN RESUME =====================
+
 export const ModernResume = ({ data }) => {
-  const { summary, personalDetails, education, experience, projects, skills } =
-    data || {};
+  const {
+    summary,
+    personalDetails,
+    education,
+    experience,
+    projects,
+    skills,
+    languages,
+    hobbies,
+    awards,
+  } = data || {};
 
   return (
     <div className="formates modern-resume">
@@ -172,8 +271,8 @@ export const ModernResume = ({ data }) => {
           <h1>{personalDetails?.fullName}</h1>
           <p className="modern-title">{personalDetails?.profession}</p>
           <div className="modern-contact">
-            <p className="resume-collection">
-              <span className="resume-icon">
+            <p>
+              <span>
                 <Mail size={12} />
               </span>{" "}
               {personalDetails?.email}
@@ -206,6 +305,7 @@ export const ModernResume = ({ data }) => {
             )}
           </div>
         </div>
+
         {education?.length > 0 && (
           <section className="education">
             <h3>Education</h3>
@@ -228,6 +328,7 @@ export const ModernResume = ({ data }) => {
             ))}
           </section>
         )}
+
         {skills?.length > 0 && (
           <section className="skills">
             <h3>Skills</h3>
@@ -238,7 +339,40 @@ export const ModernResume = ({ data }) => {
             </ul>
           </section>
         )}
+
+        {languages?.length > 0 && (
+          <section className="languages">
+            <h3>Languages</h3>
+            <ul>
+              {languages.map((lang, i) => (
+                <div className="language-item" key={i}>
+                  <li>
+                    {lang.language} — {lang.proficiency}%
+                  </li>
+                  <div className="progress-bar">
+                    <div
+                      className="progress-fill"
+                      style={{ width: `${lang.proficiency}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {hobbies?.length > 0 && (
+          <section className="hobbies">
+            <h3>Hobbies</h3>
+            <ul>
+              {hobbies.map((h, i) => (
+                <li key={i}>{h}</li>
+              ))}
+            </ul>
+          </section>
+        )}
       </aside>
+
       <main className="modern-main">
         {summary && (
           <section className="profile-info">
@@ -246,19 +380,23 @@ export const ModernResume = ({ data }) => {
             <p>{summary}</p>
           </section>
         )}
+
         {experience?.length > 0 && (
           <section className="experience">
             <h3>Experience</h3>
             {experience.map((exp, i) => (
               <div key={i} className="job">
                 <h4>{exp?.companyName}</h4>
-                <p className="company">
-                  {exp?.jobTitle} {exp?.startDate && `| ${exp?.startDate}`}
-                  {exp?.currentlyWorking &&
-                    ` -
+                <div className="award-item-header">
+                  <p className="company">{exp?.jobTitle}</p>
+                  <span>
+                    {exp?.startDate && `| ${exp?.startDate}`}
+                    {exp?.currentlyWorking &&
+                      ` -
                     ${exp?.currentlyWorking ? "Present" : exp?.endDate}
                    `}
-                </p>
+                  </span>
+                </div>
                 <p>{exp?.jobDescription}</p>
               </div>
             ))}
@@ -270,7 +408,9 @@ export const ModernResume = ({ data }) => {
             <h3>Projects</h3>
             {projects.map((p, i) => (
               <div key={i} className="project">
-                <h4>{p?.projectName}</h4>
+                <p>
+                  <strong>{p?.projectName}</strong> – {p?.projectType}
+                </p>
                 <p>{p?.projectDescription}</p>
                 {p?.projectLink && (
                   <a href={p.projectLink} target="_blank" rel="noreferrer">
@@ -281,10 +421,28 @@ export const ModernResume = ({ data }) => {
             ))}
           </section>
         )}
+        {awards?.length > 0 && (
+          <section className="awards">
+            <h3>Awards</h3>
+            {awards.map((a, i) => (
+              <div key={i} className="award-item">
+                <div className="award-item-header">
+                  <p>
+                    <strong>{a.title}</strong> – {a.organization}
+                  </p>
+                  <span className="award-year">{a.year}</span>
+                </div>
+                <p>{a.description}</p>
+              </div>
+            ))}
+          </section>
+        )}
       </main>
     </div>
   );
 };
+
+// ===================== EMPTY RESUME =====================
 
 export const EmptyResume = ({ onCreate }) => {
   return (
