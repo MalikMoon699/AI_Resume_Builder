@@ -74,6 +74,11 @@ const ResumeSchema = new mongoose.Schema(
       enum: ["Modern", "Classic"],
       default: "Modern",
     },
+    creationType: {
+      type: String,
+      enum: ["Manual", "Ai"],
+      default: "Manual",
+    },
   },
   { timestamps: true },
   { strict: false }

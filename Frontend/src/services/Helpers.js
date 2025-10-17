@@ -30,6 +30,9 @@ export const buttonProvider = (location, navigate, currentUser) => {
   }
 };
 
+export const API_URL =
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDcuGKlq8468Ry8FNRJxPqZzPA2mkIYhos";
+
 export const resumeTemplateData = [
   {
     _id: "66fa1c9d1a23bc456789abcd",

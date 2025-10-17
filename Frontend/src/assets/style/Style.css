@@ -50,7 +50,7 @@
 }
 
 .topbar-btn {
-  background-color: #00af4e;
+  background-color: #149c51a8;
   color: #fff;
   border: none;
   padding: 7px;
@@ -126,6 +126,40 @@
 .modal-header > button:hover {
   transform: rotate(90deg);
 }
+
+.create-type-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.create-type-card {
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background-color: #f9fafb;
+}
+
+.create-type-card:hover {
+  border-color: #00af4e;
+  background-color: #ecfdf5;
+  transform: translateY(-3px);
+}
+
+.create-type-card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.create-type-card p {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
 
 .create-resume-modal-content > input {
   width: 100%;

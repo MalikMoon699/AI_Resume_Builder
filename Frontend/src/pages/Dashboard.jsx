@@ -8,16 +8,21 @@ import { toast } from "react-toastify";
 import { ResumePreview } from "../services/Constants.jsx";
 import { resumeTemplateData } from "../services/Helpers.js";
 import { EmptyResume } from "../components/FormatResponse.jsx";
+import CreateResumeByAi from "../components/CreateResumeByAi.jsx";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const [resume, setResume] = useState([]);
 
+  const [creationType, setCreationType] = useState("");
   const [resumeTitle, setResumeTitle] = useState("");
   const [updateResumeTitle, setUpdateResumeTitle] = useState("");
   const [selectedResumeId, setSelectedResumeId] = useState(null);
+  const [createdResumeId, setCreatedResumeId] = useState(null);
 
+
+  const [isCreateResumeAi, setIsCreateResumeAi] = useState(true);
   const [isCreateResume, setIsCreateResume] = useState(false);
   const [isUploadResume, setIsUploadResume] = useState(false);
   const [isUpdateResume, setIsUpdateResume] = useState(false);
@@ -42,10 +47,17 @@ const Dashboard = () => {
     try {
       const res = await API.post("/resume/create", {
         title: resumeTitle,
+        creationType: creationType,
       });
 
       toast.success("Resume created!");
-      navigate(`/create-resume/${res.data._id}`);
+      setIsCreateResume(false);
+       if (creationType === "Ai") {
+         setCreatedResumeId(res.data._id);
+         setIsCreateResumeAi(true);
+       } else {
+         navigate(`/create-resume/${res.data._id}`);
+       }
     } catch (err) {
       console.error("Error creating resume:", err);
       toast.error("Failed to create resume");
@@ -189,10 +201,12 @@ const Dashboard = () => {
           ))}
         </div>
       </div>
+
       {isCreateResume && (
         <div
           onClick={() => {
             setIsCreateResume(false);
+            setCreationType("");
             setResumeTitle("");
           }}
           className="modal-overlay"
@@ -203,31 +217,83 @@ const Dashboard = () => {
             }}
             className="modal-content"
           >
-            <div className="modal-header">
-              <h3 className="modal-header-title">Create a Resume</h3>
-              <button
-                onClick={() => {
-                  setIsCreateResume(false);
-                  setResumeTitle("");
-                }}
-              >
-                <X />
-              </button>
-            </div>
-            <div className="create-resume-modal-content">
-              <input
-                type="text"
-                value={resumeTitle}
-                onChange={(e) => {
-                  setResumeTitle(e.target.value);
-                }}
-                placeholder="Enter resume title"
-              />
-              <button onClick={handleCreate}>Create Resume</button>
-            </div>
+            {!creationType ? (
+              <>
+                <div className="modal-header">
+                  <h3 className="modal-header-title">Create a Resume</h3>
+                  <button
+                    onClick={() => {
+                      setIsCreateResume(false);
+                      setCreationType("");
+                      setResumeTitle("");
+                    }}
+                  >
+                    <X />
+                  </button>
+                </div>
+
+                <div className="create-type-selection">
+                  <div
+                    className="create-type-card"
+                    onClick={() => setCreationType("Manual")}
+                  >
+                    <h4>Start from Scratch</h4>
+                    <p>Create your resume manually with full control.</p>
+                  </div>
+
+                  <div
+                    className="create-type-card"
+                    onClick={() => setCreationType("Ai")}
+                  >
+                    <h4>AI-Assisted Resume</h4>
+                    <p>
+                      Let AI generate your professional resume automatically —
+                      and fully edit it afterward to personalize and refine
+                      every detail.
+                    </p>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="modal-header">
+                  <h3 className="modal-header-title">
+                    {creationType === "Manual"
+                      ? "Manual Resume Setup"
+                      : "AI Resume Setup"}
+                  </h3>
+                  <button
+                    onClick={() => {
+                      setCreationType("");
+                      setResumeTitle("");
+                    }}
+                  >
+                    <X />
+                  </button>
+                </div>
+
+                <div className="create-resume-modal-content">
+                  <input
+                    type="text"
+                    value={resumeTitle}
+                    onChange={(e) => setResumeTitle(e.target.value)}
+                    placeholder="Enter resume title"
+                  />
+                  <button onClick={handleCreate}>
+                    {creationType === "Manual"
+                      ? "Create Manual Resume"
+                      : "Create AI Resume"}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
+      {isCreateResumeAi && createdResumeId && (
+        <CreateResumeByAi id={createdResumeId} />
+      )}
+
       {isUpdateResume && (
         <div
           onClick={() => {
