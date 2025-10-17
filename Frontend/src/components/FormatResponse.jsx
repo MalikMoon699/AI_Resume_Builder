@@ -446,7 +446,7 @@ export const ModernResume = ({ data }) => {
 
 export const EmptyResume = ({ navigate, btn = true }) => {
   const onBack = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (

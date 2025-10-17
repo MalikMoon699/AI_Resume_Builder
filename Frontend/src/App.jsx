@@ -8,6 +8,7 @@ import AppLayout from "./layout/AppLayout.jsx";
 import { ProtectedRoute, PublicRoute } from "./routes/RouteGuards.jsx";
 import CreateResume from "./pages/CreateResume.jsx";
 import Preview from "./pages/Preview.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
 
 const App = () => {
   return (
@@ -29,9 +30,8 @@ const App = () => {
             </PublicRoute>
           }
         />
-
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
@@ -55,8 +55,9 @@ const App = () => {
           }
         />
         <Route path="/resume/:id" element={<Preview />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>
+      <Route path="/" element={<LandingPage />} />
     </Routes>
   );
 };

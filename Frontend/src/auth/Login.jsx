@@ -24,7 +24,7 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         setTimeout(async () => {
           await refresh();
-          navigate("/", { replace: true });
+          navigate("/dashboard", { replace: true });
         }, 100);
       }
       toast.success("Login successfully.");

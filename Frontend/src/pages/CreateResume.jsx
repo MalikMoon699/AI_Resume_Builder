@@ -725,7 +725,7 @@ const CreateResume = () => {
     <>
       <button
         onClick={() => {
-          navigate("/");
+          navigate("/dashboard");
         }}
         className="back-to-dashboard"
       >

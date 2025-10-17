@@ -82,10 +82,12 @@
 
 .formates .classic-sidebar {
   flex: 1;
+  text-align: start !important;
 }
 
 .formates .classic-main {
   flex: 2;
+  text-align: start !important;
 }
 
 .formates .classic-sidebar h3,
@@ -124,7 +126,10 @@
   color: #fff;
   width: 35%;
   padding: 30px;
+  text-align: start !important;
 }
+
+
 
 .formates .sidebar-name h1 {
   font-size: 48px;
@@ -136,6 +141,7 @@
 .formates .modern-main {
   flex: 1;
   padding: 40px;
+  text-align: start !important;
 }
 
 .formates .modern-header h1 {

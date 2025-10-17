@@ -17,7 +17,7 @@ const TopBar = () => {
 
   return (
     <div className="topbar">
-      <h1 onClick={()=>{navigate("/")}}>Resume Builder</h1>
+      <h1 onClick={()=>{navigate("/dashboard");}}>Resume Builder</h1>
       <div>
         {currentUser?.name && <p className="topbar-username">Hi, {currentUser?.name}</p>}
         <button onClick={action} className={`topbar-btn ${className}`}>

@@ -13,6 +13,7 @@ export const ResumePreview = ({
   width = "210px",
   minHeight = "",
   minWidth = "",
+  margin = "",
 }) => {
   const previewRef = useRef(null);
   const [img, setImg] = useState(null);
@@ -67,8 +68,8 @@ export const ResumePreview = ({
         ref={previewRef}
         style={{
           position: "absolute",
-          top: "-100vh",
-          left: "-100vw",
+          top: "-1000vh",
+          left: "-1000vw",
           zIndex: -9999,
           opacity: 1,
           pointerEvents: "none",
@@ -96,6 +97,7 @@ export const ResumePreview = ({
             borderRadius: "8px",
             objectFit: "contain",
             background: "#fff",
+            margin: margin,
           }}
         />
       ) : (
@@ -113,6 +115,7 @@ export const ResumePreview = ({
             border: "1px dashed #ccc",
             color: "#999",
             fontSize: "14px",
+            margin: margin,
           }}
         >
           <Loader />

@@ -6,7 +6,9 @@ export const ProtectedRoute = ({ children }) => {
   const { authAllow, loading } = useAuth();
   const location = useLocation();
 
-  const isResumePublic = location.pathname.startsWith("/resume/");
+const isResumePublic =
+  location.pathname.startsWith("/resume/") || location.pathname === "/";
+
   
   if (loading) {
     return (
@@ -45,7 +47,7 @@ export const PublicRoute = ({ children }) => {
   }
 
   if (authAllow) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return children;
