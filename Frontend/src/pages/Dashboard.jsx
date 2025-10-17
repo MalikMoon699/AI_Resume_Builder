@@ -21,8 +21,7 @@ const Dashboard = () => {
   const [selectedResumeId, setSelectedResumeId] = useState(null);
   const [createdResumeId, setCreatedResumeId] = useState(null);
 
-
-  const [isCreateResumeAi, setIsCreateResumeAi] = useState(true);
+  const [isCreateResumeAi, setIsCreateResumeAi] = useState(false);
   const [isCreateResume, setIsCreateResume] = useState(false);
   const [isUploadResume, setIsUploadResume] = useState(false);
   const [isUpdateResume, setIsUpdateResume] = useState(false);
@@ -52,12 +51,12 @@ const Dashboard = () => {
 
       toast.success("Resume created!");
       setIsCreateResume(false);
-       if (creationType === "Ai") {
-         setCreatedResumeId(res.data._id);
-         setIsCreateResumeAi(true);
-       } else {
-         navigate(`/create-resume/${res.data._id}`);
-       }
+      if (creationType === "Ai") {
+        setCreatedResumeId(res.data._id);
+        setIsCreateResumeAi(true);
+      } else {
+        navigate(`/create-resume/${res.data._id}`);
+      }
     } catch (err) {
       console.error("Error creating resume:", err);
       toast.error("Failed to create resume");
@@ -293,7 +292,6 @@ const Dashboard = () => {
       {isCreateResumeAi && createdResumeId && (
         <CreateResumeByAi id={createdResumeId} />
       )}
-
       {isUpdateResume && (
         <div
           onClick={() => {
@@ -363,7 +361,13 @@ const Dashboard = () => {
                 {resume.map((item, index) => (
                   <div
                     onClick={() => {
-                      navigate(`/create-resume/${item._id}`);
+                      if (item?.creationType === "Ai") {
+                        setCreatedResumeId(item._id);
+                        setIsCreateResumeAi(true);
+                        setIsUploadResume(false);
+                      } else {
+                        navigate(`/create-resume/${item._id}`);
+                      }
                     }}
                     key={index}
                     className="resume-select-card"
