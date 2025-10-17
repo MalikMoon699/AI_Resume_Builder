@@ -110,10 +110,15 @@ export const DeleteResume = async (req, res) => {
 export const UpdateResumeTitle = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title } = req.body;
+    const { title, creationType } = req.body;
 
     if (!title?.trim()) {
       return res.status(400).json({ message: "Resume title is required" });
+    }
+    if (!creationType?.trim()) {
+      return res
+        .status(400)
+        .json({ message: "Resume creationType is required" });
     }
 
     const resume = await Resume.findById(id);
@@ -128,6 +133,7 @@ export const UpdateResumeTitle = async (req, res) => {
     }
 
     resume.title = title.trim();
+    resume.creationType = creationType.trim();
     const updatedResume = await resume.save();
 
     res.status(200).json({

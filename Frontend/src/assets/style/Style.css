@@ -160,8 +160,8 @@
   color: #6b7280;
 }
 
-
-.create-resume-modal-content > input {
+.create-resume-modal-content > input,
+.create-resume-modal-content > select {
   width: 100%;
   padding: 12px 14px;
   font-size: 1rem;
@@ -172,7 +172,11 @@
   transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
-.create-resume-modal-content > input:focus {
+.create-resume-modal-content > select{
+  cursor: pointer;
+}
+
+.create-resume-modal-content > input:focus,.create-resume-modal-content > select:focus {
   border-color: #00af4e;
   box-shadow: 0 0 0 3px rgba(0, 175, 78, 0.25);
 }

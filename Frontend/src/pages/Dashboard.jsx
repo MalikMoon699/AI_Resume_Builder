@@ -78,17 +78,21 @@ const Dashboard = () => {
   const handleEdit = async () => {
     if (!updateResumeTitle.trim()) return toast.error("Resume Title required!");
     if (!selectedResumeId) return toast.error("No resume selected!");
+    if (!creationType) return toast.error("Please select a creation type!");
 
     try {
       const res = await API.post(`/resume/update-title/${selectedResumeId}`, {
         title: updateResumeTitle,
+        creationType: creationType,
       });
 
       toast.success("Resume updated!");
       setIsUpdateResume(false);
       setUpdateResumeTitle("");
       setSelectedResumeId(null);
+      setCreationType("");
       load();
+
       navigate(`/create-resume/${res.data.resume._id}`);
     } catch (err) {
       console.error("Error updating resume:", err);
@@ -153,6 +157,7 @@ const Dashboard = () => {
                     e.stopPropagation();
                     setSelectedResumeId(item._id);
                     setUpdateResumeTitle(item?.title);
+                    setCreationType(item?.creationType || "");
                     setIsUpdateResume(true);
                   }}
                 >
@@ -328,6 +333,15 @@ const Dashboard = () => {
                 }}
                 placeholder="Enter resume title"
               />
+              <select
+                value={creationType}
+                onChange={(e) => setCreationType(e.target.value)}
+                className="creation-type-dropdown"
+              >
+                <option value="Manual">Manual</option>
+                <option value="Ai">AI</option>
+              </select>
+
               <button onClick={handleEdit}>Update Resume</button>
             </div>
           </div>

@@ -6,6 +6,7 @@ import "../assets/style/CreateResume.css";
 import { ClassicResume, ModernResume } from "../components/FormatResponse.jsx";
 import {
   ArrowLeft,
+  Brain,
   ChevronLeft,
   ChevronRight,
   LayoutTemplate,
@@ -181,7 +182,22 @@ const CreateResume = () => {
       case 2:
         return (
           <div className="create-resume-step">
-            <h3 className="create-resume-step-title">Professional Summary</h3>
+            <div className="create-resume-header-bin-collection">
+              <h3
+                style={{ margin: resume?.creationType === "Ai" ? "0px" : "" }}
+                className="create-resume-step-title"
+              >
+                Professional Summary
+              </h3>
+              {resume?.creationType === "Ai" && (
+                <button onClick={() => {}} className="genrate-ai-btn">
+                  <span>
+                    <Brain size={15} />
+                  </span>
+                  Genrate
+                </button>
+              )}
+            </div>
             <textarea
               className="create-resume-textarea"
               rows="6"
@@ -294,19 +310,42 @@ const CreateResume = () => {
                   />
                   <label htmlFor={`work-${i}`}>I currently work here</label>
                 </div>
-                <textarea
-                  placeholder="Job Description"
-                  className="create-resume-textarea"
-                  value={exp.jobDescription || ""}
-                  onChange={(e) =>
-                    handleArrayChange(
-                      "experience",
-                      i,
-                      "jobDescription",
-                      e.target.value
-                    )
-                  }
-                />
+                <div>
+                  <div className="create-resume-header-bin-collection">
+                    <h5
+                      style={{
+                        fontSize: "18px",
+                        margin:
+                          resume?.creationType === "Ai"
+                            ? "0px 0px 0px 5px"
+                            : "15px 0px 0px 5px",
+                      }}
+                    >
+                      Description
+                    </h5>
+                    {resume?.creationType === "Ai" && (
+                      <button onClick={() => {}} className="genrate-ai-btn">
+                        <span>
+                          <Brain size={15} />
+                        </span>
+                        Genrate
+                      </button>
+                    )}
+                  </div>
+                  <textarea
+                    placeholder="Job Description"
+                    className="create-resume-textarea"
+                    value={exp.jobDescription || ""}
+                    onChange={(e) =>
+                      handleArrayChange(
+                        "experience",
+                        i,
+                        "jobDescription",
+                        e.target.value
+                      )
+                    }
+                  />
+                </div>
               </div>
             ))}
             <button
@@ -475,19 +514,42 @@ const CreateResume = () => {
                     )
                   }
                 />
-                <textarea
-                  placeholder="Project Description"
-                  className="create-resume-textarea"
-                  value={p.projectDescription || ""}
-                  onChange={(e) =>
-                    handleArrayChange(
-                      "projects",
-                      i,
-                      "projectDescription",
-                      e.target.value
-                    )
-                  }
-                />
+                <div>
+                  <div className="create-resume-header-bin-collection">
+                    <h5
+                      style={{
+                        fontSize: "18px",
+                        margin:
+                          resume?.creationType === "Ai"
+                            ? "0px 0px 0px 5px"
+                            : "15px 0px 0px 5px",
+                      }}
+                    >
+                      Description
+                    </h5>
+                    {resume?.creationType === "Ai" && (
+                      <button onClick={() => {}} className="genrate-ai-btn">
+                        <span>
+                          <Brain size={15} />
+                        </span>
+                        Genrate
+                      </button>
+                    )}
+                  </div>
+                  <textarea
+                    placeholder="Project Description"
+                    className="create-resume-textarea"
+                    value={p.projectDescription || ""}
+                    onChange={(e) =>
+                      handleArrayChange(
+                        "projects",
+                        i,
+                        "projectDescription",
+                        e.target.value
+                      )
+                    }
+                  />
+                </div>
               </div>
             ))}
             <button
@@ -685,19 +747,42 @@ const CreateResume = () => {
                     handleArrayChange("awards", i, "year", e.target.value)
                   }
                 />
-                <textarea
-                  placeholder="Description"
-                  className="create-resume-textarea"
-                  value={award.description || ""}
-                  onChange={(e) =>
-                    handleArrayChange(
-                      "awards",
-                      i,
-                      "description",
-                      e.target.value
-                    )
-                  }
-                />
+                <div>
+                  <div className="create-resume-header-bin-collection">
+                    <h5
+                      style={{
+                        fontSize: "18px",
+                        margin:
+                          resume?.creationType === "Ai"
+                            ? "0px 0px 0px 5px"
+                            : "15px 0px 0px 5px",
+                      }}
+                    >
+                      Description
+                    </h5>
+                    {resume?.creationType === "Ai" && (
+                      <button onClick={() => {}} className="genrate-ai-btn">
+                        <span>
+                          <Brain size={15} />
+                        </span>
+                        Genrate
+                      </button>
+                    )}
+                  </div>
+                  <textarea
+                    placeholder="Description"
+                    className="create-resume-textarea"
+                    value={award.description || ""}
+                    onChange={(e) =>
+                      handleArrayChange(
+                        "awards",
+                        i,
+                        "description",
+                        e.target.value
+                      )
+                    }
+                  />
+                </div>
               </div>
             ))}
             <button

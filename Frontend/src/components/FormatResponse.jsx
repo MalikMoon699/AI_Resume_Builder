@@ -183,7 +183,8 @@ export const ClassicResume = ({ data }) => {
           {summary && (
             <section className="profile">
               <h3>Professional Summary</h3>
-              <p>{summary}</p>
+              <FormatResponse text={summary} />
+              {/* <p>{summary}</p> */}
             </section>
           )}
 
@@ -203,7 +204,8 @@ export const ClassicResume = ({ data }) => {
                    `}
                     </span>
                   </div>
-                  <p>{exp?.jobDescription}</p>
+                  <FormatResponse text={exp?.jobDescription} />
+                  {/* <p>{exp?.jobDescription}</p> */}
                 </div>
               ))}
             </section>
@@ -217,7 +219,8 @@ export const ClassicResume = ({ data }) => {
                   <p>
                     <strong>{p?.projectName}</strong> – {p?.projectType}
                   </p>
-                  <p>{p?.projectDescription}</p>
+                  <FormatResponse text={p?.projectDescription} />
+                  {/* <p>{p?.projectDescription}</p> */}
                   {p?.projectLink && (
                     <a href={p.projectLink} target="_blank" rel="noreferrer">
                       {p.projectLink}
@@ -238,7 +241,8 @@ export const ClassicResume = ({ data }) => {
                     </p>
                     <span className="award-year">{a.year}</span>
                   </div>
-                  <p>{a.description}</p>
+                  <FormatResponse text={a?.description} />
+                  {/* <p>{a.description}</p> */}
                 </div>
               ))}
             </section>
@@ -377,7 +381,8 @@ export const ModernResume = ({ data }) => {
         {summary && (
           <section className="profile-info">
             <h3>Professional Summary</h3>
-            <p>{summary}</p>
+            {/* <p>{summary}</p> */}
+            <FormatResponse text={summary} />
           </section>
         )}
 
@@ -397,7 +402,8 @@ export const ModernResume = ({ data }) => {
                    `}
                   </span>
                 </div>
-                <p>{exp?.jobDescription}</p>
+                <FormatResponse text={exp?.jobDescription} />
+                {/* <p>{exp?.jobDescription}</p> */}
               </div>
             ))}
           </section>
@@ -411,7 +417,8 @@ export const ModernResume = ({ data }) => {
                 <p>
                   <strong>{p?.projectName}</strong> – {p?.projectType}
                 </p>
-                <p>{p?.projectDescription}</p>
+                <FormatResponse text={p?.projectDescription} />
+                {/* <p>{p?.projectDescription}</p> */}
                 {p?.projectLink && (
                   <a href={p.projectLink} target="_blank" rel="noreferrer">
                     {p.projectLink}
@@ -432,7 +439,8 @@ export const ModernResume = ({ data }) => {
                   </p>
                   <span className="award-year">{a.year}</span>
                 </div>
-                <p>{a.description}</p>
+                <FormatResponse text={a?.description} />
+                {/* <p>{a.description}</p> */}
               </div>
             ))}
           </section>

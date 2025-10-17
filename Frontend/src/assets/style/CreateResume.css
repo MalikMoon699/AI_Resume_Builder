@@ -249,8 +249,6 @@
   cursor: pointer;
 }
 
-/* ---- New Added ---- */
-
 .create-resume-step-title {
   font-size: 1.3rem;
   font-weight: 600;
@@ -258,7 +256,6 @@
   margin-bottom: 15px;
 }
 
-/* Input + Add button */
 .create-resume-skill-input {
   display: flex;
   align-items: center;
@@ -440,4 +437,25 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.genrate-ai-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: 1px solid #00af4e;
+  background: #00af4e14;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.genrate-ai-btn:hover{
+transform: scale(1.1)
+}
+
+.genrate-ai-btn > span {
+  font-size: 0px;
+  margin-right: 2px;
 }

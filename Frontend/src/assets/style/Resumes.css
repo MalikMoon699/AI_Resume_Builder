@@ -15,7 +15,7 @@
 .formates h4,
 .formates h5,
 .formates h6,
-.formates li{
+.formates li {
   padding: 4px 0px;
 }
 
@@ -105,9 +105,14 @@
   color: var(--accent-color);
 }
 
-.modern-resume li::before {
+.modern-resume > .modern-sidebar li::before {
   content: "• ";
   color: #fff;
+}
+
+.modern-resume > .modern-main li::before {
+  content: "• ";
+  color: var(--accent-color);
 }
 
 .modern-resume {
@@ -128,8 +133,6 @@
   padding: 30px;
   text-align: start !important;
 }
-
-
 
 .formates .sidebar-name h1 {
   font-size: 48px;

@@ -249,3 +249,4 @@ export const resumeTemplateData = [
     updatedAt: "2025-10-17T08:00:00.000Z",
   },
 ];
+
