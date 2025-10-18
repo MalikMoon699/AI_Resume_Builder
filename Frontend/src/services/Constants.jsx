@@ -1,11 +1,7 @@
 import html2canvas from "html2canvas";
 import { useEffect, useRef, useState } from "react";
 import Loader from "../components/Loader.jsx";
-import {
-  ClassicResume,
-  ModernResume,
-  EmptyResume,
-} from "../components/FormatResponse.jsx";
+import { ClassicResume, ModernResume } from "../components/FormatResponse.jsx";
 
 export const ResumePreview = ({
   item,
@@ -46,7 +42,7 @@ export const ResumePreview = ({
       }
 
       const canvas = await html2canvas(node, {
-        scale: 2,
+        scale: 3,
         useCORS: true,
         backgroundColor: "#ffffff",
         logging: false,
@@ -73,7 +69,7 @@ export const ResumePreview = ({
           zIndex: -9999,
           opacity: 1,
           pointerEvents: "none",
-          width: "800px",
+          maxWidth: "800px",
           background: "#fff",
         }}
       >

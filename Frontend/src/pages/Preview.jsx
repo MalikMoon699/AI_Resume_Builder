@@ -129,7 +129,7 @@ const Preview = () => {
         ref={resumeRef}
         className="resume-preview"
       >
-        {item?.resumeType ? (
+        {resume?.resumeType ? (
           <ResumePreview
             item={resume}
             width="100%"
