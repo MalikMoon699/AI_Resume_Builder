@@ -68,64 +68,84 @@ export const ClassicResume = ({ data }) => {
     <div className="formates classic-resume">
       <header className="classic-header">
         <h1>{personalDetails?.fullName || "Your Name"}</h1>
-        <p className="classic-title">{personalDetails?.profession || title}</p>
+        {(personalDetails?.profession || title) && (
+          <p className="classic-title">
+            {personalDetails?.profession || title}
+          </p>
+        )}
       </header>
 
       <div className="classic-body">
         <aside className="classic-sidebar">
-          <section className="contact">
-            <h3>Contact</h3>
-            <div className="modern-contact">
-              <p>
-                <span>
-                  <Mail size={12} />
-                </span>{" "}
-                {personalDetails?.email}
-              </p>
-              <p>
-                <span>
-                  <Phone size={12} />
-                </span>{" "}
-                {personalDetails?.number}
-              </p>
-              <p>
-                <span>
-                  <MapPin size={12} />
-                </span>{" "}
-                {personalDetails?.location}
-              </p>
-              {personalDetails?.personalWebsite && (
-                <p>
-                  <span>
-                    <Link size={12} />
-                  </span>{" "}
-                  <a
-                    href={personalDetails?.personalWebsite}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {personalDetails?.personalWebsite}
-                  </a>
-                </p>
-              )}
-            </div>
-          </section>
+          {(personalDetails?.email ||
+            personalDetails?.number ||
+            personalDetails?.location ||
+            personalDetails?.personalWebsite) && (
+            <section className="contact">
+              <h3>Contact</h3>
+              <div className="modern-contact">
+                {personalDetails?.email && (
+                  <p>
+                    <span>
+                      <Mail size={12} />
+                    </span>{" "}
+                    {personalDetails?.email}
+                  </p>
+                )}
+                {personalDetails?.number && (
+                  <p>
+                    <span>
+                      <Phone size={12} />
+                    </span>{" "}
+                    {personalDetails?.number}
+                  </p>
+                )}
+                {personalDetails?.location && (
+                  <p>
+                    <span>
+                      <MapPin size={12} />
+                    </span>{" "}
+                    {personalDetails?.location}
+                  </p>
+                )}
+                {personalDetails?.personalWebsite && (
+                  <p>
+                    <span>
+                      <Link size={12} />
+                    </span>{" "}
+                    <a
+                      href={personalDetails?.personalWebsite}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {personalDetails?.personalWebsite}
+                    </a>
+                  </p>
+                )}
+              </div>
+            </section>
+          )}
+
           {education?.length > 0 && (
             <section className="education">
               <h3>Education</h3>
               {education.map((edu, i) => (
                 <div key={i} className="edu-item">
-                  <p>
-                    {edu?.startDate?.slice(0, 4)}
-                    {edu?.currentlyLearning ||
-                      (edu?.endDate &&
-                        ` - 
-                  ${
-                    edu?.currentlyLearning
-                      ? "Present"
-                      : edu?.endDate?.slice(0, 4)
-                  }`)}
-                  </p>
+                  {(edu?.startDate ||
+                    edu?.endDate ||
+                    edu?.currentlyLearning) && (
+                    <p>
+                      {edu?.startDate?.slice(0, 4)}
+                      {(edu?.endDate || edu?.currentlyLearning) && (
+                        <>
+                          {" - "}
+                          {edu?.currentlyLearning
+                            ? "Present"
+                            : edu?.endDate?.slice(0, 4)}
+                        </>
+                      )}
+                    </p>
+                  )}
                   {edu?.institutionName && <h4>{edu?.institutionName}</h4>}
                   {edu?.degree && <li>{edu?.degree}</li>}
                 </div>
@@ -144,29 +164,32 @@ export const ClassicResume = ({ data }) => {
             </section>
           )}
 
-          {/* 🔹 NEW: Languages */}
           {languages?.length > 0 && (
             <section className="languages">
               <h3>Languages</h3>
               <ul>
                 {languages.map((lang, i) => (
                   <div className="language-item" key={i}>
-                    <li>
-                      {lang.language} — {lang.proficiency}%
-                    </li>
-                    <div className="progress-bar">
-                      <div
-                        className="progress-fill"
-                        style={{ width: `${lang.proficiency}%` }}
-                      ></div>
-                    </div>
+                    {(lang?.language || lang?.proficiency) && (
+                      <li>
+                        {lang?.language}
+                        {lang?.proficiency && ` — ${lang?.proficiency}%`}
+                      </li>
+                    )}
+                    {lang?.proficiency && (
+                      <div className="progress-bar">
+                        <div
+                          className="progress-fill"
+                          style={{ width: `${lang.proficiency}%` }}
+                        ></div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </ul>
             </section>
           )}
 
-          {/* 🔹 NEW: Hobbies */}
           {hobbies?.length > 0 && (
             <section className="hobbies">
               <h3>Hobbies</h3>
@@ -184,7 +207,6 @@ export const ClassicResume = ({ data }) => {
             <section className="profile">
               <h3>Professional Summary</h3>
               <FormatResponse text={summary} />
-              {/* <p>{summary}</p> */}
             </section>
           )}
 
@@ -193,19 +215,33 @@ export const ClassicResume = ({ data }) => {
               <h3>Experience</h3>
               {experience.map((exp, i) => (
                 <div key={i} className="job">
-                  <h4>{exp?.companyName}</h4>
-                  <div className="award-item-header">
-                    <p className="company">{exp?.jobTitle}</p>
-                    <span>
-                      {exp?.startDate && `| ${exp?.startDate}`}
-                      {exp?.currentlyWorking &&
-                        ` -
-                    ${exp?.currentlyWorking ? "Present" : exp?.endDate}
-                   `}
-                    </span>
-                  </div>
-                  <FormatResponse text={exp?.jobDescription} />
-                  {/* <p>{exp?.jobDescription}</p> */}
+                  {exp?.companyName && <h4>{exp?.companyName}</h4>}
+                  {(exp?.jobTitle ||
+                    exp?.startDate ||
+                    exp?.endDate ||
+                    exp?.currentlyWorking) && (
+                    <div className="award-item-header">
+                      {exp?.jobTitle && (
+                        <p className="company">{exp?.jobTitle}</p>
+                      )}
+                      {(exp?.startDate ||
+                        exp?.endDate ||
+                        exp?.currentlyWorking) && (
+                        <span>
+                          {exp?.startDate && `| ${exp?.startDate}`}
+                          {(exp?.endDate || exp?.currentlyWorking) && (
+                            <>
+                              {" - "}
+                              {exp?.currentlyWorking ? "Present" : exp?.endDate}
+                            </>
+                          )}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  {exp?.jobDescription && (
+                    <FormatResponse text={exp?.jobDescription} />
+                  )}
                 </div>
               ))}
             </section>
@@ -216,11 +252,15 @@ export const ClassicResume = ({ data }) => {
               <h3>Projects</h3>
               {projects.map((p, i) => (
                 <div key={i} className="project">
-                  <p>
-                    <strong>{p?.projectName}</strong> – {p?.projectType}
-                  </p>
-                  <FormatResponse text={p?.projectDescription} />
-                  {/* <p>{p?.projectDescription}</p> */}
+                  {(p?.projectName || p?.projectType) && (
+                    <p>
+                      {p?.projectName && <strong>{p?.projectName}</strong>}
+                      {p?.projectType && ` – ${p?.projectType}`}
+                    </p>
+                  )}
+                  {p?.projectDescription && (
+                    <FormatResponse text={p?.projectDescription} />
+                  )}
                   {p?.projectLink && (
                     <a href={p.projectLink} target="_blank" rel="noreferrer">
                       {p.projectLink}
@@ -230,19 +270,20 @@ export const ClassicResume = ({ data }) => {
               ))}
             </section>
           )}
+
           {awards?.length > 0 && (
             <section className="awards">
               <h3>Awards</h3>
               {awards.map((a, i) => (
                 <div key={i}>
-                  <div className="award-item-header">
+                  {(a?.title || a?.organization) && (
                     <p>
-                      <strong>{a.title}</strong> – {a.organization}
+                      {a?.title && <strong>{a?.title}</strong>}
+                      {a?.organization && ` – ${a?.organization}`}
                     </p>
-                    <span className="award-year">{a.year}</span>
-                  </div>
-                  <FormatResponse text={a?.description} />
-                  {/* <p>{a.description}</p> */}
+                  )}
+                  {a?.year && <span className="award-year">{a?.year}</span>}
+                  {a?.description && <FormatResponse text={a?.description} />}
                 </div>
               ))}
             </section>
@@ -272,42 +313,55 @@ export const ModernResume = ({ data }) => {
     <div className="formates modern-resume">
       <aside className="modern-sidebar">
         <div className="modern-header">
-          <h1>{personalDetails?.fullName}</h1>
-          <p className="modern-title">{personalDetails?.profession}</p>
-          <div className="modern-contact">
-            <p>
-              <span>
-                <Mail size={12} />
-              </span>{" "}
-              {personalDetails?.email}
-            </p>
-            <p>
-              <span>
-                <Phone size={12} />
-              </span>{" "}
-              {personalDetails?.number}
-            </p>
-            <p>
-              <span>
-                <MapPin size={12} />
-              </span>{" "}
-              {personalDetails?.location}
-            </p>
-            {personalDetails?.personalWebsite && (
-              <p>
-                <span>
-                  <Link size={12} />
-                </span>{" "}
-                <a
-                  href={personalDetails?.personalWebsite}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {personalDetails?.personalWebsite}
-                </a>
-              </p>
-            )}
-          </div>
+          {personalDetails?.fullName && <h1>{personalDetails?.fullName}</h1>}
+          {personalDetails?.profession && (
+            <p className="modern-title">{personalDetails?.profession}</p>
+          )}
+          {(personalDetails?.email ||
+            personalDetails?.number ||
+            personalDetails?.location ||
+            personalDetails?.personalWebsite) && (
+            <div className="modern-contact">
+              {personalDetails?.email && (
+                <p>
+                  <span>
+                    <Mail size={12} />
+                  </span>{" "}
+                  {personalDetails?.email}
+                </p>
+              )}
+              {personalDetails?.number && (
+                <p>
+                  <span>
+                    <Phone size={12} />
+                  </span>{" "}
+                  {personalDetails?.number}
+                </p>
+              )}
+              {personalDetails?.location && (
+                <p>
+                  <span>
+                    <MapPin size={12} />
+                  </span>{" "}
+                  {personalDetails?.location}
+                </p>
+              )}
+              {personalDetails?.personalWebsite && (
+                <p>
+                  <span>
+                    <Link size={12} />
+                  </span>{" "}
+                  <a
+                    href={personalDetails?.personalWebsite}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {personalDetails?.personalWebsite}
+                  </a>
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
         {education?.length > 0 && (
@@ -315,17 +369,19 @@ export const ModernResume = ({ data }) => {
             <h3>Education</h3>
             {education.map((edu, i) => (
               <div key={i} className="edu-item">
-                <p>
-                  {edu?.startDate?.slice(0, 4)}
-                  {edu?.currentlyLearning ||
-                    (edu?.endDate &&
-                      ` - 
-                  ${
-                    edu?.currentlyLearning
-                      ? "Present"
-                      : edu?.endDate?.slice(0, 4)
-                  }`)}
-                </p>
+                {(edu?.startDate || edu?.endDate || edu?.currentlyLearning) && (
+                  <p>
+                    {edu?.startDate?.slice(0, 4)}
+                    {(edu?.endDate || edu?.currentlyLearning) && (
+                      <>
+                        {" - "}
+                        {edu?.currentlyLearning
+                          ? "Present"
+                          : edu?.endDate?.slice(0, 4)}
+                      </>
+                    )}
+                  </p>
+                )}
                 {edu?.institutionName && <h4>{edu?.institutionName}</h4>}
                 {edu?.degree && <li>{edu?.degree}</li>}
               </div>
@@ -350,15 +406,20 @@ export const ModernResume = ({ data }) => {
             <ul>
               {languages.map((lang, i) => (
                 <div className="language-item" key={i}>
-                  <li>
-                    {lang.language} — {lang.proficiency}%
-                  </li>
-                  <div className="progress-bar">
-                    <div
-                      className="progress-fill"
-                      style={{ width: `${lang.proficiency}%` }}
-                    ></div>
-                  </div>
+                  {(lang?.language || lang?.proficiency) && (
+                    <li>
+                      {lang?.language}
+                      {lang?.proficiency && ` — ${lang?.proficiency}%`}
+                    </li>
+                  )}
+                  {lang?.proficiency && (
+                    <div className="progress-bar">
+                      <div
+                        className="progress-fill"
+                        style={{ width: `${lang.proficiency}%` }}
+                      ></div>
+                    </div>
+                  )}
                 </div>
               ))}
             </ul>
@@ -381,7 +442,6 @@ export const ModernResume = ({ data }) => {
         {summary && (
           <section className="profile-info">
             <h3>Professional Summary</h3>
-            {/* <p>{summary}</p> */}
             <FormatResponse text={summary} />
           </section>
         )}
@@ -391,19 +451,33 @@ export const ModernResume = ({ data }) => {
             <h3>Experience</h3>
             {experience.map((exp, i) => (
               <div key={i} className="job">
-                <h4>{exp?.companyName}</h4>
-                <div className="award-item-header">
-                  <p className="company">{exp?.jobTitle}</p>
-                  <span>
-                    {exp?.startDate && `| ${exp?.startDate}`}
-                    {exp?.currentlyWorking &&
-                      ` -
-                    ${exp?.currentlyWorking ? "Present" : exp?.endDate}
-                   `}
-                  </span>
-                </div>
-                <FormatResponse text={exp?.jobDescription} />
-                {/* <p>{exp?.jobDescription}</p> */}
+                {exp?.companyName && <h4>{exp?.companyName}</h4>}
+                {(exp?.jobTitle ||
+                  exp?.startDate ||
+                  exp?.endDate ||
+                  exp?.currentlyWorking) && (
+                  <div className="award-item-header">
+                    {exp?.jobTitle && (
+                      <p className="company">{exp?.jobTitle}</p>
+                    )}
+                    {(exp?.startDate ||
+                      exp?.endDate ||
+                      exp?.currentlyWorking) && (
+                      <span>
+                        {exp?.startDate && `| ${exp?.startDate}`}
+                        {(exp?.endDate || exp?.currentlyWorking) && (
+                          <>
+                            {" - "}
+                            {exp?.currentlyWorking ? "Present" : exp?.endDate}
+                          </>
+                        )}
+                      </span>
+                    )}
+                  </div>
+                )}
+                {exp?.jobDescription && (
+                  <FormatResponse text={exp?.jobDescription} />
+                )}
               </div>
             ))}
           </section>
@@ -414,11 +488,15 @@ export const ModernResume = ({ data }) => {
             <h3>Projects</h3>
             {projects.map((p, i) => (
               <div key={i} className="project">
-                <p>
-                  <strong>{p?.projectName}</strong> – {p?.projectType}
-                </p>
-                <FormatResponse text={p?.projectDescription} />
-                {/* <p>{p?.projectDescription}</p> */}
+                {(p?.projectName || p?.projectType) && (
+                  <p>
+                    {p?.projectName && <strong>{p?.projectName}</strong>}
+                    {p?.projectType && ` – ${p?.projectType}`}
+                  </p>
+                )}
+                {p?.projectDescription && (
+                  <FormatResponse text={p?.projectDescription} />
+                )}
                 {p?.projectLink && (
                   <a href={p.projectLink} target="_blank" rel="noreferrer">
                     {p.projectLink}
@@ -428,19 +506,20 @@ export const ModernResume = ({ data }) => {
             ))}
           </section>
         )}
+
         {awards?.length > 0 && (
           <section className="awards">
             <h3>Awards</h3>
             {awards.map((a, i) => (
               <div key={i} className="award-item">
-                <div className="award-item-header">
+                {(a?.title || a?.organization) && (
                   <p>
-                    <strong>{a.title}</strong> – {a.organization}
+                    {a?.title && <strong>{a?.title}</strong>}
+                    {a?.organization && ` – ${a?.organization}`}
                   </p>
-                  <span className="award-year">{a.year}</span>
-                </div>
-                <FormatResponse text={a?.description} />
-                {/* <p>{a.description}</p> */}
+                )}
+                {a?.year && <span className="award-year">{a?.year}</span>}
+                {a?.description && <FormatResponse text={a?.description} />}
               </div>
             ))}
           </section>

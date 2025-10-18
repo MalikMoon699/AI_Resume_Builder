@@ -12,6 +12,7 @@ import { useNavigate } from "react-router";
 import { ResumePreview } from "../services/Constants.jsx";
 import { resumeTemplateData } from "../services/Helpers.js";
 import LandingBackground from "../assets/images/LandingBackground.png";
+import { EmptyResume } from "../components/FormatResponse.jsx";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -118,7 +119,11 @@ const LandingPage = () => {
                   style={{ "--accent-color": item.accentColor || "#00af4e" }}
                   className="landing-resume-preview"
                 >
-                  <ResumePreview margin="0px 0px -4px 0px" item={item} />
+           {item?.resumeType ? (
+                    <ResumePreview margin="0px 0px -4px 0px" item={item} />
+                  ) : (
+                    <EmptyResume btn={false} navigate={navigate} />
+                  )}
                 </div>
               </div>
             ))}
@@ -141,7 +146,11 @@ const LandingPage = () => {
                   style={{ "--accent-color": item.accentColor || "#00af4e" }}
                   className="landing-resume-preview"
                 >
-                  <ResumePreview margin="0px 0px -4px 0px" item={item} />
+                  {item?.resumeType ? (
+                    <ResumePreview margin="0px 0px -4px 0px" item={item} />
+                  ) : (
+                    <EmptyResume btn={false} navigate={navigate} />
+                  )}
                 </div>
               </div>
             ))}

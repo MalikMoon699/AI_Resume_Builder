@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import API from "../utils/api.js";
 import { toast } from "react-toastify";
 import "../assets/style/CreateResume.css";
-import { ClassicResume, ModernResume } from "../components/FormatResponse.jsx";
+import { ClassicResume, EmptyResume, ModernResume } from "../components/FormatResponse.jsx";
 import {
   ArrowLeft,
   Brain,
@@ -1017,7 +1017,11 @@ const CreateResume = () => {
           className="create-resume-preview"
           style={{ "--accent-color": resume.accentColor || "#00af4e" }}
         >
-          <ResumePreview item={resume} width="100%" height="100%" />
+          {item?.resumeType ? (
+            <ResumePreview item={resume} width="100%" height="100%" />
+          ) : (
+            <EmptyResume btn={false} navigate={navigate} />
+          )}
         </div>
       </div>
     </>

@@ -5,6 +5,7 @@ import Loader from "../components/Loader.jsx";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ResumePreview } from "../services/Constants.jsx";
+import { EmptyResume } from "../components/FormatResponse.jsx";
 
 const Preview = () => {
   const { id } = useParams();
@@ -87,6 +88,17 @@ const Preview = () => {
     }
   };
 
+  const handleCopy = async () => {
+    const copyUrl = `${import.meta.env.VITE_FRONTEND_URL}/resume/${id}`;
+    try {
+      await navigator.clipboard.writeText(copyUrl);
+      toast.success("Link copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy link:", err);
+      toast.error("Failed to copy link");
+    }
+  };
+
   if (loading)
     return (
       <Loader
@@ -107,6 +119,9 @@ const Preview = () => {
           <button onClick={handleShare} className="preview-action share">
             Share
           </button>
+          <button onClick={handleCopy} className="preview-action download">
+            Copy Link
+          </button>
         </div>
       )}
       <div
@@ -114,12 +129,16 @@ const Preview = () => {
         ref={resumeRef}
         className="resume-preview"
       >
-        <ResumePreview
-          item={resume}
-          width="100%"
-          height="90vh"
-          minWidth="300px"
-        />
+        {item?.resumeType ? (
+          <ResumePreview
+            item={resume}
+            width="100%"
+            height="90vh"
+            minWidth="300px"
+          />
+        ) : (
+          <EmptyResume btn={false} navigate={navigate} />
+        )}
       </div>
     </div>
   );

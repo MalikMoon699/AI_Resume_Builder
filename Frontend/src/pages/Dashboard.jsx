@@ -139,7 +139,11 @@ const Dashboard = () => {
               style={{ "--accent-color": item.accentColor || "#00af4e" }}
               className="resume-preview"
             >
-              <ResumePreview item={item} />
+              {item?.resumeType ? (
+                <ResumePreview item={item} />
+              ) : (
+                <EmptyResume btn={false} navigate={navigate} />
+              )}
             </div>
             <div className="dashboard-resume-card-options">
               <p>{item.title}</p>
