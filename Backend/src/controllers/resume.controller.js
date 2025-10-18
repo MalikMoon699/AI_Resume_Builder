@@ -31,10 +31,12 @@ export const GetResumesByUser = async (req, res) => {
 
 export const CreateResume = async (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, creationType, resumeType } = req.body;
 
     const newResume = new Resume({
       title,
+      resumeType,
+      creationType,
       user: req.user.id,
     });
 

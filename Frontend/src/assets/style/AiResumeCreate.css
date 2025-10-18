@@ -205,3 +205,38 @@ textarea:focus {
     transform: translateY(0);
   }
 }
+
+.ai-suggestions-box {
+  margin-top: 10px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.ai-suggestions-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.ai-suggestions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ai-suggestion-item {
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff;
+  margin-bottom: 6px;
+  cursor: pointer;
+  border: 1px solid #0000001f;
+  transition: background 0.2s ease;
+}
+
+.ai-suggestion-item:hover {
+  background: #e0f2fe;
+}

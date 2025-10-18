@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import API from "../utils/api.js";
 import { toast } from "react-toastify";
 import "../assets/style/CreateResume.css";
-import { ClassicResume, EmptyResume, ModernResume } from "../components/FormatResponse.jsx";
+import { EmptyResume } from "../components/FormatResponse.jsx";
 import {
   ArrowLeft,
   Brain,
@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import Loader from "../components/Loader.jsx";
 import { ResumePreview } from "../services/Constants.jsx";
+import { generateResumeSuggestions } from "../services/Helpers.js";
 
 const CreateResume = () => {
   const { id } = useParams();
@@ -28,6 +29,10 @@ const CreateResume = () => {
   const [isAccent, setIsAccent] = useState(false);
   const [step, setStep] = useState(1);
   const [newSkill, setNewSkill] = useState("");
+
+  const [aiSuggestions, setAiSuggestions] = useState({});
+  const [aiSuggestionsLoading, setAiSuggestionsLoading] = useState({});
+  const [aiLoading, setAiLoading] = useState(false);
 
   const templateRef = useRef();
   const accentRef = useRef();
@@ -139,6 +144,18 @@ const CreateResume = () => {
     return `${progress}%`;
   };
 
+  const getSuggestions = async (data, section, key) => {
+    setAiSuggestionsLoading((prev) => ({ ...prev, [key]: true }));
+    setAiLoading(true);
+    const suggestions = await generateResumeSuggestions(data, section);
+    setAiSuggestions((prev) => ({
+      ...prev,
+      [key]: suggestions,
+    }));
+    setAiSuggestionsLoading((prev) => ({ ...prev, [key]: false }));
+    setAiLoading(false);
+  };
+
   if (loading)
     return (
       <Loader
@@ -190,14 +207,30 @@ const CreateResume = () => {
                 Professional Summary
               </h3>
               {resume?.creationType === "Ai" && (
-                <button onClick={() => {}} className="genrate-ai-btn">
+                <button
+                  disabled={aiSuggestionsLoading["Professional Summary"]}
+                  style={{
+                    cursor: aiSuggestionsLoading["Professional Summary"]
+                      ? "not-allowed"
+                      : "",
+                  }}
+                  onClick={() =>
+                    getSuggestions(
+                      resume,
+                      "Professional Summary",
+                      "Professional Summary"
+                    )
+                  }
+                  className="genrate-ai-btn"
+                >
                   <span>
                     <Brain size={15} />
                   </span>
-                  Genrate
+                  Generate
                 </button>
               )}
             </div>
+
             <textarea
               className="create-resume-textarea"
               rows="6"
@@ -207,6 +240,31 @@ const CreateResume = () => {
                 setResume((prev) => ({ ...prev, summary: e.target.value }))
               }
             />
+
+            {aiSuggestionsLoading["Professional Summary"] && <Loader size="30" />}
+
+            {aiSuggestions["Professional Summary"]?.length > 0 && (
+              <div className="ai-suggestions-box">
+                <h4 className="ai-suggestions-title">AI Suggestions</h4>
+                <ul className="ai-suggestions-list">
+                  {aiSuggestions["Professional Summary"].map((s, idx) => (
+                    <li
+                      key={idx}
+                      className="ai-suggestion-item"
+                      onClick={() => {
+                        setResume((prev) => ({ ...prev, summary: s }));
+                        setAiSuggestions((prev) => ({
+                          ...prev,
+                          ["Professional Summary"]: [],
+                        }));
+                      }}
+                    >
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         );
 
@@ -324,7 +382,20 @@ const CreateResume = () => {
                       Description
                     </h5>
                     {resume?.creationType === "Ai" && (
-                      <button onClick={() => {}} className="genrate-ai-btn">
+                      <button
+                        disabled={aiSuggestionsLoading[i]}
+                        style={{
+                          cursor: aiSuggestionsLoading[i] ? "not-allowed" : "",
+                        }}
+                        onClick={() => {
+                          getSuggestions(
+                            { ...resume, experience: [resume.experience[i]] },
+                            "Experience",
+                            i
+                          );
+                        }}
+                        className="genrate-ai-btn"
+                      >
                         <span>
                           <Brain size={15} />
                         </span>
@@ -346,8 +417,35 @@ const CreateResume = () => {
                     }
                   />
                 </div>
+                {aiSuggestionsLoading[i] && <Loader size="30" />}
+
+                {aiSuggestions[i]?.length > 0 && (
+                  <div className="ai-suggestions-box">
+                    <h4 className="ai-suggestions-title">AI Suggestions</h4>
+                    <ul className="ai-suggestions-list">
+                      {aiSuggestions[i].map((s, idx) => (
+                        <li
+                          key={idx}
+                          className="ai-suggestion-item"
+                          onClick={() => {
+                            handleArrayChange(
+                              "experience",
+                              i,
+                              "jobDescription",
+                              s
+                            );
+                            setAiSuggestions((prev) => ({ ...prev, [i]: [] }));
+                          }}
+                        >
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             ))}
+
             <button
               className="create-resume-add-btn"
               onClick={() =>
@@ -528,7 +626,20 @@ const CreateResume = () => {
                       Description
                     </h5>
                     {resume?.creationType === "Ai" && (
-                      <button onClick={() => {}} className="genrate-ai-btn">
+                      <button
+                        disabled={aiSuggestionsLoading[i]}
+                        style={{
+                          cursor: aiSuggestionsLoading[i] ? "not-allowed" : "",
+                        }}
+                        onClick={() => {
+                          getSuggestions(
+                            { ...resume, projects: [resume.projects[i]] },
+                            "Projects",
+                            i
+                          );
+                        }}
+                        className="genrate-ai-btn"
+                      >
                         <span>
                           <Brain size={15} />
                         </span>
@@ -550,6 +661,32 @@ const CreateResume = () => {
                     }
                   />
                 </div>
+                {aiSuggestionsLoading[i] && <Loader size="30" />}
+
+                {aiSuggestions[i]?.length > 0 && (
+                  <div className="ai-suggestions-box">
+                    <h4 className="ai-suggestions-title">AI Suggestions</h4>
+                    <ul className="ai-suggestions-list">
+                      {aiSuggestions[i].map((s, idx) => (
+                        <li
+                          key={idx}
+                          className="ai-suggestion-item"
+                          onClick={() => {
+                            handleArrayChange(
+                              "projects",
+                              i,
+                              "projectDescription",
+                              s
+                            );
+                            setAiSuggestions((prev) => ({ ...prev, [i]: [] }));
+                          }}
+                        >
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             ))}
             <button
@@ -761,7 +898,20 @@ const CreateResume = () => {
                       Description
                     </h5>
                     {resume?.creationType === "Ai" && (
-                      <button onClick={() => {}} className="genrate-ai-btn">
+                      <button
+                        disabled={aiSuggestionsLoading[i]}
+                        style={{
+                          cursor: aiSuggestionsLoading[i] ? "not-allowed" : "",
+                        }}
+                        onClick={() => {
+                          getSuggestions(
+                            { ...resume, awards: [resume.awards[i]] },
+                            "Awards & Achievements",
+                            i
+                          );
+                        }}
+                        className="genrate-ai-btn"
+                      >
                         <span>
                           <Brain size={15} />
                         </span>
@@ -783,6 +933,27 @@ const CreateResume = () => {
                     }
                   />
                 </div>
+                {aiSuggestionsLoading[i] && <Loader size="30" />}
+
+                {aiSuggestions[i]?.length > 0 && (
+                  <div className="ai-suggestions-box">
+                    <h4 className="ai-suggestions-title">AI Suggestions</h4>
+                    <ul className="ai-suggestions-list">
+                      {aiSuggestions[i].map((s, idx) => (
+                        <li
+                          key={idx}
+                          className="ai-suggestion-item"
+                          onClick={() => {
+                            handleArrayChange("awards", i, "description", s);
+                            setAiSuggestions((prev) => ({ ...prev, [i]: [] }));
+                          }}
+                        >
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             ))}
             <button
@@ -964,6 +1135,10 @@ const CreateResume = () => {
             <button
               className="create-resume-nav-btn create-resume-back-btn"
               onClick={() => setStep((s) => s - 1)}
+              style={{
+                cursor: aiLoading ? "not-allowed" : "pointer",
+              }}
+              disabled={aiLoading}
             >
               <span>
                 <ChevronLeft size={17} />
@@ -975,6 +1150,10 @@ const CreateResume = () => {
             <button
               className="create-resume-nav-btn create-resume-next-btn"
               onClick={() => setStep((s) => s + 1)}
+              style={{
+                cursor: aiLoading ? "not-allowed" : "pointer",
+              }}
+              disabled={aiLoading}
             >
               Next
               <span>

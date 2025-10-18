@@ -250,3 +250,95 @@ export const resumeTemplateData = [
   },
 ];
 
+const geminiPrompt = (resume, make) => {
+return `
+You are a professional resume writer. Generate the "${make}" section based on the provided resume data.
+
+If "${make}" is "Experience":
+- Focus ONLY on the most recent experience provided.
+- Use the company name, job title, and context to write 3–5 **different job descriptions** (3–5 sentences each).
+- Each description should sound professional, achievement-focused, and ATS-friendly.
+- Avoid generic "Web Developer" summaries — tailor the text to the specific job title and company.
+- Use strong action verbs (e.g., "developed", "implemented", "optimized", "collaborated").
+- Emphasize quantifiable impact where possible.
+
+Example JSON output:
+{
+  "Experience": [
+    "Developed and maintained responsive front-end interfaces using React.js and Redux for TechVerse Solutions, improving page performance by 25%.",
+    "Collaborated with backend developers to integrate REST APIs, ensuring seamless communication between front-end and server components.",
+    "Implemented new UI features and optimized existing codebase, enhancing maintainability and reducing load times by 30%."
+  ]
+}
+
+If "${make}" is "Projects":
+- Use the project name, type, and link if available.
+- Generate 3–5 engaging, professional descriptions (2–3 sentences each).
+- Highlight technologies used, goals achieved, and measurable results.
+- Avoid generic "This project was about..." phrasing; make it sound strong and concise.
+
+Example Output:
+{
+  "Projects": [
+    "Developed a full-stack eCommerce platform using React.js, Node.js, and MongoDB, enabling secure transactions and real-time inventory tracking.",
+    "Built a responsive portfolio website to showcase design and coding projects, improving user engagement by 40%.",
+    "Implemented REST APIs and dynamic routing to enhance project scalability and performance."
+  ]
+}
+
+If "${make}" is "Awards & Achievements":
+- Generate 3–5 professional one-line or short-paragraph descriptions.
+- Focus on what the award represents, its relevance, and measurable outcomes.
+- Keep tone confident but factual.
+
+Example Output:
+{
+  "Awards & Achievements": [
+    "Received 'Employee of the Year' at TechVerse Solutions for excellence in front-end development and team leadership.",
+    "Awarded 'Best Innovation Project' at the National Hackathon 2024 for developing an AI-driven portfolio builder.",
+    "Recognized by University of Karachi with the Dean’s Merit Award for outstanding academic performance."
+  ]
+}
+
+If "${make}" is "Professional Summary":
+- Generate 3–5 short professional summaries, 2–4 sentences each, tailored to the resume.
+
+Return only valid JSON with the key "${make}".
+
+Here is the user's resume data:
+${JSON.stringify(resume, null, 2)}
+`;
+};
+
+export const generateResumeSuggestions = async (resume, make) => {
+  try {
+    const prompt = geminiPrompt(resume, make);
+
+    const payload = {
+      contents: [{ parts: [{ text: prompt }] }],
+    };
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    const rawText =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+    if (!rawText) throw new Error("Empty Gemini response");
+
+    const cleaned = rawText.replace(/```json|```/g, "").trim();
+    const aiJson = JSON.parse(cleaned);
+
+    const summaries = aiJson[make];
+    if (!summaries || !Array.isArray(summaries)) throw new Error("Bad output");
+
+  return [...summaries];
+  } catch (error) {
+    console.error("Error generating with Gemini:", error);
+    return [];
+  }
+};

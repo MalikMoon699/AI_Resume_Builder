@@ -20,6 +20,7 @@ const Dashboard = () => {
   const [updateResumeTitle, setUpdateResumeTitle] = useState("");
   const [selectedResumeId, setSelectedResumeId] = useState(null);
   const [createdResumeId, setCreatedResumeId] = useState(null);
+  const [selectedTemplate, setSelectedTemplate] = useState("");
 
   const [isCreateResumeAi, setIsCreateResumeAi] = useState(false);
   const [isCreateResume, setIsCreateResume] = useState(false);
@@ -47,6 +48,7 @@ const Dashboard = () => {
       const res = await API.post("/resume/create", {
         title: resumeTitle,
         creationType: creationType,
+        resumeType: selectedTemplate,
       });
 
       toast.success("Resume created!");
@@ -202,7 +204,15 @@ const Dashboard = () => {
               <div className="dashboard-resume-card-options">
                 <p>{item.title}</p>
                 <div className="dashboard-resume-card-options-btns">
-                  <button className="use-temp-btn">Use template</button>
+                  <button
+                    className="use-temp-btn"
+                    onClick={() => {
+                      setSelectedTemplate(item?.resumeType);
+                      setIsCreateResume(true);
+                    }}
+                  >
+                    Use template
+                  </button>
                 </div>
               </div>
             </div>
