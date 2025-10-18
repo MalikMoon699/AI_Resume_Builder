@@ -338,3 +338,191 @@
   font-size: 0.85rem;
   color: gray;
 }
+
+/* ------ minimalist ------ */
+
+.minimalist-resume {
+  font-family: "Arial", sans-serif;
+  color: #222;
+  background: #fff;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+}
+
+.minimalist-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.minimalist-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.minimalist-header p {
+  font-size: 16px;
+  color: #555;
+  margin-top: 4px;
+}
+
+.minimalist-contact p {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.minimalist-contact a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.minimalist-contact a:hover {
+  text-decoration: underline;
+}
+
+.minimalist-summary,
+.minimalist-experience,
+.minimalist-education,
+.minimalist-skills,
+.minimalist-projects,
+.minimalist-awards {
+  margin-top: 20px;
+}
+
+.minimalist-experience .job,
+.minimalist-education p,
+.minimalist-projects p,
+.minimalist-awards p {
+  margin-bottom: 12px;
+}
+
+.minimalist-experience .job > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.minimalist-experience li::before {
+  content: "• ";
+  color: var(--accent-color);
+}
+
+.minimalist-experience .job h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.minimalist-experience .job span {
+  font-size: 13px;
+  color: var(--accent-color);
+}
+
+.minimalist-skills p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ---- creative ---- */
+.creative-resume {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.12);
+  font-family: "Poppins", sans-serif;
+}
+
+.creative-header {
+  width: 100%;
+  padding: 30px;
+  text-align: center;
+  color: #fff;
+}
+
+.creative-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.creative-header p {
+  font-size: 16px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.creative-header-tablates {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.creative-header-tablates > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.creative-header-tablates > p > span {
+  font-size: 0px;
+}
+
+.creative-main {
+  flex: 1;
+  padding: 30px 40px;
+  color: #222;
+}
+
+.creative-main h3 {
+  font-size: 16px;
+  color: var(--accent-color);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
+
+.creative-main p,
+.creative-main li {
+  font-size: 14px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.creative-main ul {
+  padding-left: 16px;
+}
+
+.creative-job h4 {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.creative-job span {
+  font-size: 13px;
+  color: #555;
+}
+
+.creative-resume li::before {
+  content: "• ";
+  color: var(--accent-color);
+}
+
+.creative-skills li {
+  display: inline-block;
+  margin-right: 10px;
+  background-color: var(--accent-color);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 6px;
+}

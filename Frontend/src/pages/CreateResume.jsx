@@ -1009,29 +1009,35 @@ const CreateResume = () => {
               >
                 <h3 className="template-modal-title">Choose a Template</h3>
                 <div className="template-options">
-                  {["Classic", "Modern"].map((type) => (
-                    <div
-                      key={type}
-                      className={`template-option ${
-                        resume.resumeType === type ? "active" : ""
-                      }`}
-                      onClick={() => {
-                        setResume((prev) => ({
-                          ...prev,
-                          resumeType: type,
-                        }));
-                        setIsTemplate(false);
-                      }}
-                    >
-                      <h4>{type}</h4>
-                      <p>
-                        {type === "Classic" &&
-                          "A clean, traditional resume format with clear sections and professional typography"}
-                        {type === "Modern" &&
-                          "Sleek design with strategic use of color and modern font choices"}
-                      </p>
-                    </div>
-                  ))}
+                  {["Classic", "Modern", "Minimalist", "Creative"].map(
+                    (type) => (
+                      <div
+                        key={type}
+                        className={`template-option ${
+                          resume.resumeType === type ? "active" : ""
+                        }`}
+                        onClick={() => {
+                          setResume((prev) => ({
+                            ...prev,
+                            resumeType: type,
+                          }));
+                          setIsTemplate(false);
+                        }}
+                      >
+                        <h4>{type}</h4>
+                        <p>
+                          {type === "Classic" &&
+                            "A clean, traditional resume format with clear sections and professional typography"}
+                          {type === "Modern" &&
+                            "Sleek design with strategic use of color and modern font choices"}
+                          {type === "Minimalist" &&
+                            "Simple and elegant layout focusing on essential information"}
+                          {type === "Creative" &&
+                            "Visually striking resume with modern design and graphics"}
+                        </p>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             )}

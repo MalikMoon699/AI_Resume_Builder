@@ -1,7 +1,12 @@
 import html2canvas from "html2canvas";
 import { useEffect, useRef, useState } from "react";
 import Loader from "../components/Loader.jsx";
-import { ClassicResume, ModernResume } from "../components/FormatResponse.jsx";
+import {
+  ClassicResume,
+  ModernResume,
+  MinimalistResume,
+  CreativeResume,
+} from "../components/FormatResponse.jsx";
 
 export const ResumePreview = ({
   item,
@@ -42,7 +47,7 @@ export const ResumePreview = ({
       }
 
       const canvas = await html2canvas(node, {
-        scale: 3,
+        scale: 2,
         useCORS: true,
         backgroundColor: "#ffffff",
         logging: false,
@@ -69,15 +74,25 @@ export const ResumePreview = ({
           zIndex: -9999,
           opacity: 1,
           pointerEvents: "none",
-          maxWidth: "800px",
+          height: "800px",
+          width: "800px",
           background: "#fff",
         }}
       >
-        {item?.resumeType === "Modern" ? (
-          <ModernResume data={item} />
-        ) : (
-          <ClassicResume data={item} />
-        )}
+        {(() => {
+          switch (item?.resumeType) {
+            case "Modern":
+              return <ModernResume data={item} />;
+            case "Classic":
+              return <ClassicResume data={item} />;
+            case "Minimalist":
+              return <MinimalistResume data={item} />;
+            case "Creative":
+              return <CreativeResume data={item} />;
+            default:
+              return <EmptyResume navigate={navigate} />; 
+          }
+        })()}
       </div>
 
       {ready && img ? (

@@ -529,6 +529,356 @@ export const ModernResume = ({ data }) => {
   );
 };
 
+// ===================== Minimalist RESUME =====================
+export const MinimalistResume = ({ data }) => {
+  const {
+    personalDetails,
+    summary,
+    experience,
+    education,
+    skills,
+    projects,
+    awards,
+  } = data || {};
+
+  return (
+    <div className="formates minimalist-resume">
+      <header className="minimalist-header">
+        {personalDetails?.fullName && <h1>{personalDetails.fullName}</h1>}
+        {personalDetails?.profession && <p>{personalDetails.profession}</p>}
+      </header>
+
+      {(personalDetails?.email ||
+        personalDetails?.number ||
+        personalDetails?.location ||
+        personalDetails?.personalWebsite) && (
+        <section className="minimalist-contact">
+          {personalDetails?.email && <p>Email: {personalDetails.email}</p>}
+          {personalDetails?.number && <p>Phone: {personalDetails.number}</p>}
+          {personalDetails?.location && (
+            <p>Location: {personalDetails.location}</p>
+          )}
+          {personalDetails?.personalWebsite && (
+            <p>
+              Website:{" "}
+              <a
+                href={personalDetails.personalWebsite}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {personalDetails.personalWebsite}
+              </a>
+            </p>
+          )}
+        </section>
+      )}
+
+      {summary && (
+        <section className="minimalist-summary">
+          <h3>Summary</h3>
+          <FormatResponse text={summary} />
+        </section>
+      )}
+
+      {experience?.length > 0 && (
+        <section className="minimalist-experience">
+          <h3>Experience</h3>
+          {experience.map((exp, i) => (
+            <div key={i} className="job">
+              <div>
+                {(exp?.jobTitle || exp?.companyName) && (
+                  <h4>
+                    {exp.jobTitle} — {exp.companyName}
+                  </h4>
+                )}
+                {(exp?.startDate || exp?.endDate || exp?.currentlyWorking) && (
+                  <span>
+                    {exp.startDate} -{" "}
+                    {exp.currentlyWorking ? "Present" : exp.endDate}
+                  </span>
+                )}
+              </div>
+              {exp?.jobDescription && (
+                <FormatResponse text={exp.jobDescription} />
+              )}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {education?.length > 0 && (
+        <section className="minimalist-education">
+          <h3>Education</h3>
+          {education.map((edu, i) => (
+            <p key={i}>
+              {(edu?.degree || edu?.institutionName) && (
+                <>
+                  {edu.degree} — {edu.institutionName} ({edu.startDate} -{" "}
+                  {edu.currentlyLearning ? "Present" : edu.endDate})
+                </>
+              )}
+            </p>
+          ))}
+        </section>
+      )}
+
+      {skills?.length > 0 && (
+        <section className="minimalist-skills">
+          <h3>Skills</h3>
+          <p>{skills.join(", ")}</p>
+        </section>
+      )}
+
+      {projects?.length > 0 && (
+        <section className="minimalist-projects">
+          <h3>Projects</h3>
+          {projects.map(
+            (p, i) =>
+              (p?.projectName || p?.projectLink) && (
+                <div key={i}>
+                  <p>
+                    {p.projectName}{" "}
+                    {p.projectLink && (
+                      <>
+                        {" "}
+                        — <a href={p.projectLink}>{p.projectLink}</a>
+                      </>
+                    )}
+                  </p>
+                  {p?.projectDescription && (
+                    <FormatResponse text={p.projectDescription} />
+                  )}
+                </div>
+              )
+          )}
+        </section>
+      )}
+
+      {awards?.length > 0 && (
+        <section className="minimalist-awards">
+          <h3>Awards</h3>
+          {awards.map(
+            (a, i) =>
+              (a?.title || a?.organization || a?.year) && (
+                <div key={i}>
+                  <p>
+                    {a.title} — {a.organization} ({a.year})
+                  </p>
+                  {a?.description && <FormatResponse text={a.description} />}
+                </div>
+              )
+          )}
+        </section>
+      )}
+    </div>
+  );
+};
+
+// =====================  Creative RESUME =====================
+export const CreativeResume = ({ data }) => {
+  const {
+    personalDetails,
+    summary,
+    experience,
+    education,
+    skills,
+    projects,
+    hobbies,
+    awards,
+    languages,
+    accentColor,
+  } = data || {};
+
+  return (
+    <div className="formates creative-resume">
+      {(personalDetails?.fullName || personalDetails?.profession) && (
+        <header
+          className="creative-header"
+          style={{ backgroundColor: accentColor || "#00af4e" }}
+        >
+          {personalDetails?.fullName && <h1>{personalDetails.fullName}</h1>}
+          {personalDetails?.profession && <p>{personalDetails.profession}</p>}
+          <div className="creative-header-tablates">
+            {personalDetails?.email && (
+              <p>
+                <span>
+                  <Mail size={16} />
+                </span>
+                {personalDetails?.email}
+              </p>
+            )}
+            {personalDetails?.number && (
+              <p>
+                <span>
+                  <Phone size={16} />
+                </span>
+                {personalDetails?.number}
+              </p>
+            )}
+            {personalDetails?.location && (
+              <p>
+                <span>
+                  <MapPin size={16} />
+                </span>
+                {personalDetails?.location}
+              </p>
+            )}
+          </div>
+          {personalDetails?.personalWebsite && (
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <span style={{ fontSize: "0px", marginRight: "6px" }}>
+                <Link size={16} />
+              </span>
+              <a
+                style={{ color: "white", marginBottom: "2px" }}
+                href={personalDetails.personalWebsite}
+                target="_blank"
+              >
+                {personalDetails.personalWebsite}
+              </a>
+            </p>
+          )}
+        </header>
+      )}
+
+      <main className="creative-main">
+        {summary && (
+          <section>
+            <h3>About Me</h3>
+            <FormatResponse text={summary} />
+          </section>
+        )}
+
+        {experience?.length > 0 && (
+          <section>
+            <h3>Work Experience</h3>
+            {experience.map(
+              (exp, i) =>
+                (exp?.jobTitle || exp?.companyName) && (
+                  <div key={i} className="creative-job">
+                    {(exp.jobTitle || exp.companyName) && (
+                      <h4>
+                        {exp.jobTitle} at {exp.companyName}
+                      </h4>
+                    )}
+                    {(exp.startDate || exp.endDate || exp.currentlyWorking) && (
+                      <span>
+                        {exp.startDate} -{" "}
+                        {exp.currentlyWorking ? "Present" : exp.endDate}
+                      </span>
+                    )}
+                    {exp.jobDescription && (
+                      <FormatResponse text={exp.jobDescription} />
+                    )}
+                  </div>
+                )
+            )}
+          </section>
+        )}
+
+        {education?.length > 0 && (
+          <section>
+            <h3>Education</h3>
+            {education.map(
+              (edu, i) =>
+                (edu?.degree || edu?.institutionName) && (
+                  <div key={i}>
+                    <strong>{edu.degree}</strong> — {edu.institutionName} (
+                    {edu.startDate} -{" "}
+                    {edu.currentlyLearning ? "Present" : edu.endDate})
+                  </div>
+                )
+            )}
+          </section>
+        )}
+
+        {skills?.length > 0 && (
+          <section>
+            <h3>Skills</h3>
+            <ul className="creative-skills">
+              {skills.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {languages?.length > 0 && (
+          <section>
+            <h3>Languages</h3>
+            <ul>
+              {languages.map((lang, i) => (
+                <li key={i}>
+                  {lang.language} — {lang.proficiency}%
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {hobbies?.length > 0 && (
+          <section>
+            <h3>Hobbies</h3>
+            <ul>
+              {hobbies.map((h, i) => (
+                <li key={i}>{h}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {projects?.length > 0 && (
+          <section>
+            <h3>Projects</h3>
+            {projects.map(
+              (p, i) =>
+                (p?.projectName || p?.projectLink) && (
+                  <div key={i}>
+                    <p>
+                      <strong>{p.projectName}</strong>{" "}
+                      {p.projectLink && (
+                        <>
+                          {" "}
+                          — <a href={p.projectLink}>{p.projectLink}</a>
+                        </>
+                      )}
+                    </p>
+                    {p?.projectDescription && (
+                      <FormatResponse text={p?.projectDescription} />
+                    )}
+                  </div>
+                )
+            )}
+          </section>
+        )}
+
+        {awards?.length > 0 && (
+          <section>
+            <h3>Awards</h3>
+            {awards.map(
+              (a, i) =>
+                (a?.title || a?.organization || a?.year) && (
+                  <div key={i}>
+                    <p>
+                      {a.title} — {a.organization} ({a.year})
+                    </p>
+                    {a?.description && <FormatResponse text={a?.description} />}
+                  </div>
+                )
+            )}
+          </section>
+        )}
+      </main>
+    </div>
+  );
+};
+
 // ===================== EMPTY RESUME =====================
 
 export const EmptyResume = ({ navigate, btn = true }) => {

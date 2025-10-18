@@ -5,7 +5,11 @@ import Loader from "../components/Loader.jsx";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ResumePreview } from "../services/Constants.jsx";
-import { EmptyResume } from "../components/FormatResponse.jsx";
+import {
+  CreativeResume,
+  EmptyResume,
+  MinimalistResume,
+} from "../components/FormatResponse.jsx";
 
 const Preview = () => {
   const { id } = useParams();
