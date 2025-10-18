@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import "../assets/style/Auth.css";
 import Loader from "../components/Loader";
-import { toast } from 'react-toastify';
+import { toast } from "sonner";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });

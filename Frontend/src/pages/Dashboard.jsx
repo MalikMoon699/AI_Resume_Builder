@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext.jsx";
 import { CloudUpload, Plus, SquarePen, Trash2, X } from "lucide-react";
 import "../assets/style/Dashboard.css";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { ResumePreview } from "../services/Constants.jsx";
 import { resumeTemplateData } from "../services/Helpers.js";
 import { EmptyResume } from "../components/FormatResponse.jsx";

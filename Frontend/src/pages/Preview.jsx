@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Loader from "../components/Loader.jsx";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";

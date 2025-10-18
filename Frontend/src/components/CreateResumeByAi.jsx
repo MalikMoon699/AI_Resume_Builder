@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../utils/api.js";
 import { API_URL } from "../services/Helpers.js";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import "../assets/style/AiResumeCreate.css";
 import {
   ChevronLeft,

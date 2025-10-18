@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../utils/api.js";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import "../assets/style/CreateResume.css";
 import { EmptyResume } from "../components/FormatResponse.jsx";
 import {

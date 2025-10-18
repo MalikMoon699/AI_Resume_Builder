@@ -3,7 +3,7 @@ import { Copy, Link, Mail, MapPin, Phone } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import "../assets/style/Resumes.css";
 
 const handleCopy = (text) => {

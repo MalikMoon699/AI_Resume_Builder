@@ -217,3 +217,27 @@
     opacity: 1;
   }
 }
+
+
+/* ------  toast ------ */
+[data-sonner-toast] {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border-radius: 10px;
+}
+[data-sonner-toast][data-type="success"] {
+  background-color: #00af4e !important;
+}
+[data-sonner-toast][data-type="error"] {
+  background-color: #dc2626 !important;
+}
+
+[data-sonner-toast][data-type="warning"] {
+  background-color: #f59e0b !important; 
+  color: white !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+  background-color: #3b82f6 !important; 
+  color: #ffffff !important;
+}
