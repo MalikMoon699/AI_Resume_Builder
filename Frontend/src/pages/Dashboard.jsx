@@ -9,6 +9,7 @@ import { ResumePreview } from "../services/Constants.jsx";
 import { resumeTemplateData } from "../services/Helpers.js";
 import { EmptyResume } from "../components/FormatResponse.jsx";
 import CreateResumeByAi from "../components/CreateResumeByAi.jsx";
+import Uploads from "../components/Uploads.jsx";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -361,7 +362,8 @@ const Dashboard = () => {
           </div>
         </div>
       )}
-      {isUploadResume && (
+      {isUploadResume && <Uploads setIsUploadResume={setIsUploadResume} />}
+      {/* {isUploadResume && (
         <div
           onClick={() => {
             setIsUploadResume(false);
@@ -407,7 +409,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

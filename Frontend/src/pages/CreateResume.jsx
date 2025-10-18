@@ -320,12 +320,12 @@ const CreateResume = () => {
                       placeholder="Enter year"
                       min="1950"
                       max={new Date().getFullYear() + 5}
-                      value={exp.jobStartDate?.slice(0, 4) || ""}
+                      value={exp.startDate?.slice(0, 4) || ""}
                       onChange={(e) =>
                         handleArrayChange(
                           "experience",
                           i,
-                          "jobStartDate",
+                          "startDate",
                           e.target.value
                         )
                       }
@@ -340,12 +340,12 @@ const CreateResume = () => {
                       min="1950"
                       disabled={exp.currentlyWorking}
                       max={new Date().getFullYear() + 5}
-                      value={exp.jobEndDate?.slice(0, 4) || ""}
+                      value={exp.endDate?.slice(0, 4) || ""}
                       onChange={(e) =>
                         handleArrayChange(
                           "experience",
                           i,
-                          "jobEndDate",
+                          "endDate",
                           e.target.value
                         )
                       }
@@ -452,8 +452,8 @@ const CreateResume = () => {
                 addArrayItem("experience", {
                   companyName: "",
                   jobTitle: "",
-                  jobStartDate: "",
-                  jobEndDate: "",
+                  startDate: "",
+                  endDate: "",
                   currentlyWorking: false,
                   jobDescription: "",
                 })

@@ -1,4 +1,8 @@
 // services/Helpers.js
+import * as pdfjsLib from "pdfjs-dist";
+import workerSrc from "pdfjs-dist/build/pdf.worker.mjs?url";
+pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
+
 export const buttonProvider = (location, navigate, currentUser) => {
   if (location === "/signUp") {
     return {
@@ -251,7 +255,7 @@ export const resumeTemplateData = [
 ];
 
 const geminiPrompt = (resume, make) => {
-return `
+  return `
 You are a professional resume writer. Generate the "${make}" section based on the provided resume data.
 
 If "${make}" is "Experience":
@@ -336,9 +340,104 @@ export const generateResumeSuggestions = async (resume, make) => {
     const summaries = aiJson[make];
     if (!summaries || !Array.isArray(summaries)) throw new Error("Bad output");
 
-  return [...summaries];
+    return [...summaries];
   } catch (error) {
     console.error("Error generating with Gemini:", error);
     return [];
+  }
+};
+
+const extractTextFromPDF = async (file) => {
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+    const pdf = await loadingTask.promise;
+
+    let textContent = "";
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const text = await page.getTextContent();
+
+      const pageText = text.items.map((item) => item.str).join(" ");
+      textContent += `\n${pageText}`;
+    }
+
+    console.log("📄 Extracted text length:", textContent.length);
+    return textContent.trim();
+  } catch (error) {
+    console.error("❌ PDF text extraction failed:", error);
+    return "";
+  }
+};
+
+export const detectResumeFromPDF = async (file) => {
+  try {
+    const text = await extractTextFromPDF(file);
+    console.log("text--->", text);
+    if (!text || text.length < 50) {
+      throw new Error("Empty or invalid resume text extracted");
+    }
+
+    const prompt = `
+You are a resume data extraction assistant. 
+Analyze the following resume text and return JSON matching this schema:
+{
+  "title": string,
+  "summary": string,
+  "personalDetails": {
+    "fullName": string,
+    "email": string,
+    "number": string,
+    "location": string,
+    "profession": string
+  },
+  "skills": string[],
+  "education": [{
+    "degree": string,
+    "institution": string,
+    "startDate": string,
+    "endDate": string
+  }],
+  "experience": [{
+    "title": string,
+    "company": string,
+    "startDate": string,
+    "endDate": string,
+    "description": string
+  }],
+  "projects": [{
+    "name": string,
+    "description": string,
+    "technologies": string[]
+  }],
+  "languages": [{ "name": string, "proficiency": string }],
+  "hobbies": string[],
+  "awards": [{ "title": string, "year": string }]
+}
+
+Resume Text:
+${text}
+    `;
+
+    const response = await fetch(API_URL,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+        }),
+      }
+    );
+
+    const data = await response.json();
+    const output = data?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+    const parsed = JSON.parse(output);
+
+    console.log("✅ AI Detected Resume Data:", parsed);
+    return parsed;
+  } catch (err) {
+    console.error("❌ Error parsing resume:", err.message);
+    return null;
   }
 };

@@ -1,0 +1,53 @@
+.resumeUpload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.upload-area {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  color: #555;
+}
+
+.upload-area:hover {
+  border-color: #00af4e;
+  background-color: #f9f9f9;
+}
+
+.selected-file {
+  margin-top: 10px;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.file-input {
+  display: none;
+}
+
+.error-text {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.resumeUpload-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #00af4e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.resumeUpload-btn:hover {
+  background: #0ec962;
+}
