@@ -4,12 +4,17 @@ import { toast } from "sonner";
 import Loader from "../components/Loader.jsx";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+// import {
+//   Page,
+//   Text,
+//   View,
+//   Document,
+//   StyleSheet,
+//   pdf,
+// } from "@react-pdf/renderer";
+// import { saveAs } from "file-saver";
 import { ResumePreview } from "../services/Constants.jsx";
-import {
-  CreativeResume,
-  EmptyResume,
-  MinimalistResume,
-} from "../components/FormatResponse.jsx";
+import { EmptyResume } from "../components/FormatResponse.jsx";
 
 const Preview = () => {
   const { id } = useParams();
@@ -72,6 +77,21 @@ const Preview = () => {
       console.error("PDF generation failed:", err);
     }
   };
+
+  // const handleDownload = async () => {
+  //   const doc = (
+  //     <Document>
+  //       <Page size="A4" style={{ padding: 30 }}>
+  //         <Text style={{ fontSize: 18, fontWeight: "bold" }}>{resume?.personalDetails?.fullName}</Text>
+  //         <Text>{resume?.personalDetails?.email}</Text>
+  //         {/* Map through experience, education, etc. */}
+  //       </Page>
+  //     </Document>
+  //   );
+
+  //   const blob = await pdf(doc).toBlob();
+  //   saveAs(blob, `${resume?.name || "resume"}.pdf`);
+  // };
 
   const handleShare = async () => {
     const shareUrl = `${import.meta.env.VITE_FRONTEND_URL}/resume/${id}`;

@@ -72,7 +72,7 @@ const ResumeSchema = new mongoose.Schema(
     resumeType: {
       type: String,
       enum: ["Modern", "Classic", "Minimalist", "Creative"],
-      default: "Modern",
+      default: "Minimalist",
     },
     creationType: {
       type: String,

@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [updateResumeTitle, setUpdateResumeTitle] = useState("");
   const [selectedResumeId, setSelectedResumeId] = useState(null);
   const [createdResumeId, setCreatedResumeId] = useState(null);
-  const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState("Minimalist");
 
   const [isCreateResumeAi, setIsCreateResumeAi] = useState(false);
   const [isCreateResume, setIsCreateResume] = useState(false);
