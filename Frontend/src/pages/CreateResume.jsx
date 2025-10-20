@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import API from "../utils/api.js";
 import { toast } from "sonner";
 import "../assets/style/CreateResume.css";
-import { EmptyResume } from "../components/FormatResponse.jsx";
+import { EmptyResume, ModernResume } from "../components/FormatResponse.jsx";
 import {
   ArrowLeft,
   Brain,

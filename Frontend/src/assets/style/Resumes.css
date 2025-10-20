@@ -333,7 +333,7 @@
 
 .language-item .progress-fill {
   height: 100%;
-  padding: 4px !important;
+  padding: 3px !important;
   border-radius: 10px;
   background: var(--accent-color, #00af4e);
   transition: width 0.4s ease;
@@ -641,7 +641,7 @@
   margin-top: 5px;
 }
 
-.language-item .progress-fill {
+.elegant-resume .language-item .progress-fill {
   height: 100%;
   background: var(--accent-color);
   transition: width 0.3s ease;
