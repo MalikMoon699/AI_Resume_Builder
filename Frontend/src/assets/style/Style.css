@@ -241,3 +241,35 @@
   background-color: #3b82f6 !important; 
   color: #ffffff !important;
 }
+
+/* ---- Print ---- */
+/* Hide HTML version normally */
+.hidden-print {
+  display: none;
+}
+
+/* Show only HTML version during print */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  .resume-print,
+  .resume-print * {
+    visibility: visible !important;
+    display: block !important;
+  }
+
+  .resume-print {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+  }
+
+  .preview-action-container,
+  .visible-preview {
+    display: none !important;
+  }
+}
+

@@ -577,7 +577,6 @@ const extractTextFromPDF = async (file) => {
       textContent += `\n${pageText}`;
     }
 
-    console.log("📄 Extracted text length:", textContent.length);
     return textContent.trim();
   } catch (error) {
     console.error("❌ PDF text extraction failed:", error);
@@ -588,7 +587,6 @@ const extractTextFromPDF = async (file) => {
 export const detectResumeFromPDF = async (file) => {
   try {
     const text = await extractTextFromPDF(file);
-    console.log("text--->", text);
     if (!text || text.length < 50) {
       throw new Error("Empty or invalid resume text extracted");
     }
@@ -597,55 +595,58 @@ export const detectResumeFromPDF = async (file) => {
 You are a resume data extraction assistant. 
 Analyze the following resume text and return JSON matching this schema:
 {
-  "title": string,
   "summary": string,
   "personalDetails": {
     "fullName": string,
     "email": string,
     "number": string,
     "location": string,
-    "profession": string
+    "profession": string,
+    "personalWebsite": string
   },
-  "skills": string[],
-  "education": [{
-    "degree": string,
-    "institution": string,
-    "startDate": string,
-    "endDate": string
-  }],
-  "experience": [{
-    "title": string,
-    "company": string,
+    "experience": [{
+    "companyName": string,
+    "jobTitle": string,
     "startDate": string,
     "endDate": string,
-    "description": string
+    "currentlyWorking": boolean,
+    "jobDescription": string
+  }],
+  "education": [{
+    "institutionName": string,
+    "degree": string,
+    "fieldOfStudy": string,
+    "startDate": string,
+    "endDate": string,
+    "currentlyLearning": boolean
   }],
   "projects": [{
-    "name": string,
-    "description": string,
-    "technologies": string[]
+    "projectName": string,
+    "projectType": string,
+    "projectDescription": string,
+    "projectLink": string
   }],
-  "languages": [{ "name": string, "proficiency": string }],
+    "skills": string[],
+  "languages": [{ "name": string, "proficiency": Number }],
   "hobbies": string[],
-  "awards": [{ "title": string, "year": string }]
+  "awards": [{ "title": string, "organization": string, "year": string, "description": string }]
 }
 
 Resume Text:
 ${text}
     `;
 
-    const response = await fetch(API_URL,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-        }),
-      }
-    );
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+      }),
+    });
 
     const data = await response.json();
-    const output = data?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+    let output = data?.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+    output = output.replace(/```json|```/g, "").trim();
     const parsed = JSON.parse(output);
 
     console.log("✅ AI Detected Resume Data:", parsed);

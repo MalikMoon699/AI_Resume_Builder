@@ -2,11 +2,39 @@ import { X, CloudUpload } from "lucide-react";
 import React, { useState } from "react";
 import "../assets/style/Uploads.css";
 import { detectResumeFromPDF } from "../services/Helpers.js";
+import API from "../utils/api.js";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 const Uploads = ({ setIsUploadResume }) => {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [creationType, setCreationType] = useState("Ai");
+  const [resumeTitle, setResumeTitle] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState("Minimalist");
+
+  const handleCreate = async (parsedData = {}) => {
+    if (!resumeTitle) return toast.error("Resume Title required!!!");
+    if (!selectedFile) return toast.error("Resume file required!!!");
+
+    try {
+      const res = await API.post("/resume/create", {
+        title: resumeTitle,
+        creationType: creationType,
+        resumeType: selectedTemplate,
+        ...parsedData,
+      });
+
+      toast.success("Resume created!");
+      setIsUploadResume(false);
+      navigate(`/create-resume/${res.data._id}`);
+    } catch (err) {
+      console.error("Error creating resume:", err);
+      toast.error("Failed to create resume");
+    }
+  };
 
   const onClose = () => {
     setIsUploadResume(false);
@@ -36,6 +64,8 @@ const Uploads = ({ setIsUploadResume }) => {
 
     try {
       const parsedData = await detectResumeFromPDF(selectedFile);
+
+      handleCreate(parsedData);
       console.log("🎯 Parsed Resume Data:", parsedData);
     } catch (err) {
       console.error("❌ Error:", err);
@@ -55,7 +85,13 @@ const Uploads = ({ setIsUploadResume }) => {
           </button>
         </div>
 
-        <div className="resumeUpload-container">
+        <div className="resumeUpload-container create-resume-modal-content">
+          <input
+            type="text"
+            placeholder="Enter resume title"
+            value={resumeTitle}
+            onChange={(e) => setResumeTitle(e.target.value)}
+          />
           <label htmlFor="resumeUpload" className="upload-area">
             <CloudUpload size={40} />
             <p>Click to upload your resume (PDF only)</p>
@@ -94,5 +130,3 @@ const Uploads = ({ setIsUploadResume }) => {
 };
 
 export default Uploads;
-
-

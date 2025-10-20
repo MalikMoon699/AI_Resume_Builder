@@ -31,13 +31,14 @@ export const GetResumesByUser = async (req, res) => {
 
 export const CreateResume = async (req, res) => {
   try {
-    const { title, creationType, resumeType } = req.body;
+    const { title, creationType, resumeType, ...rest } = req.body;
 
     const newResume = new Resume({
       title,
       resumeType,
       creationType,
       user: req.user.id,
+      ...rest,
     });
 
     const savedResume = await newResume.save();
@@ -111,7 +112,7 @@ export const DeleteResume = async (req, res) => {
 export const UpdateResumeTitle = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, creationType } = req.body;
+    const { title, creationType } = req.body
 
     if (!title?.trim()) {
       return res.status(400).json({ message: "Resume title is required" });

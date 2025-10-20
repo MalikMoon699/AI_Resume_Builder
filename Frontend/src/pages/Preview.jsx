@@ -1,23 +1,19 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import Loader from "../components/Loader.jsx";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-// import {
-//   Page,
-//   Text,
-//   View,
-//   Document,
-//   StyleSheet,
-//   pdf,
-// } from "@react-pdf/renderer";
-// import { saveAs } from "file-saver";
 import { ResumePreview } from "../services/Constants.jsx";
-import { EmptyResume } from "../components/FormatResponse.jsx";
+import {
+  EmptyResume,
+  ClassicResume,
+  ModernResume,
+  MinimalistResume,
+  CreativeResume,
+} from "../components/FormatResponse.jsx";
 
 const Preview = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
   const resumeRef = useRef();
@@ -41,58 +37,6 @@ const Preview = () => {
     if (id) fetchResume();
   }, [id]);
 
-  const handleDownload = async () => {
-    const element = resumeRef.current;
-    if (!element) return;
-
-    try {
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-      });
-      const imgData = canvas.toDataURL("image/png");
-
-      const pdf = new jsPDF("p", "mm", "a4");
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * pageWidth) / canvas.width;
-
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      pdf.save(`${resume?.name || "resume"}.pdf`);
-    } catch (err) {
-      console.error("PDF generation failed:", err);
-    }
-  };
-
-  // const handleDownload = async () => {
-  //   const doc = (
-  //     <Document>
-  //       <Page size="A4" style={{ padding: 30 }}>
-  //         <Text style={{ fontSize: 18, fontWeight: "bold" }}>{resume?.personalDetails?.fullName}</Text>
-  //         <Text>{resume?.personalDetails?.email}</Text>
-  //         {/* Map through experience, education, etc. */}
-  //       </Page>
-  //     </Document>
-  //   );
-
-  //   const blob = await pdf(doc).toBlob();
-  //   saveAs(blob, `${resume?.name || "resume"}.pdf`);
-  // };
-
   const handleShare = async () => {
     const shareUrl = `${import.meta.env.VITE_FRONTEND_URL}/resume/${id}`;
 
@@ -111,6 +55,11 @@ const Preview = () => {
       toast.info("Share link copied to clipboard!");
     }
   };
+
+const handleDownload = () => {
+  window.print();
+};
+
 
   const handleCopy = async () => {
     const copyUrl = `${import.meta.env.VITE_FRONTEND_URL}/resume/${id}`;
@@ -163,6 +112,29 @@ const Preview = () => {
         ) : (
           <EmptyResume btn={false} navigate={navigate} />
         )}
+
+        <div
+          ref={resumeRef}
+          className="resume-print hidden-print"
+          style={{
+            background: "#fff",
+          }}
+        >
+          {(() => {
+            switch (resume?.resumeType) {
+              case "Modern":
+                return <ModernResume data={resume} />;
+              case "Classic":
+                return <ClassicResume data={resume} />;
+              case "Minimalist":
+                return <MinimalistResume data={resume} />;
+              case "Creative":
+                return <CreativeResume data={resume} />;
+              default:
+                return <EmptyResume navigate={navigate} />;
+            }
+          })()}
+        </div>
       </div>
     </div>
   );

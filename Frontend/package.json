@@ -12,7 +12,9 @@
   "dependencies": {
     "@react-pdf/renderer": "^4.3.1",
     "axios": "^1.12.2",
+    "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.12.1",
     "jspdf": "^3.0.3",
     "ldrs": "^1.1.7",
     "lucide-react": "^0.545.0",
