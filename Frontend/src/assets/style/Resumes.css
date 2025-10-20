@@ -49,10 +49,8 @@
 .classic-resume {
   font-family: "Times New Roman", serif;
   color: #000;
-  background: #fff;
   padding: 40px;
   max-width: 950px;
-  margin: 40px auto;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
 }
@@ -118,8 +116,6 @@
 .modern-resume {
   display: flex;
   max-width: 1000px;
-  margin: 40px auto;
-  background: #fff;
   font-family: "Poppins", sans-serif;
   border-radius: 10px;
   overflow: hidden;
@@ -349,9 +345,7 @@
 .minimalist-resume {
   font-family: "Arial", sans-serif;
   color: #222;
-  background: #fff;
   max-width: 900px;
-  margin: 40px auto;
   padding: 30px 40px;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
@@ -435,8 +429,6 @@
   display: flex;
   flex-direction: column;
   max-width: 1000px;
-  margin: 40px auto;
-  background: #fff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.12);
@@ -535,9 +527,7 @@
 .elegant-resume {
   font-family: "Georgia", serif;
   color: #333;
-  background: #f9f9f9;
   max-width: 900px;
-  margin: 40px auto;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
