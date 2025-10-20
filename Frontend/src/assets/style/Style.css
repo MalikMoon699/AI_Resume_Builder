@@ -174,11 +174,12 @@
   transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
-.create-resume-modal-content > select{
+.create-resume-modal-content > select {
   cursor: pointer;
 }
 
-.create-resume-modal-content > input:focus,.create-resume-modal-content > select:focus {
+.create-resume-modal-content > input:focus,
+.create-resume-modal-content > select:focus {
   border-color: #00af4e;
   box-shadow: 0 0 0 3px rgba(0, 175, 78, 0.25);
 }
@@ -220,7 +221,6 @@
   }
 }
 
-
 /* ------  toast ------ */
 [data-sonner-toast] {
   background-color: #1e293b !important;
@@ -235,12 +235,12 @@
 }
 
 [data-sonner-toast][data-type="warning"] {
-  background-color: #f59e0b !important; 
+  background-color: #f59e0b !important;
   color: white !important;
 }
 
 [data-sonner-toast][data-type="info"] {
-  background-color: #3b82f6 !important; 
+  background-color: #3b82f6 !important;
   color: #ffffff !important;
 }
 
@@ -274,4 +274,3 @@
     display: none !important;
   }
 }
-

@@ -41,7 +41,7 @@ const Preview = () => {
 
   const handleShare = async () => {
     const shareUrl = `${import.meta.env.VITE_FRONTEND_URL}/resume/${id}`;
-
+  toast.success("Resume share link created successfully!");
     if (navigator.share) {
       try {
         await navigator.share({
@@ -60,6 +60,7 @@ const Preview = () => {
 
   const handleDownload = () => {
     window.print();
+    toast.success("Resume downloaded successfully!");
   };
 
   const handleCopy = async () => {
@@ -153,7 +154,14 @@ const Preview = () => {
         </div>
       </div>
       {isZoomed && (
-        <div style={{cursor:"zoom-out"}} className="modal-overlay" onClick={() => setIsZoomed(false)}>
+        <div
+          style={{
+            cursor: "zoom-out",
+            "--accent-color": resume.accentColor || "#00af4e",
+          }}
+          className="modal-overlay"
+          onClick={() => setIsZoomed(false)}
+        >
           <div className="modal-content">
             {resume?.resumeType ? (
               <ResumePreview
