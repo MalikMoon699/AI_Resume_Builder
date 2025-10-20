@@ -292,17 +292,16 @@ ${JSON.stringify(resume, null, 2)}
                   <div>
                     <label>Start Date</label>
                     <input
-                      type="number"
+                      type="month"
                       className="create-resume-input"
-                      placeholder="Enter year"
-                      min="1950"
-                      max={new Date().getFullYear() + 5}
-                      value={exp.jobStartDate?.slice(0, 4) || ""}
+                      min="1950-01"
+                      max={`${new Date().getFullYear() + 5}-12`}
+                      value={exp.startDate || ""}
                       onChange={(e) =>
                         handleArrayChange(
                           "experience",
                           i,
-                          "jobStartDate",
+                          "startDate",
                           e.target.value
                         )
                       }
@@ -311,18 +310,17 @@ ${JSON.stringify(resume, null, 2)}
                   <div>
                     <label>End Date</label>
                     <input
-                      type="number"
+                      type="month"
                       className="create-resume-input"
-                      placeholder="Enter year"
-                      min="1950"
                       disabled={exp.currentlyWorking}
-                      max={new Date().getFullYear() + 5}
-                      value={exp.jobEndDate?.slice(0, 4) || ""}
+                      min="1950-01"
+                      max={`${new Date().getFullYear() + 5}-12`}
+                      value={exp.endDate || ""}
                       onChange={(e) =>
                         handleArrayChange(
                           "experience",
                           i,
-                          "jobEndDate",
+                          "endDate",
                           e.target.value
                         )
                       }
@@ -407,12 +405,11 @@ ${JSON.stringify(resume, null, 2)}
                   <div>
                     <label>Start Date</label>
                     <input
-                      type="number"
+                      type="month"
                       className="create-resume-input"
-                      placeholder="Enter year"
-                      min="1950"
-                      max={new Date().getFullYear() + 5}
-                      value={edu.startDate?.slice(0, 4) || ""}
+                      min="1950-01"
+                      max={`${new Date().getFullYear() + 5}-12`}
+                      value={edu.startDate || ""}
                       onChange={(e) =>
                         handleArrayChange(
                           "education",
@@ -426,12 +423,11 @@ ${JSON.stringify(resume, null, 2)}
                   <div>
                     <label>End Date</label>
                     <input
-                      type="number"
+                      type="month"
                       className="create-resume-input"
-                      placeholder="Enter year"
-                      min="1950"
-                      max={new Date().getFullYear() + 5}
-                      value={edu.endDate?.slice(0, 4) || ""}
+                      min="1950-01"
+                      max={`${new Date().getFullYear() + 5}-12`}
+                      value={edu.endDate || ""}
                       onChange={(e) =>
                         handleArrayChange(
                           "education",
@@ -702,8 +698,8 @@ ${JSON.stringify(resume, null, 2)}
                   }
                 />
                 <input
-                  type="number"
-                  placeholder="Year"
+                  type="month"
+                  placeholder="Month & Year"
                   className="create-resume-input"
                   value={award.year || ""}
                   onChange={(e) =>

@@ -222,7 +222,7 @@
 }
 
 .preview-action {
-  padding: 10px 20px;
+  padding: 8px 12px;
   font-size: 15px;
   font-weight: 600;
   border-radius: 8px;
@@ -231,6 +231,11 @@
   color: #fff;
   transition: all 0.25s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.preview-action > span {
+  font-size: 0px;
+  margin-right: 7px;
 }
 
 .preview-action.download {

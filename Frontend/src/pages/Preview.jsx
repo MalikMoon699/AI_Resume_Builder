@@ -10,12 +10,14 @@ import {
   MinimalistResume,
   CreativeResume,
 } from "../components/FormatResponse.jsx";
+import { Copy, Download, Share2 } from "lucide-react";
 
 const Preview = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isZoomed, setIsZoomed] = useState(false);
   const resumeRef = useRef();
 
   useEffect(() => {
@@ -86,20 +88,35 @@ const Preview = () => {
       {resume?.resumeType && (
         <div className="preview-action-container">
           <button onClick={handleDownload} className="preview-action download">
+            <span>
+              <Download size={15} />
+            </span>
             Download
           </button>
           <button onClick={handleShare} className="preview-action share">
+            <span>
+              <Share2 size={13} />
+            </span>
             Share
           </button>
           <button onClick={handleCopy} className="preview-action download">
+            <span>
+              <Copy size={14} />
+            </span>
             Copy Link
           </button>
         </div>
       )}
       <div
-        style={{ "--accent-color": resume.accentColor || "#00af4e" }}
+        style={{
+          "--accent-color": resume.accentColor || "#00af4e",
+          cursor: "zoom-in",
+        }}
         ref={resumeRef}
         className="resume-preview"
+        onClick={() => {
+          setIsZoomed(true);
+        }}
       >
         {resume?.resumeType ? (
           <ResumePreview
@@ -135,6 +152,22 @@ const Preview = () => {
           })()}
         </div>
       </div>
+      {isZoomed && (
+        <div style={{cursor:"zoom-out"}} className="modal-overlay" onClick={() => setIsZoomed(false)}>
+          <div className="modal-content">
+            {resume?.resumeType ? (
+              <ResumePreview
+                item={resume}
+                width="100%"
+                height="100%"
+                minWidth="300px"
+              />
+            ) : (
+              <EmptyResume btn={false} navigate={navigate} />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -655,3 +655,12 @@ ${text}
     return null;
   }
 };
+
+
+export const formatMonthYear = (val) => {
+  if (!val) return "";
+
+  const date = new Date(`${val}-01`);
+  if (isNaN(date)) return val;
+  return date.toLocaleString("en-US", { month: "short", year: "numeric" });
+};

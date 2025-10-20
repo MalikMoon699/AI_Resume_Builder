@@ -14,7 +14,7 @@ root.render(
       <Toaster
         richColors
         position="bottom-right"
-        closeButton
+        // closeButton
         dismissible
         toastOptions={{
           duration: 4000,

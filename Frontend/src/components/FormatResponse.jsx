@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { toast } from "sonner";
+import { formatMonthYear } from "../services/Helpers";
 import "../assets/style/Resumes.css";
 
 const handleCopy = (text) => {
@@ -135,13 +136,13 @@ export const ClassicResume = ({ data }) => {
                     edu?.endDate ||
                     edu?.currentlyLearning) && (
                     <p>
-                      {edu?.startDate?.slice(0, 4)}
+                      {formatMonthYear(edu.startDate)}
                       {(edu?.endDate || edu?.currentlyLearning) && (
                         <>
                           {" - "}
                           {edu?.currentlyLearning
                             ? "Present"
-                            : edu?.endDate?.slice(0, 4)}
+                            : formatMonthYear(edu.endDate)}
                         </>
                       )}
                     </p>
@@ -228,11 +229,14 @@ export const ClassicResume = ({ data }) => {
                         exp?.endDate ||
                         exp?.currentlyWorking) && (
                         <span>
-                          {exp?.startDate && `| ${exp?.startDate}`}
+                          {exp?.startDate &&
+                            `| ${formatMonthYear(exp.startDate)}`}
                           {(exp?.endDate || exp?.currentlyWorking) && (
                             <>
                               {" - "}
-                              {exp?.currentlyWorking ? "Present" : exp?.endDate}
+                              {exp?.currentlyWorking
+                                ? "Present"
+                                : formatMonthYear(exp.endDate)}
                             </>
                           )}
                         </span>
@@ -282,7 +286,9 @@ export const ClassicResume = ({ data }) => {
                       {a?.organization && ` – ${a?.organization}`}
                     </p>
                   )}
-                  {a?.year && <span className="award-year">{a?.year}</span>}
+                  {a?.year && (
+                    <span className="award-year">{formatMonthYear(a?.year)}</span>
+                  )}
                   {a?.description && <FormatResponse text={a?.description} />}
                 </div>
               ))}
@@ -371,13 +377,13 @@ export const ModernResume = ({ data }) => {
               <div key={i} className="edu-item">
                 {(edu?.startDate || edu?.endDate || edu?.currentlyLearning) && (
                   <p>
-                    {edu?.startDate?.slice(0, 4)}
+                    {formatMonthYear(edu.startDate)}
                     {(edu?.endDate || edu?.currentlyLearning) && (
                       <>
                         {" - "}
                         {edu?.currentlyLearning
                           ? "Present"
-                          : edu?.endDate?.slice(0, 4)}
+                          : formatMonthYear(edu.endDate)}
                       </>
                     )}
                   </p>
@@ -464,11 +470,14 @@ export const ModernResume = ({ data }) => {
                       exp?.endDate ||
                       exp?.currentlyWorking) && (
                       <span>
-                        {exp?.startDate && `| ${exp?.startDate}`}
+                        {exp?.startDate &&
+                          `| ${formatMonthYear(exp.startDate)}`}
                         {(exp?.endDate || exp?.currentlyWorking) && (
                           <>
                             {" - "}
-                            {exp?.currentlyWorking ? "Present" : exp?.endDate}
+                            {exp?.currentlyWorking
+                              ? "Present"
+                              : formatMonthYear(exp.endDate)}
                           </>
                         )}
                       </span>
@@ -518,7 +527,9 @@ export const ModernResume = ({ data }) => {
                     {a?.organization && ` – ${a?.organization}`}
                   </p>
                 )}
-                {a?.year && <span className="award-year">{a?.year}</span>}
+                {a?.year && (
+                  <span className="award-year">{formatMonthYear(a?.year)}</span>
+                )}
                 {a?.description && <FormatResponse text={a?.description} />}
               </div>
             ))}
@@ -593,8 +604,10 @@ export const MinimalistResume = ({ data }) => {
                 )}
                 {(exp?.startDate || exp?.endDate || exp?.currentlyWorking) && (
                   <span>
-                    {exp.startDate} -{" "}
-                    {exp.currentlyWorking ? "Present" : exp.endDate}
+                    {formatMonthYear(exp.startDate)} -{" "}
+                    {exp.currentlyWorking
+                      ? "Present"
+                      : formatMonthYear(exp.endDate)}
                   </span>
                 )}
               </div>
@@ -615,8 +628,11 @@ export const MinimalistResume = ({ data }) => {
                 <>
                   <strong>{i + 1}. </strong>
                   <strong>{edu.degree}</strong>— {edu.institutionName} (
-                  {edu.startDate} -{" "}
-                  {edu.currentlyLearning ? "Present" : edu.endDate})
+                  {formatMonthYear(edu?.startDate)} -{" "}
+                  {edu.currentlyLearning
+                    ? "Present"
+                    : formatMonthYear(edu?.endDate)}
+                  )
                 </>
               )}
             </p>
@@ -682,7 +698,8 @@ export const MinimalistResume = ({ data }) => {
                 <div key={i}>
                   <p>
                     <strong>{i + 1}. </strong>
-                    <strong> {a.title}</strong>— {a.organization} ({a.year})
+                    <strong> {a.title}</strong>— {a.organization} (
+                    {formatMonthYear(a.year)})
                   </p>
                   {a?.description && <FormatResponse text={a.description} />}
                 </div>
@@ -801,8 +818,10 @@ export const CreativeResume = ({ data }) => {
                         exp?.endDate ||
                         exp?.currentlyWorking) && (
                         <span>
-                          {exp.startDate} -{" "}
-                          {exp.currentlyWorking ? "Present" : exp.endDate}
+                          {formatMonthYear(exp.startDate)} -{" "}
+                          {exp.currentlyWorking
+                            ? "Present"
+                            : formatMonthYear(exp.endDate)}
                         </span>
                       )}
                     </div>
@@ -824,8 +843,11 @@ export const CreativeResume = ({ data }) => {
                   <div key={i}>
                     <strong>{i + 1}. </strong>
                     <strong>{edu.degree}</strong> — {edu.institutionName} (
-                    {edu.startDate} -{" "}
-                    {edu.currentlyLearning ? "Present" : edu.endDate})
+                    {formatMonthYear(edu.startDate)} -{" "}
+                    {edu.currentlyLearning
+                      ? "Present"
+                      : formatMonthYear(edu.endDate)}
+                    )
                   </div>
                 )
             )}
@@ -902,7 +924,8 @@ export const CreativeResume = ({ data }) => {
                   <div key={i}>
                     <p>
                       <strong>{i + 1}. </strong>
-                      <strong>{a?.title}</strong> — {a.organization} ({a.year})
+                      <strong>{a?.title}</strong> — {a.organization} (
+                      {formatMonthYear(a.year)})
                     </p>
                     {a?.description && <FormatResponse text={a?.description} />}
                   </div>
