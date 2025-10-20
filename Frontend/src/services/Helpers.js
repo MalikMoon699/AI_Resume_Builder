@@ -627,7 +627,7 @@ Analyze the following resume text and return JSON matching this schema:
     "projectLink": string
   }],
     "skills": string[],
-  "languages": [{ "name": string, "proficiency": Number }],
+  "languages": [{ "language": string, "proficiency": Number }],
   "hobbies": string[],
   "awards": [{ "title": string, "organization": string, "year": string, "description": string }]
 }
@@ -649,7 +649,6 @@ ${text}
     output = output.replace(/```json|```/g, "").trim();
     const parsed = JSON.parse(output);
 
-    console.log("✅ AI Detected Resume Data:", parsed);
     return parsed;
   } catch (err) {
     console.error("❌ Error parsing resume:", err.message);

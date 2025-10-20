@@ -60,13 +60,11 @@ const Uploads = ({ setIsUploadResume }) => {
     }
 
     setLoading(true);
-    console.log("📤 Uploading:", selectedFile.name);
 
     try {
       const parsedData = await detectResumeFromPDF(selectedFile);
 
       handleCreate(parsedData);
-      console.log("🎯 Parsed Resume Data:", parsedData);
     } catch (err) {
       console.error("❌ Error:", err);
     }

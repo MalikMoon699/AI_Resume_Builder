@@ -405,7 +405,7 @@
   justify-content: space-between;
 }
 
-.minimalist-experience li::before {
+.minimalist-resume li::before {
   content: "• ";
   color: var(--accent-color);
 }

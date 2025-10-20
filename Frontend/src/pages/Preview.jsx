@@ -56,10 +56,9 @@ const Preview = () => {
     }
   };
 
-const handleDownload = () => {
-  window.print();
-};
-
+  const handleDownload = () => {
+    window.print();
+  };
 
   const handleCopy = async () => {
     const copyUrl = `${import.meta.env.VITE_FRONTEND_URL}/resume/${id}`;

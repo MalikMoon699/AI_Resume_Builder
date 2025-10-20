@@ -539,6 +539,8 @@ export const MinimalistResume = ({ data }) => {
     skills,
     projects,
     awards,
+    languages,
+    hobbies,
   } = data || {};
 
   return (
@@ -561,11 +563,7 @@ export const MinimalistResume = ({ data }) => {
           {personalDetails?.personalWebsite && (
             <p>
               Website:{" "}
-              <a
-                href={personalDetails.personalWebsite}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={personalDetails.personalWebsite} target="_blank">
                 {personalDetails.personalWebsite}
               </a>
             </p>
@@ -587,9 +585,11 @@ export const MinimalistResume = ({ data }) => {
             <div key={i} className="job">
               <div>
                 {(exp?.jobTitle || exp?.companyName) && (
-                  <h4>
-                    {exp.jobTitle} — {exp.companyName}
-                  </h4>
+                  <p>
+                    <strong>{i + 1}. </strong>
+                    <strong>{exp?.jobTitle && exp.jobTitle}</strong>
+                    {exp?.companyName && `— ${exp.companyName}`}
+                  </p>
                 )}
                 {(exp?.startDate || exp?.endDate || exp?.currentlyWorking) && (
                   <span>
@@ -613,7 +613,9 @@ export const MinimalistResume = ({ data }) => {
             <p key={i}>
               {(edu?.degree || edu?.institutionName) && (
                 <>
-                  {edu.degree} — {edu.institutionName} ({edu.startDate} -{" "}
+                  <strong>{i + 1}. </strong>
+                  <strong>{edu.degree}</strong>— {edu.institutionName} (
+                  {edu.startDate} -{" "}
                   {edu.currentlyLearning ? "Present" : edu.endDate})
                 </>
               )}
@@ -628,23 +630,40 @@ export const MinimalistResume = ({ data }) => {
           <p>{skills.join(", ")}</p>
         </section>
       )}
+      {languages?.length > 0 && (
+        <section className="minimalist-languages">
+          <h3>Languages</h3>
+          <ul>
+            {languages?.map((lang, i) => (
+              <li key={i}>
+                {lang.language}
+                {lang.proficiency && ` — ${lang.proficiency}%`}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {hobbies?.length > 0 && (
+        <section className="minimalist-hobbies">
+          <h3>Hobbies</h3>
+          <p>{hobbies.join(", ")}</p>
+        </section>
+      )}
 
       {projects?.length > 0 && (
         <section className="minimalist-projects">
           <h3>Projects</h3>
           {projects.map(
             (p, i) =>
-              (p?.projectName || p?.projectLink) && (
+              (p?.projectName || p?.projectType) && (
                 <div key={i}>
                   <p>
-                    {p.projectName}{" "}
-                    {p.projectLink && (
-                      <>
-                        {" "}
-                        — <a href={p.projectLink}>{p.projectLink}</a>
-                      </>
-                    )}
+                    <strong>{i + 1}. </strong>
+                    <strong>{p.projectName}</strong>
+                    {p.projectType && <>— {p.projectType}</>}
                   </p>
+                  {p.projectLink && <a href={p.projectLink}>{p.projectLink}</a>}
                   {p?.projectDescription && (
                     <FormatResponse text={p.projectDescription} />
                   )}
@@ -662,7 +681,8 @@ export const MinimalistResume = ({ data }) => {
               (a?.title || a?.organization || a?.year) && (
                 <div key={i}>
                   <p>
-                    {a.title} — {a.organization} ({a.year})
+                    <strong>{i + 1}. </strong>
+                    <strong> {a.title}</strong>— {a.organization} ({a.year})
                   </p>
                   {a?.description && <FormatResponse text={a.description} />}
                 </div>
@@ -762,17 +782,30 @@ export const CreativeResume = ({ data }) => {
               (exp, i) =>
                 (exp?.jobTitle || exp?.companyName) && (
                   <div key={i} className="creative-job">
-                    {(exp.jobTitle || exp.companyName) && (
-                      <h4>
-                        {exp.jobTitle} at {exp.companyName}
-                      </h4>
-                    )}
-                    {(exp.startDate || exp.endDate || exp.currentlyWorking) && (
-                      <span>
-                        {exp.startDate} -{" "}
-                        {exp.currentlyWorking ? "Present" : exp.endDate}
-                      </span>
-                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "4px",
+                      }}
+                    >
+                      {(exp?.jobTitle || exp?.companyName) && (
+                        <p>
+                          <strong>{i + 1}. </strong>
+                          <strong>{exp?.jobTitle && exp.jobTitle}</strong>
+                          {exp?.companyName && `— ${exp.companyName}`}
+                        </p>
+                      )}
+                      {(exp?.startDate ||
+                        exp?.endDate ||
+                        exp?.currentlyWorking) && (
+                        <span>
+                          {exp.startDate} -{" "}
+                          {exp.currentlyWorking ? "Present" : exp.endDate}
+                        </span>
+                      )}
+                    </div>
                     {exp.jobDescription && (
                       <FormatResponse text={exp.jobDescription} />
                     )}
@@ -789,6 +822,7 @@ export const CreativeResume = ({ data }) => {
               (edu, i) =>
                 (edu?.degree || edu?.institutionName) && (
                   <div key={i}>
+                    <strong>{i + 1}. </strong>
                     <strong>{edu.degree}</strong> — {edu.institutionName} (
                     {edu.startDate} -{" "}
                     {edu.currentlyLearning ? "Present" : edu.endDate})
@@ -838,17 +872,18 @@ export const CreativeResume = ({ data }) => {
             <h3>Projects</h3>
             {projects.map(
               (p, i) =>
-                (p?.projectName || p?.projectLink) && (
+                (p?.projectName || p?.projectType) && (
                   <div key={i}>
                     <p>
+                      <strong>{i + 1}. </strong>
                       <strong>{p.projectName}</strong>{" "}
-                      {p.projectLink && (
-                        <>
-                          {" "}
-                          — <a href={p.projectLink}>{p.projectLink}</a>
-                        </>
-                      )}
+                      {p.projectType && <> — {p.projectType}</>}
                     </p>
+                    {p.projectLink && (
+                      <p>
+                        <a href={p.projectLink}>{p.projectLink}</a>
+                      </p>
+                    )}
                     {p?.projectDescription && (
                       <FormatResponse text={p?.projectDescription} />
                     )}
@@ -866,7 +901,8 @@ export const CreativeResume = ({ data }) => {
                 (a?.title || a?.organization || a?.year) && (
                   <div key={i}>
                     <p>
-                      {a.title} — {a.organization} ({a.year})
+                      <strong>{i + 1}. </strong>
+                      <strong>{a?.title}</strong> — {a.organization} ({a.year})
                     </p>
                     {a?.description && <FormatResponse text={a?.description} />}
                   </div>
