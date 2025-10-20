@@ -17,7 +17,10 @@ import {
 } from "lucide-react";
 import Loader from "../components/Loader.jsx";
 import { ResumePreview } from "../services/Constants.jsx";
-import { formatMonthYear, generateResumeSuggestions } from "../services/Helpers.js";
+import {
+  formatMonthYear,
+  generateResumeSuggestions,
+} from "../services/Helpers.js";
 
 const CreateResume = () => {
   const { id } = useParams();
@@ -33,6 +36,7 @@ const CreateResume = () => {
   const [aiSuggestions, setAiSuggestions] = useState({});
   const [aiSuggestionsLoading, setAiSuggestionsLoading] = useState({});
   const [aiLoading, setAiLoading] = useState(false);
+  const [imgLoading, setImgLoading] = useState(false);
 
   const templateRef = useRef();
   const accentRef = useRef();
@@ -142,6 +146,13 @@ const CreateResume = () => {
     const totalSteps = 8;
     const progress = (step / totalSteps) * 100;
     return `${progress}%`;
+  };
+
+  const loadingforImg = () => {
+    setImgLoading(true);
+    setTimeout(() => {
+      setImgLoading(false);
+    }, 200);
   };
 
   const getSuggestions = async (data, section, key) => {
@@ -1020,6 +1031,7 @@ const CreateResume = () => {
                             resumeType: type,
                           }));
                           setIsTemplate(false);
+                          loadingforImg();
                         }}
                       >
                         <h4>{type}</h4>
@@ -1082,6 +1094,7 @@ const CreateResume = () => {
                           accentColor: color,
                         }));
                         setIsAccent(false);
+                            loadingforImg();
                       }}
                     ></div>
                   ))}
@@ -1200,7 +1213,9 @@ const CreateResume = () => {
           className="create-resume-preview"
           style={{ "--accent-color": resume.accentColor || "#00af4e" }}
         >
-          {resume?.resumeType ? (
+          {imgLoading ? (
+            <Loader />
+          ) : resume?.resumeType ? (
             <ResumePreview item={resume} width="100%" height="100%" />
           ) : (
             <EmptyResume btn={false} navigate={navigate} />
