@@ -92,7 +92,7 @@
   height: 3px;
   background-color: #00af4e;
   width: 0%;
-  transition: width 0.4s ease-in-out;
+  transition: all 0.7s ease-in-out;
 }
 
 .create-resume-preview {
