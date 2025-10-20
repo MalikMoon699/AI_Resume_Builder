@@ -209,7 +209,8 @@ const Dashboard = () => {
                 <div className="dashboard-resume-card-options-btns">
                   <button
                     className="use-temp-btn"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setSelectedTemplate(item?.resumeType);
                       setIsCreateResume(true);
                     }}
