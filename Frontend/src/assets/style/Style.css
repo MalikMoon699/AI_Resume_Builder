@@ -245,12 +245,10 @@
 }
 
 /* ---- Print ---- */
-/* Hide HTML version normally */
 .hidden-print {
-  display: none;
+  display: none !important;
 }
 
-/* Show only HTML version during print */
 @media print {
   body * {
     visibility: hidden !important;

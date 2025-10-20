@@ -513,6 +513,11 @@
   color: var(--accent-color);
 }
 
+.creative-resume .creative-skills li::before {
+  content: "• ";
+  color: white;
+}
+
 .creative-skills li {
   display: inline-block;
   margin-right: 10px;
