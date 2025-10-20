@@ -1018,7 +1018,7 @@ const CreateResume = () => {
               >
                 <h3 className="template-modal-title">Choose a Template</h3>
                 <div className="template-options">
-                  {["Classic", "Modern", "Minimalist", "Creative"].map(
+                  {["Classic", "Modern", "Minimalist", "Creative", "Elegant"].map(
                     (type) => (
                       <div
                         key={type}
@@ -1044,6 +1044,8 @@ const CreateResume = () => {
                             "Simple and elegant layout focusing on essential information"}
                           {type === "Creative" &&
                             "Visually striking resume with modern design and graphics"}
+                          {type === "Elegant" &&
+                            "Sophisticated design with refined typography and subtle accents"}
                         </p>
                       </div>
                     )
@@ -1094,7 +1096,7 @@ const CreateResume = () => {
                           accentColor: color,
                         }));
                         setIsAccent(false);
-                            loadingforImg();
+                        loadingforImg();
                       }}
                     ></div>
                   ))}

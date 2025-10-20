@@ -9,6 +9,7 @@ import {
   ModernResume,
   MinimalistResume,
   CreativeResume,
+  ElegantResume,
 } from "../components/FormatResponse.jsx";
 import { Copy, Download, Share2 } from "lucide-react";
 
@@ -129,7 +130,6 @@ const Preview = () => {
         ) : (
           <EmptyResume btn={false} navigate={navigate} />
         )}
-
         <div
           ref={resumeRef}
           className="resume-print hidden-print"
@@ -147,6 +147,8 @@ const Preview = () => {
                 return <MinimalistResume data={resume} />;
               case "Creative":
                 return <CreativeResume data={resume} />;
+              case "Elegant":
+                return <ElegantResume data={resume} />;
               default:
                 return <EmptyResume navigate={navigate} />;
             }

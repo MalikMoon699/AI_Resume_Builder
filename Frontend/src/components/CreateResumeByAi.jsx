@@ -747,7 +747,13 @@ ${JSON.stringify(resume, null, 2)}
                 >
                   <h3 className="template-modal-title">Choose a Template</h3>
                   <div className="template-options">
-                    {["Classic", "Modern"].map((type) => (
+                    {[
+                      "Classic",
+                      "Modern",
+                      "Minimalist",
+                      "Creative",
+                      "Elegant",
+                    ].map((type) => (
                       <div
                         key={type}
                         className={`template-option ${
@@ -767,6 +773,12 @@ ${JSON.stringify(resume, null, 2)}
                             "A clean, traditional resume format with clear sections and professional typography"}
                           {type === "Modern" &&
                             "Sleek design with strategic use of color and modern font choices"}
+                          {type === "Minimalist" &&
+                            "Simple and elegant layout focusing on essential information"}
+                          {type === "Creative" &&
+                            "Visually striking resume with modern design and graphics"}
+                          {type === "Elegant" &&
+                            "Sophisticated design with refined typography and subtle accents"}
                         </p>
                       </div>
                     ))}

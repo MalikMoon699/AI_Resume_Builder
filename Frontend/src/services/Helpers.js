@@ -164,6 +164,11 @@ export const resumeTemplateData = [
     resumeType: "Creative",
     title: "Creative template",
   },
+  {
+    ...templatescommondata,
+    resumeType: "Elegant",
+    title: "Elegant template",
+  },
 ];
 
 const geminiPrompt = (resume, make) => {

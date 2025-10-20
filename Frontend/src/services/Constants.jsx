@@ -6,6 +6,7 @@ import {
   ModernResume,
   MinimalistResume,
   CreativeResume,
+  ElegantResume,
 } from "../components/FormatResponse.jsx";
 
 export const ResumePreview = ({
@@ -89,8 +90,10 @@ export const ResumePreview = ({
               return <MinimalistResume data={item} />;
             case "Creative":
               return <CreativeResume data={item} />;
+            case "Elegant":
+              return <ElegantResume data={item} />;
             default:
-              return <EmptyResume navigate={navigate} />; 
+              return <EmptyResume navigate={navigate} />;
           }
         })()}
       </div>

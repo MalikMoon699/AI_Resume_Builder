@@ -531,3 +531,124 @@
   font-size: 13px;
   margin-bottom: 6px;
 }
+
+.elegant-resume {
+  font-family: "Georgia", serif;
+  color: #333;
+  background: #f9f9f9;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.elegant-header {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--accent-color);
+  margin-bottom: 20px;
+}
+
+.elegant-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-bottom: 5px;
+}
+
+.elegant-title {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.elegant-contact {
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.elegant-contact > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.elegant-icon {
+  font-size: 0px;
+  padding: 0px !important;
+}
+
+.elegant-body {
+  display: flex;
+  gap: 30px;
+}
+
+.company-date-container {
+  background: #00af4e1f;
+  color: var(--accent-color);
+  padding: 3px 4px !important;
+  border-radius: 4px;
+}
+
+.elegant-sidebar {
+  flex: 1;
+  padding: 15px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.elegant-main {
+  flex: 2;
+  padding: 15px;
+}
+
+.elegant-sidebar h3,
+.elegant-main h3 {
+  font-size: 16px;
+  color: var(--accent-color);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  border-bottom: 1px dashed var(--accent-color);
+  padding-bottom: 5px;
+}
+
+.edu-item,
+.job,
+.project,
+.award-item {
+  margin-bottom: 15px;
+}
+
+.elegant-resume li::before {
+  content: "› ";
+  color: var(--accent-color);
+  margin-right: 5px;
+}
+
+.language-item .progress-bar {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.language-item .progress-fill {
+  height: 100%;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
+}
+
+.award-year {
+  font-size: 12px;
+  color: #888;
+  margin-left: 10px;
+}
