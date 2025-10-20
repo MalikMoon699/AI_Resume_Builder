@@ -37,111 +37,105 @@ export const buttonProvider = (location, navigate, currentUser) => {
 export const API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBDKJ4_M-nZswCgG8JDn3xcE01sPI3S6Og";
 
-const templatescommondata = {
-  _id: "66fa1c9d1a23bc456789abcd",
-  user: "66fa1c9d1a23bc456789abce",
+
+export const templatescommondata = {
+  _id: "placeholder-id",
+  user: "placeholder-user",
+  title: "Modern template",
+  resumeType: "Modern",
+
   summary:
-    "Results-driven Full Stack Developer with a passion for building scalable web applications and crafting elegant user experiences. Skilled in React, Node.js, and MongoDB.",
+    "Write a short professional summary highlighting your key skills, experience, and goals.",
 
   personalDetails: {
-    fullName: "John Doe",
-    email: "john.doe@example.com",
-    number: "+1 555 123 4567",
-    location: "New York, USA",
-    profession: "Full Stack Developer",
-    personalWebsite: "https://johndoe.dev",
+    fullName: "Full Name",
+    email: "email@example.com",
+    number: "+1 000 000 0000",
+    location: "City, Country",
+    profession: "Your Profession",
+    personalWebsite: "www.example.com",
   },
 
   experience: [
     {
-      companyName: "Techverse Solutions",
-      jobTitle: "Senior Frontend Developer",
-      startDate: "Jan 2023",
-      endDate: "Present",
-      currentlyWorking: true,
-      jobDescription:
-        "Leading the frontend team to build high-performance React apps. Implemented modern design systems and optimized state management using Redux Toolkit.",
-    },
-    {
-      companyName: "CodeSmith Inc.",
-      jobTitle: "Full Stack Developer",
-      startDate: "Mar 2020",
-      endDate: "Dec 2022",
+      companyName: "Company Name",
+      jobTitle: "Job Title",
+      startDate: "Start Date",
+      endDate: "End Date",
       currentlyWorking: false,
       jobDescription:
-        "Developed REST APIs with Express and integrated MongoDB for dynamic dashboards. Collaborated with designers to enhance UX and responsiveness.",
+        "Describe your role, key responsibilities, and achievements in this position.",
+    },
+    {
+      companyName: "Company Name",
+      jobTitle: "Job Title",
+      startDate: "Start Date",
+      endDate: "End Date",
+      currentlyWorking: false,
+      jobDescription:
+        "Describe your role, key responsibilities, and achievements in this position.",
     },
   ],
 
   education: [
     {
-      institutionName: "Stanford University",
-      degree: "Bachelor of Science",
-      fieldOfStudy: "Computer Science",
-      startDate: "2016",
-      endDate: "2020",
+      institutionName: "Institution Name",
+      degree: "Degree Title",
+      fieldOfStudy: "Field of Study",
+      startDate: "Start Year",
+      endDate: "End Year",
       currentlyLearning: false,
     },
   ],
 
   projects: [
     {
-      projectName: "Smart Resume Builder",
-      projectType: "Web Application",
+      projectName: "Project Title",
+      projectType: "Project Type",
       projectDescription:
-        "Created a modern resume builder using React, Node.js, and MongoDB that allows users to generate beautiful resumes instantly.",
-      projectLink: "https://github.com/johndoe/resume-builder",
+        "Briefly describe the project, your role, and the technologies used.",
+      projectLink: "www.project-link.com",
     },
     {
-      projectName: "Taskify – Team Management Tool",
-      projectType: "SaaS Product",
+      projectName: "Project Title",
+      projectType: "Project Type",
       projectDescription:
-        "Developed a collaborative task management system with real-time updates using Socket.IO and MongoDB change streams.",
-      projectLink: "https://taskify.io",
+        "Briefly describe the project, your role, and the technologies used.",
+      projectLink: "www.project-link.com",
     },
   ],
 
   skills: [
-    "JavaScript (ES6+)",
-    "React.js",
-    "Node.js",
-    "Express.js",
-    "MongoDB",
-    "Tailwind CSS",
-    "Git & GitHub",
-    "REST APIs",
-    "Next.js",
-    "TypeScript",
+    "Skill 1",
+    "Skill 2",
+    "Skill 3",
+    "Skill 4",
+    "Skill 5",
+    "Skill 6",
+    "Skill 7",
   ],
 
   languages: [
-    { language: "English", proficiency: 98 },
-    { language: "Spanish", proficiency: 80 },
+    { language: "Language 1", proficiency: 100 },
+    { language: "Language 2", proficiency: 80 },
   ],
 
-  hobbies: ["Coding", "Photography", "Gaming", "Traveling"],
+  hobbies: ["Hobby 1", "Hobby 2", "Hobby 3"],
 
   awards: [
     {
-      title: "Employee of the Year",
-      organization: "Techverse Solutions",
-      year: "2024",
-      description:
-        "Recognized for outstanding contribution to frontend development and leadership in the UI/UX revamp project.",
-    },
-    {
-      title: "Hackathon Winner",
-      organization: "Google Developer Group",
-      year: "2022",
-      description:
-        "Won 1st place for developing an AI-powered productivity assistant in a 48-hour hackathon.",
+      title: "Award Title",
+      organization: "Organization Name",
+      year: "Year",
+      description: "Describe the award and why it was given.",
     },
   ],
 
   accentColor: "#00af4e",
-  createdAt: "2025-10-15T12:00:00.000Z",
-  updatedAt: "2025-10-17T08:00:00.000Z",
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 };
+
 
 export const resumeTemplateData = [
   {

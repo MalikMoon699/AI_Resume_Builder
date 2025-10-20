@@ -9,6 +9,7 @@ import { ProtectedRoute, PublicRoute } from "./routes/RouteGuards.jsx";
 import CreateResume from "./pages/CreateResume.jsx";
 import Preview from "./pages/Preview.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
+import TemplatePreiview from "./pages/TemplatePreiview.jsx";
 
 const App = () => {
   return (
@@ -54,6 +55,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/template/:name" element={<TemplatePreiview />} />
         <Route path="/resume/:id" element={<Preview />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Route>

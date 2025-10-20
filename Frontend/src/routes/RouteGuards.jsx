@@ -6,10 +6,11 @@ export const ProtectedRoute = ({ children }) => {
   const { authAllow, loading } = useAuth();
   const location = useLocation();
 
-const isResumePublic =
-  location.pathname.startsWith("/resume/") || location.pathname === "/";
+  const isResumePublic =
+    location.pathname.startsWith("/resume/") ||
+    location.pathname === "/" ||
+    location.pathname.startsWith("/template/");
 
-  
   if (loading) {
     return (
       <Loader
@@ -21,9 +22,9 @@ const isResumePublic =
     );
   }
 
- if (isResumePublic) {
-   return children;
- }
+  if (isResumePublic) {
+    return children;
+  }
 
   if (!authAllow) {
     return <Navigate to="/login" replace />;

@@ -18,8 +18,8 @@ import {
 import Loader from "../components/Loader.jsx";
 import { ResumePreview } from "../services/Constants.jsx";
 import {
-  formatMonthYear,
   generateResumeSuggestions,
+  templatescommondata,
 } from "../services/Helpers.js";
 
 const CreateResume = () => {
@@ -1018,38 +1018,42 @@ const CreateResume = () => {
               >
                 <h3 className="template-modal-title">Choose a Template</h3>
                 <div className="template-options">
-                  {["Classic", "Modern", "Minimalist", "Creative", "Elegant"].map(
-                    (type) => (
-                      <div
-                        key={type}
-                        className={`template-option ${
-                          resume.resumeType === type ? "active" : ""
-                        }`}
-                        onClick={() => {
-                          setResume((prev) => ({
-                            ...prev,
-                            resumeType: type,
-                          }));
-                          setIsTemplate(false);
-                          loadingforImg();
-                        }}
-                      >
-                        <h4>{type}</h4>
-                        <p>
-                          {type === "Classic" &&
-                            "A clean, traditional resume format with clear sections and professional typography"}
-                          {type === "Modern" &&
-                            "Sleek design with strategic use of color and modern font choices"}
-                          {type === "Minimalist" &&
-                            "Simple and elegant layout focusing on essential information"}
-                          {type === "Creative" &&
-                            "Visually striking resume with modern design and graphics"}
-                          {type === "Elegant" &&
-                            "Sophisticated design with refined typography and subtle accents"}
-                        </p>
-                      </div>
-                    )
-                  )}
+                  {[
+                    "Classic",
+                    "Modern",
+                    "Minimalist",
+                    "Creative",
+                    "Elegant",
+                  ].map((type) => (
+                    <div
+                      key={type}
+                      className={`template-option ${
+                        resume.resumeType === type ? "active" : ""
+                      }`}
+                      onClick={() => {
+                        setResume((prev) => ({
+                          ...prev,
+                          resumeType: type,
+                        }));
+                        setIsTemplate(false);
+                        loadingforImg();
+                      }}
+                    >
+                      <h4>{type}</h4>
+                      <p>
+                        {type === "Classic" &&
+                          "A clean, traditional resume format with clear sections and professional typography"}
+                        {type === "Modern" &&
+                          "Sleek design with strategic use of color and modern font choices"}
+                        {type === "Minimalist" &&
+                          "Simple and elegant layout focusing on essential information"}
+                        {type === "Creative" &&
+                          "Visually striking resume with modern design and graphics"}
+                        {type === "Elegant" &&
+                          "Sophisticated design with refined typography and subtle accents"}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -1218,7 +1222,11 @@ const CreateResume = () => {
           {imgLoading ? (
             <Loader />
           ) : resume?.resumeType ? (
-            <ResumePreview item={resume} width="100%" height="100%" />
+            <ResumePreview
+              item={resume}
+              width="100%"
+              height="100%"
+            />
           ) : (
             <EmptyResume btn={false} navigate={navigate} />
           )}

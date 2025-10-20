@@ -92,8 +92,6 @@ export const ResumePreview = ({
               return <CreativeResume data={item} />;
             case "Elegant":
               return <ElegantResume data={item} />;
-            default:
-              return <EmptyResume navigate={navigate} />;
           }
         })()}
       </div>

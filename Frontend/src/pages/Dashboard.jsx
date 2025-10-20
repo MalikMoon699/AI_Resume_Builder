@@ -190,7 +190,9 @@ const Dashboard = () => {
             <div
               key={index}
               className="dashboard-resume-card"
-              style={{ cursor: "default" }}
+              onClick={() => {
+                navigate(`/template/${item.title}`, { state: { resume: item } });
+              }}
             >
               <div
                 style={{ "--accent-color": item.accentColor || "#00af4e" }}
@@ -363,53 +365,6 @@ const Dashboard = () => {
         </div>
       )}
       {isUploadResume && <Uploads setIsUploadResume={setIsUploadResume} />}
-      {/* {isUploadResume && (
-        <div
-          onClick={() => {
-            setIsUploadResume(false);
-          }}
-          className="modal-overlay"
-        >
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            className="modal-content"
-          >
-            <div className="modal-header">
-              <h3 className="modal-header-title">Upload a Resume</h3>
-              <button
-                onClick={() => {
-                  setIsUploadResume(false);
-                }}
-              >
-                <X />
-              </button>
-            </div>
-            <div className="create-resume-modal-content">
-              <div className="resume-select-cards-container">
-                {resume.map((item, index) => (
-                  <div
-                    onClick={() => {
-                      if (item?.creationType === "Ai") {
-                        setCreatedResumeId(item._id);
-                        setIsCreateResumeAi(true);
-                        setIsUploadResume(false);
-                      } else {
-                        navigate(`/create-resume/${item._id}`);
-                      }
-                    }}
-                    key={index}
-                    className="resume-select-card"
-                  >
-                    <p className="resume-name">{item.title}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };
